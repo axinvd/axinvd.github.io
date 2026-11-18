@@ -39,6 +39,17 @@ Out: тексты LinkedIn; раздел для фриланс-клиентов.
 Done when: сайт открыт по `https://axinvd.github.io`, проходит проверку телефона (390) и SEO/AEO по правилам владельца.
 Decide: —
 
+### walk-fixes-1
+Depends: cv-site
+Goal: мелкие замечания персоны ко второму проходу сайта-резюме, которые не блокировали cv-site.
+Scope: одной строкой на каждое (polish):
+- inline-ссылка «PlatformColor fix» на телефоне 20 px в высоту, трудно нажать.
+- «Leads come in through the site.» повторяется дословно в обеих карточках проектов; строка «Both sites were built with Claude Code…» стоит между карточками и кейсом без заголовка.
+- страница нигде не определяет, что такое «шаг» харнесса, цифры «74 steps» / «14 of 46» висят без привязки ко времени (одна строка-определение).
+Out: ссылка на репозиторий и скриншоты проектов (владелец решил, что ссылок достаточно); PDF (обновление `cv-en.md` — отдельная строка Follow-ups).
+Done when: каждая строка исправлена или снята владельцем; полная проверка зелёная; телефон 390 без обрезки.
+Decide: —
+
 ## Follow-ups
 
 - После мержа cv-site руками владельца: Settings → Pages → Source «GitHub Actions» (или `gh api -X PUT repos/axinvd/axinvd.github.io/pages -f build_type=workflow`), один раз запустить workflow Pages, затем живая проверка `BASE_URL=https://axinvd.github.io npx playwright test`, скриншот живой страницы в 390 и `/CLAUDE.html` → 404 (из cv-site, репо axinvd.github.io)
