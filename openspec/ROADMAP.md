@@ -61,7 +61,6 @@ Decide: —
 
 ## Follow-ups
 
-- [репо `.claude`] Приватность: хук cc-plugin-privacy режет запись собственного email владельца рядом с именами его проектов (caro.md, infodreamhome.com), в том числе в тестах публичного сайта-резюме, и роль не вправе его обходить; хука нет ни в `settings.json`, ни среди плагинов, снять его из сессии нельзя. Завести шаг в roadmap `~/.claude`: где живёт хук и как его настроить или снять, и будет ли это скил или агент (решение владельца, cv-site, 2026-11-18).
 - После мержа cv-site руками владельца: Settings → Pages → Source «GitHub Actions» (или `gh api -X PUT repos/axinvd/axinvd.github.io/pages -f build_type=workflow`), один раз запустить workflow Pages, затем живая проверка `BASE_URL=https://axinvd.github.io npx playwright test`, скриншот живой страницы в 390 и `/CLAUDE.html` → 404 (из cv-site, репо axinvd.github.io)
 - JSON-LD: `Person` должен быть отдельным узлом `@graph`, а `ProfilePage.mainEntity` — ссылкой по `@id`; хелпер контрактных тестов разворачивает только `@graph`, вложенный `Person` ломает «The three copies are identical» (из cv-site, репо axinvd.github.io; знание для правки JSON-LD)
 - GitHub App бота не может пушить `.github/workflows/*` без права `workflows` (владелец выдал 2026-11-18); любой шаг, трогающий workflow, зависит от него (из cv-site, репо axinvd.github.io)
