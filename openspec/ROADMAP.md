@@ -30,15 +30,6 @@ blockers by what they unblock.
 
 ## Steps
 
-### cv-site
-Depends: —
-Read: `~/projects/freelance_leads/docs/ai-product-engineer.md` (план п. 2); `~/projects/freelance_leads/cv/cv-en.md`, `~/projects/freelance_leads/cv/ai-experience.md`
-Goal: сайт-резюме для найма на AI product и фронтенд-роли: ссылка идёт в поле Portfolio URL откликов (у Distru оно есть).
-Scope: одна страница по-английски по `cv/cv-en.md` и `cv/ai-experience.md` из `~/projects/freelance_leads`: кто, что умеет, опыт; кейс harness (схема, числа, что ломалось и как чинили — без закрытого кода); проекты caro.md и infodreamhome.com со ссылками; контакты и PDF резюме. Хостинг — GitHub Pages этого репо (`https://axinvd.github.io`); стек — explore (статический экспорт). Owner, 2026-11-18: аудитория — найм (AI product + фронт), не фриланс-клиенты; хостинг — GitHub Pages. Owner, 2026-11-18, по двум ресёрчам (дизайн и контент): дизайн — сдержанно + один фирменный элемент (спина варианта c), на телефоне тонкая линия, первый экран с кто/что/доказательство, одно движение; контент — достижения, победы и сложности вместо счётчиков активности: без числа pull request и без «main contributor», без долей коммитов; «9 000+» оставить; числа харнесса оставить, но с пояснением базы сравнения, чтобы читатель сам их истолковал; историю с IP-баном caro.md не включать; делать акцент на работе с ИИ (caro.md — дизайн через Pencil, infodreamhome.com — через Open Design) и на практиках, которые можно вытащить из проектов; бизнес-результат проектов есть, но не измерен — не выдумывать, писать, что заявки идут. Owner, 2026-11-18: take c.
-Out: тексты LinkedIn; раздел для фриланс-клиентов.
-Done when: сайт открыт по `https://axinvd.github.io`, проходит проверку телефона (390) и SEO/AEO по правилам владельца.
-Decide: —
-
 ### walk-fixes-1
 Depends: cv-site
 Goal: мелкие замечания персоны ко второму проходу сайта-резюме, которые не блокировали cv-site.
