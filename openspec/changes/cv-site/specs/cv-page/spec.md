@@ -4,7 +4,9 @@
 
 The CV page at the site root: a hiring manager or recruiter who follows the Portfolio URL of an
 application learns who Ivan Alexandrov is, what he built and what made it hard, and how to contact
-him or take his CV as a PDF, on a phone or a desktop.
+him or take his CV as a PDF, on a phone or a desktop. A phrase quoted in a scenario here is matched
+in the page's visible text case-insensitively, with whitespace collapsed; an `href` or a URL is
+matched exactly.
 
 ## ADDED Requirements
 
@@ -68,15 +70,19 @@ his own tool.
 
 #### Scenario: The role chain reads as text
 - **WHEN** a visitor, or a screen reader, reads the harness section
-- **THEN** the chain is present as text, in this order: orchestrator, architect, designer, tester,
-  implementer, verifier, pull request, the owner's Approve, merge
+- **THEN** the chain is present as text, in a list or a diagram made of text. Its steps read in this
+  order: «Orchestrator», «Architect», «Designer», «Tester», «Implementer», «Verifier», «Pull
+  request», «Approve», «Merge», where the Approve step names the owner's approval in GitHub
 - **AND** any diagram in it carries the same chain as text, not only as a picture
 
 #### Scenario: Measured findings are shown with their baseline and date
 - **WHEN** a visitor reads the harness section
 - **THEN** it contains «121 roadmap steps», «135,948», «6,344», «none of 74 steps», «14 of 46» and
   «8 of its top 10»
-- **AND** each of the last three findings states in the same sentence what it was compared with
+- **AND** each of the verifier, MCP and lead-ranking findings states what its figure was compared
+  with, in the sentence that holds the figure or in the sentence just before it (the verifier's
+  «14 of 46» after the split, against «none of 74 steps» with one verifier; the same call with and
+  without every MCP server loaded; the model's top 10 against the leads the owner had skipped)
 - **AND** it states that the figures are as of 12 November 2026
 
 #### Scenario: Hard problems come with their fixes

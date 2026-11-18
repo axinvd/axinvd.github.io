@@ -47,10 +47,12 @@ titled with the scenario name.
   `mailto:` links.
 - [ ] 1.6 cv-page «Skill groups are shown».
 - [ ] 1.7 cv-page «Positions, education and languages are shown».
-- [ ] 1.8 cv-page «The role chain reads as text»: the nine terms appear in the given order in the
-  harness section's text.
+- [ ] 1.8 cv-page «The role chain reads as text»: inside the harness section, the chain's list (or
+  diagram) text holds the nine step names in the given order, matched case-insensitively. Match on the
+  chain element, not on the whole section, since the outcome sentences name the roles too.
 - [ ] 1.9 cv-page «Measured findings are shown with their baseline and date»: the six quoted phrases
-  and the as-of date. The baseline clause is checked by the verifier against D7 (m1–m3).
+  (case-insensitive) and «as of 12 November 2026» in the harness section. The baseline clause, in the
+  same sentence or the one before, is checked by the verifier against D7 (m1–m3).
 - [ ] 1.10 cv-page «Hard problems come with their fixes»: three or four items, with the three named
   topics (own approval, comment as consent, the first verifier).
 - [ ] 1.11 cv-page «How agents are checked, and the limits»: «live model», «prompt injection»,
