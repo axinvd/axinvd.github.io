@@ -209,9 +209,22 @@ there, since the intro right under it says Chișinău, remote and EET. A phrase 
 («121 roadmap steps», «47 pull requests», «main contributor») stays in one text run, so no style
 splits it.
 
-- a — `site/variants/a/` — lens: layout-first — direction: (its fork)
-- b — `site/variants/b/` — lens: content-first — direction: (its fork)
-- c — `site/variants/c/` — lens: motion-first — direction: (its fork)
+- a — `site/variants/a/` — lens: layout-first — direction: a spec sheet on a five-column grid with
+  hairline rules, DIN-like system display type and mono labels. The first screen puts the name, role
+  and definition on the left and a grid of contact tap targets on the right, with CV (PDF) as the one
+  accent button. The harness case is the one full-width band: the orchestrator is a column holding
+  the other eight steps as a 4×2 track. The CV below reads as a ledger (label, item, detail). On a
+  phone it is one column, and the chain is a vertical rail. No script.
+- b — `site/variants/b/` — lens: content-first — direction: a well-set profile article. A serif
+  reading face (Charter stack) carries the words, mono carries facts and meta, and the definition is
+  the standfirst under the name. The harness case is the one story with a display headline, and its
+  chain is a numbered table of steps. The CV detail below is reference matter with its headings in
+  the left margin. One green accent marks the open-to-roles line and the owner's Approve. No script.
+- c — `site/variants/c/` — lens: motion-first — direction: «the run». One reading column hangs on a
+  left spine, and as you scroll a step travels down it: section and role nodes tick from pending to
+  done, the reached role sends one ring, failures flip from × to ✓, and fixes brighten. The first
+  screen rises a few pixels on load, and pills and cards lift 2px on hover. Without the script or
+  with reduced motion, the page shows its finished state.
 
 ## Risks / Trade-offs
 
