@@ -1,8 +1,8 @@
 /* One reading column hung on a left spine. The spine is the page's one motion: as the reader
-   scrolls, its fill follows and its nodes (sections, roles of the chain, positions) tick from
-   pending to done. Only the spine moves: text is never hidden, dimmed or delayed, and with no
-   script or with reduced motion the page stands in its finished state. On a phone the spine is a
-   thin rail in the side padding, so it costs the text column no width (design.md, Screens). */
+   scrolls, its fill follows and its nodes (sections and positions) tick from pending to done.
+   Only the spine moves: text is never hidden, dimmed or delayed, and with no script or with
+   reduced motion the page stands in its finished state. On a phone the spine is a thin rail in
+   the side padding, so it costs the text column no width (design.md, Screens). */
 
 :root {
   color-scheme: light dark;
@@ -14,6 +14,7 @@
   --line: #d9dde1;
   --line-strong: #7d858d;
   --accent: #0b7a4b;
+  --link: #0b6b42;
   --code-bg: #eceef1;
   --focus: #14171a;
 
@@ -59,6 +60,7 @@
     --line: #2a2f35;
     --line-strong: #6b737c;
     --accent: #3fd18f;
+    --link: #5fdca3;
     --code-bg: #1d2125;
     --focus: #e9ecef;
   }
@@ -92,6 +94,8 @@ a {
   text-underline-offset: 0.2em;
   text-decoration-color: var(--line-strong);
 }
+/* Links in the text read as ordinary links: underlined, in the link colour */
+main a, .colophon a { color: var(--link); text-decoration-color: currentColor; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
 code {
   font-family: var(--font-mono);
@@ -192,17 +196,15 @@ main::after {
   transform: scaleY(var(--run, 1));
 }
 
-/* Nodes on the spine: sections (diamond), roles of the chain, positions */
-main h2, .chain > li, .position { position: relative; }
+/* Nodes on the spine: sections (diamond) and positions */
+main h2, .position { position: relative; }
 main h2 { --node: 10px; --node-y: 0.575em; }
-.chain > li { --node: 8px; --node-y: calc(var(--s3) + 0.8em); }
 .position { --node: 8px; --node-y: 0.8em; }
 @media (min-width: 768px) {
   main h2 { --node: 14px; }
-  .chain > li { --node: 12px; }
   .position { --node: 10px; }
 }
-:is(main h2, .chain > li, .position)::before {
+:is(main h2, .position)::before {
   content: "";
   position: absolute;
   z-index: 1;
@@ -215,17 +217,16 @@ main h2 { --node: 10px; --node-y: 0.575em; }
   background: var(--fg);
 }
 main h2::before { border-radius: 2px; rotate: 45deg; }
-.chain > li::before { border-color: var(--accent); background: var(--accent); }
 
 /* Pending: only while the script runs, and only the node itself — never the text beside it */
-.spine-run :is(main h2, .chain > li, .position):not(.is-passed)::before {
+.spine-run :is(main h2, .position):not(.is-passed)::before {
   border-color: var(--line-strong);
   background: var(--bg);
   transform: scale(0.75);
 }
 
 /* Intro: who, what, and the two outcomes, all on the first phone screen */
-.intro .def { max-width: 36em; font-size: var(--t-lead); line-height: 1.55; }
+.intro .lede { max-width: 36em; font-size: var(--t-lead); line-height: 1.55; }
 .intro .open {
   position: relative;
   margin-top: var(--s4);
@@ -242,7 +243,7 @@ main h2::before { border-radius: 2px; rotate: 45deg; }
   border-radius: 50%;
   background: var(--accent);
 }
-.outcomes {
+.outcomes, .practices, .notes {
   list-style: none;
   margin: var(--s4) 0 0;
   padding: 0;
@@ -250,16 +251,17 @@ main h2::before { border-radius: 2px; rotate: 45deg; }
   gap: var(--s2);
   max-width: 65ch;
 }
-.outcomes > li { position: relative; padding-left: 18px; font-weight: 500; }
-.outcomes > li::before {
+:is(.outcomes, .practices, .notes) > li { position: relative; padding-left: 18px; }
+:is(.outcomes, .practices, .notes) > li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: calc(0.8em - 1px);
+  top: calc(0.75em - 1px);
   width: 10px;
   height: 2px;
   background: var(--fg);
 }
+.outcomes > li { font-weight: 500; }
 
 /* Sections */
 main > section + section { margin-top: var(--s8); }
@@ -268,38 +270,6 @@ main h2 {
   font: 600 var(--t-h2)/1.15 var(--font-display);
   letter-spacing: -0.015em;
 }
-.case > p { max-width: 65ch; }
-.case > p + p { margin-top: var(--s4); }
-.case h3 {
-  margin: var(--s7) 0 var(--s4);
-  color: var(--muted);
-  font: 600 var(--t-sm)/1.4 var(--font-mono);
-  letter-spacing: 0.02em;
-}
-.case .asof {
-  margin-top: var(--s6);
-  color: var(--muted);
-  font: 500 var(--t-sm)/1.5 var(--font-mono);
-}
-
-/* The chain */
-.chain { list-style: none; margin: var(--s6) 0; padding: 0; max-width: 65ch; }
-.chain > li {
-  display: grid;
-  gap: var(--s1);
-  padding: var(--s3) 0;
-  border-top: 1px solid var(--line);
-}
-.chain > li:last-child { border-bottom: 1px solid var(--line); }
-.chain-role { font-weight: 600; }
-.chain-note { color: var(--muted); }
-.chain + p { margin-top: 0; }
-
-/* Hard problems, measured findings, checks: items between hairlines, the lead phrase in display type */
-.notes { list-style: none; margin: 0; padding: 0; max-width: 65ch; }
-.notes > li { padding: var(--s4) 0; border-top: 1px solid var(--line); }
-.notes > li:last-child { border-bottom: 1px solid var(--line); }
-.notes strong { font-family: var(--font-display); font-size: 1.0625em; font-weight: 600; }
 
 /* Projects */
 .project {
@@ -314,21 +284,45 @@ main h2 {
   font: 600 1.375rem/1.2 var(--font-display);
   letter-spacing: -0.01em;
 }
-.project h3 a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
-.project h3 a::after {
-  content: "↗";
-  content: "↗" / "";
-  margin-left: 6px;
-  color: var(--muted);
-}
+.project h3 a { display: inline-flex; align-items: center; min-height: 44px; }
 .project p { max-width: 65ch; font-size: 1rem; }
-.project p + p { margin-top: var(--s3); }
+.project p + p, .project .practices + p { margin-top: var(--s3); }
+.project .practices { margin-block: var(--s3) 0; font-size: 1rem; }
 .project .project-meta {
   margin-top: var(--s4);
   color: var(--muted);
   font: 500 var(--t-sm)/1.5 var(--font-mono);
 }
 .projects-note { margin-top: var(--s5); max-width: 65ch; color: var(--muted); }
+
+/* The harness case: short prose, real subheadings, three small lists. On a phone it must stay
+   within a screen and a half (1266 px at 390, cv-page «The case fits a screen and a half»); the D7
+   copy fits that only at 15px, so the case is set compact there and at 16px from 768px up. */
+.case { font-size: 0.9375rem; line-height: 1.45; }
+.case > h2 { margin-bottom: var(--s4); }
+.case > p { max-width: 65ch; }
+.case > p + p { margin-top: var(--s2); }
+.case h3 {
+  margin: var(--s4) 0 0;
+  font: 600 1.125rem/1.25 var(--font-display);
+  letter-spacing: -0.005em;
+}
+.case h3 + p, .case .notes { margin-top: var(--s2); }
+.case .notes { gap: var(--s1); }
+.case .notes strong { font-weight: 600; }
+.case .asof {
+  margin-top: var(--s3);
+  color: var(--muted);
+  font: 500 var(--t-sm)/1.5 var(--font-mono);
+}
+@media (min-width: 768px) {
+  .case { font-size: 1rem; line-height: 1.5; }
+  .case > h2 { margin-bottom: var(--s5); }
+  .case > p + p { margin-top: var(--s3); }
+  .case h3 { margin-top: var(--s5); font-size: var(--t-h3); line-height: 1.3; }
+  .case .notes { gap: var(--s2); }
+  .case .asof { margin-top: var(--s4); }
+}
 
 /* Experience */
 .experience-lead { max-width: 65ch; margin-bottom: var(--s6); }
@@ -381,25 +375,24 @@ main h2 {
   font: 500 var(--t-sm)/1.5 var(--font-mono);
 }
 .colophon li { min-height: 44px; display: flex; align-items: center; }
-.colophon a { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); }
+.colophon a { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* Hover, for pointers only: colour feedback, never movement */
 @media (hover: hover) {
   a:hover { text-decoration-color: currentColor; text-decoration-thickness: 2px; }
   .contacts-links a:hover { border-color: var(--fg); }
-  .project h3 a:hover::after { color: var(--fg); }
 }
 
 /* The one motion, only when the reader has not asked for less: hover and focus change at once */
 @media (prefers-reduced-motion: no-preference) {
   /* The spine: nodes tick to done on the way down (enter), back to pending on the way up (exit) */
-  :is(main h2, .chain > li, .position)::before {
+  :is(main h2, .position)::before {
     transition:
       transform var(--dur) var(--ease-out),
       background-color var(--dur) var(--ease-out),
       border-color var(--dur) var(--ease-out);
   }
-  .spine-run :is(main h2, .chain > li, .position):not(.is-passed)::before {
+  .spine-run :is(main h2, .position):not(.is-passed)::before {
     transition-duration: 160ms;
     transition-timing-function: var(--ease-in);
   }

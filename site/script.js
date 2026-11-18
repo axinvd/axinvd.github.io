@@ -7,7 +7,7 @@
   var root = document.documentElement;
   var main = document.querySelector('main');
   if (!main) return;
-  var items = [].slice.call(main.querySelectorAll('h2, .chain > li, .position'));
+  var items = [].slice.call(main.querySelectorAll('h2, .position'));
   var queued = false;
 
   function update() {

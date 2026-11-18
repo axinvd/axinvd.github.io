@@ -241,7 +241,9 @@ The revision round (owner, 2026-11-18):
    spine's nodes follow this order.
 7. The harness case is at most one and a half phone screens at 390 (1266 px). That means no role
    list or table: o1–o3 are prose, and the three small lists (hard problems, measured findings,
-   limits) are short.
+   limits) are short. The D7 copy fits that only with the case set at 15 px / 1.45 on phones
+   (1233 px at 390, 1254 at 375; at 16 px it measured 1278 or more); from 768 px up it is 16 px.
+   Getting 16 px back on phones means shortening o1–o3 or l1.
 8. The case's subheadings («What went wrong, and what I changed», «What I measured», «Limits») are
    real headings, set as headings in the page's type scale. They are not grey mono captions. The `h2`
    is «A multi-agent harness on Claude Code», with no «Case:» prefix.

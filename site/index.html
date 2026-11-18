@@ -6,6 +6,7 @@
 <title>Ivan Alexandrov — AI Product Engineer, Senior Frontend</title>
 <meta name="description" content="Ivan Alexandrov: AI product engineer and senior frontend developer (React, TypeScript), remote from Chișinău. Built a multi-agent harness on Claude Code.">
 <meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314171a'/%3E%3Cpath d='M10 5v22' stroke='%233fd18f' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='12' r='4' fill='%233fd18f'/%3E%3Cpath d='M18 12h8M18 19h6' stroke='%23e9ecef' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="canonical" href="https://axinvd.github.io/">
 <meta property="og:title" content="Ivan Alexandrov — AI Product Engineer, Senior Frontend">
 <meta property="og:description" content="Ivan Alexandrov: AI product engineer and senior frontend developer (React, TypeScript), remote from Chișinău. Built a multi-agent harness on Claude Code.">
@@ -80,81 +81,66 @@
 
 <main id="main">
   <section class="intro">
-    <p class="def">Ivan Alexandrov is an AI product and frontend engineer working remotely from Chișinău, Moldova. He builds web products in React and Next.js for clients and his own multi-agent harness on Claude Code, which takes a roadmap step from plan to merged pull request.</p>
+    <p class="lede">I'm an AI product and frontend engineer working remotely from Chișinău, Moldova. I build web products in React and Next.js for clients, and my own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.</p>
     <p class="open">Open to remote AI product engineer and senior frontend roles · EET (UTC+2/+3)</p>
     <ul class="outcomes">
       <li>Two production Next.js sites for clients in 2026: caro.md and infodreamhome.com.</li>
-      <li>A multi-agent harness on Claude Code that takes a step from plan to merged pull request, and nothing merges without my approval.</li>
+      <li>My own multi-agent harness on Claude Code: a step goes from plan to merged pull request, and nothing merges without my approval.</li>
     </ul>
-  </section>
-
-  <section id="case" class="case">
-    <h2>Case: a multi-agent harness on Claude Code</h2>
-    <p>I ship software through a multi-agent harness I built on Claude Code. One orchestrator session per roadmap step leads an architect, a designer, a tester, an implementer and a fresh verifier, from the plan to the merged pull request.</p>
-    <p>Nothing merges until I approve it on GitHub; a chat message or a PR comment does not count as approval.</p>
-    <p>The tester writes the tests from the spec without reading the code, and the implementer may not edit them.</p>
-    <p>121 roadmap steps have run through it, with the cost of every role measured. It is my own tool, used daily on my and my studio's repositories.</p>
-
-    <ol class="chain">
-      <li><span class="chain-role">Orchestrator</span> <span class="chain-note">one session per step, keeps it until the merge</span></li>
-      <li><span class="chain-role">Architect</span> <span class="chain-note">turns the step into spec scenarios and tasks</span></li>
-      <li><span class="chain-role">Designer</span> <span class="chain-note">on screens: 2–3 variants on one preview</span></li>
-      <li><span class="chain-role">Tester</span> <span class="chain-note">tests from the spec, without the code</span></li>
-      <li><span class="chain-role">Implementer</span> <span class="chain-note">builds against them, may not edit them</span></li>
-      <li><span class="chain-role">Verifier</span> <span class="chain-note">a fresh agent checks the step</span></li>
-      <li><span class="chain-role">Pull request</span> <span class="chain-note">a draft until the verifier's ok</span></li>
-      <li><span class="chain-role">Owner's Approve in GitHub</span></li>
-      <li><span class="chain-role">Merge</span> <span class="chain-note">pinned to the reviewed head</span></li>
-    </ol>
-    <p>Up to three steps run at once, each in its own git worktree.</p>
-    <p>tg-flow lets my studio start work from a Telegram chat. The chat agent has four tools through an MCP server I wrote. The only one that changes the repository, <code>write_step</code>, first passes a one-shot check agent that answers pass, return or ask. The bot acts on GitHub as its own app, never as me.</p>
-
-    <h3>The hardest problems, and what I changed</h3>
-    <ul class="notes hard">
-      <li><strong>One agent per step did not scale.</strong> It peaked at 130–681k tokens of context, paid again for everything it had read on each of 100–180 apply calls, and wrote the tests for its own code. I split it into roles. A replay of real calls predicted peak context per agent at 0.54 of the single agent's, and total input at 0.42. That is a simulation, and I treat it as optimistic.</li>
-      <li><strong>An agent tried to approve its own pull request:</strong> the run wrote to GitHub under my login, and the permission classifier denied the approval. Now the bot acts as its own GitHub App, with a token scoped to one repository.</li>
-      <li><strong>An “ok” in a PR comment archived a step, and two bridges acted on it.</strong> Now consent is a GitHub Approve, and the PR author and bots do not count.</li>
-      <li><strong>The figures of this very case failed their first verifier:</strong> two counts did not reproduce. I recounted them with the command written next to each figure, and the second verifier passed.</li>
-    </ul>
-
-    <h3>What I measured</h3>
-    <ul class="notes measured">
-      <li><strong>The verifier, before and after the split.</strong> When one agent built each step and a single verifier was the only check, the verifier changed none of 74 steps. Once the roles were split, it found something on 17 and changed 14 of 46 steps.</li>
-      <li><strong>MCP schemas.</strong> The same headless call that answers “ok” cost 135,948 tokens with every MCP server loaded, and 6,344 with <code>--strict-mcp-config</code>: 21 times fewer. The flag now goes on every script call, and a test guards it.</li>
-      <li><strong>Where code replaced a model.</strong> A model that ranked job leads by verdict put 8 of its top 10 among leads I had skipped myself. Now the model only extracts 15 facts by JSON schema, and a formula in code does the scoring.</li>
-    </ul>
-
-    <h3>How the agents are checked</h3>
-    <ul class="notes checks">
-      <li>The chat agent and the step check are tested on the live model, against prompt injection too: the real <code>claude -p</code> with the real agent definition, over a fake Telegram, a fake herdr and a fake GitHub. Among the cases are a web page and a PDF that give orders, a file name that tries to forge a message line, a request by voice, and staying silent in a quarrel. A red case is fixed in the agent's definition, not in the test.</li>
-      <li>Every session becomes a typed digest linked to its transcript. The cost of a step is computed from transcripts by a script, not estimated by a model.</li>
-    </ul>
-
-    <h3>Limits</h3>
-    <p>The write hook covers file tools only; writes through the shell are left to the permission classifier. Role order and pre-merge checks are held by a model following a written skill, with the merge pinned to the reviewed head by <code>--match-head-commit</code>. That is a documented trade-off, not code.</p>
-    <p class="asof">Figures as of 12 November 2026, measured on my own runs.</p>
   </section>
 
   <section id="projects" class="projects">
     <h2>Projects</h2>
     <article class="project">
       <h3><a href="https://caro.md/">caro.md</a></h3>
-      <p>caro.md imports cars to Moldova from Korea, China and the USA, and it is in production. I build its web app.</p>
+      <p>caro.md imports cars to Moldova from Korea, China and the USA, and it is in production. I build its Next.js web app; a Django admin and API sit behind it.</p>
       <p>The hard part is the Korean catalog: 9,000+ cars read live from the source marketplace through a pool of proxy exits, with Redis caching and a stale copy served when the source fails.</p>
       <p>A calculator turns a car on another continent into a turnkey price: car price, auction fees, shipping and Moldovan customs from the official customs API, in USD, EUR and MDL at live rates.</p>
-      <p>Case pages with photo galleries are seeded from the client's documents by a parsing script. Playwright end-to-end tests and Sentry stand behind the site.</p>
-      <p>The design was made with AI in Pencil, and the site was built with Claude Code. Leads come in through the site.</p>
-      <p class="project-meta">Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian)</p>
+      <ul class="practices">
+        <li>The design lives in one Pencil file with every page and reusable component. The agent edits it through Pencil's MCP server and checks each change on a rendered screenshot.</li>
+        <li>Playwright end-to-end tests cover the calculator, the request forms, both languages and ad attribution, against a mock backend.</li>
+        <li>Every fix gets a short patch note (problem, root cause, solution, prevention), and the notes are folded into the rules the implementing agent reads, so a mistake is not repeated.</li>
+      </ul>
+      <p>Leads come in through the site.</p>
+      <p class="project-meta">Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian), Django admin</p>
     </article>
     <article class="project">
       <h3><a href="https://infodreamhome.com/">infodreamhome.com</a></h3>
       <p>infodreamhome.com is the production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it.</p>
       <p>The hard part was a photo-heavy site that stays fast on a phone. Every route is prerendered, and photos are served as AVIF or WebP at the device's width, the main image first. On the key pages, Lighthouse mobile scores 100 for accessibility and 90+ for performance, out of 100.</p>
-      <p>Copy lives in typed per-block content modules. Quote requests land in the owner's inbox through Resend, with field-level validation and silent bot filtering. Each page has a canonical URL and a link preview, and JSON-LD (GeneralContractor, FAQPage, breadcrumbs) and a sitemap tell search engines about the business.</p>
-      <p>The design was made with AI in Open Design, and the site was built with Claude Code; its late work ran as OpenSpec changes. Leads come in through the site.</p>
+      <ul class="practices">
+        <li>The site was designed with Open Design. Later pages, such as the 404 and the navigation, were designed the same way inside the site's own design language.</li>
+        <li>Its late work went through OpenSpec changes. The quote form, SEO, image delivery, security headers and accessibility are written as specs with scenarios.</li>
+        <li>All copy lives in typed per-block content modules whose IDs match the blocks on the page, so the client's text edits land in one place.</li>
+      </ul>
+      <p>Quote requests land in the owner's inbox through Resend, with silent bot filtering. Leads come in through the site.</p>
       <p class="project-meta">Next.js 16 App Router, Bun in Docker</p>
     </article>
     <p class="projects-note">Both sites were built with Claude Code before the harness existed; it appeared on 3 November 2026.</p>
+  </section>
+
+  <section id="harness" class="case">
+    <h2>A multi-agent harness on Claude Code</h2>
+    <p>I build software through my own multi-agent harness on Claude Code. For each roadmap step, an orchestrator leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code, and the implementer may not edit them.</p>
+    <p>Between control points it runs on its own. I start a step with one line, answer only the decisions the agents cannot ground in the specs, and approve the merge on GitHub; a chat message or a PR comment does not count. A step can wait hours for my answer and resume where it stopped.</p>
+    <p>It is my own tool, used daily on my repositories and those of my three-person studio. From a Telegram chat, a request becomes a step through an MCP server I wrote, and the bot acts on GitHub as its own app. The chat agent is tested on the live model against prompt injection.</p>
+
+    <h3>What went wrong, and what I changed</h3>
+    <ul class="notes">
+      <li>One agent per step peaked at 130–681k tokens of context and wrote the tests for its own code, so I split it into the roles above.</li>
+      <li>An agent tried to approve its own pull request, and the permission classifier denied it. Now the bot has its own GitHub App identity, with a token scoped to one repository.</li>
+    </ul>
+
+    <h3>What I measured</h3>
+    <ul class="notes">
+      <li><strong>Verifier:</strong> when one agent built each step and a single verifier was the only check, it changed none of 74 steps. After the split into roles it changed 14 of 46.</li>
+      <li><strong>MCP:</strong> the same headless call cost 135,948 tokens with every MCP server loaded, and 6,344 with <code>--strict-mcp-config</code>. The flag now goes on every script call.</li>
+      <li><strong>Lead ranking:</strong> a model put 8 of its top 10 among leads I had skipped myself, so now it only extracts facts and a formula in code does the scoring.</li>
+    </ul>
+
+    <h3>Limits</h3>
+    <p>The write hook covers file tools only; writes through the shell are left to the permission classifier. Role order and pre-merge checks are held by a model following a written skill, with the merge pinned to the reviewed head by <code>--match-head-commit</code>.</p>
+    <p class="asof">Figures as of 12 November 2026, measured on my own runs.</p>
   </section>
 
   <section id="experience" class="experience">
@@ -251,7 +237,6 @@
   <ul>
     <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
     <li><a href="/llms.txt">llms.txt</a></li>
-    <li>This page weighs under 150 KB and loads nothing from other sites</li>
     <li>Figures as of 12 November 2026</li>
   </ul>
 </footer>
