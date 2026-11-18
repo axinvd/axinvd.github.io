@@ -1,7 +1,8 @@
-/* Variant c, lens: motion-first. Direction «the run»: one reading column hung on a left spine;
-   as the reader scrolls, a step travels the spine — section and role nodes tick from pending to
-   done, failures flip from × to ✓. Motion only reports progress: it never hides text, and with no
-   script or with reduced motion the page stands in its finished state. */
+/* One reading column hung on a left spine. The spine is the page's one motion: as the reader
+   scrolls, its fill follows and its nodes (sections, roles of the chain, positions) tick from
+   pending to done. Only the spine moves: text is never hidden, dimmed or delayed, and with no
+   script or with reduced motion the page stands in its finished state. On a phone the spine is a
+   thin rail in the side padding, so it costs the text column no width (design.md, Screens). */
 
 :root {
   color-scheme: light dark;
@@ -13,8 +14,6 @@
   --line: #d9dde1;
   --line-strong: #7d858d;
   --accent: #0b7a4b;
-  --on-accent: #ffffff;
-  --danger: #b42318;
   --code-bg: #eceef1;
   --focus: #14171a;
 
@@ -25,7 +24,7 @@
   --t-xs: 0.8125rem;
   --t-sm: 0.875rem;
   --t-base: 1.0625rem;
-  --t-lead: 1.25rem;
+  --t-lead: 1.125rem;
   --t-h3: 1.25rem;
   --t-h2: clamp(1.625rem, 1.2rem + 1.4vw, 2.125rem);
   --t-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem);
@@ -38,16 +37,15 @@
   --s6: 32px;
   --s7: 48px;
   --s8: 64px;
-  --s9: 96px;
 
-  --dur-fast: 150ms;
   --dur: 250ms;
-  --dur-slow: 400ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
 
+  /* Phone: the column takes the full width, the spine sits in the side padding */
   --pad: 16px;
-  --gutter: 28px;
+  --gutter: 0px;
+  --spine-x: calc(var(--pad) / -2);
   --col: 50rem;
   --radius: 6px;
 }
@@ -61,8 +59,6 @@
     --line: #2a2f35;
     --line-strong: #6b737c;
     --accent: #3fd18f;
-    --on-accent: #06281a;
-    --danger: #ff8a7a;
     --code-bg: #1d2125;
     --focus: #e9ecef;
   }
@@ -70,8 +66,10 @@
 
 @media (min-width: 768px) {
   :root {
+    --t-lead: 1.25rem;
     --pad: 32px;
     --gutter: 56px;
+    --spine-x: calc(var(--gutter) / -2);
   }
 }
 
@@ -118,7 +116,7 @@ code {
 }
 .skip-link:focus { transform: none; }
 
-/* One column; the gutter on its left holds the spine */
+/* One column; on wide screens the gutter on its left holds the spine */
 .masthead, main, .colophon {
   max-width: var(--col);
   margin-inline: auto;
@@ -126,18 +124,18 @@ code {
 }
 
 /* Header */
-.masthead { padding-top: var(--s8); padding-bottom: var(--s7); }
+.masthead { padding-top: var(--s6); padding-bottom: var(--s5); }
 h1 {
   margin: 0;
   font: 600 var(--t-h1)/1.04 var(--font-display);
   letter-spacing: -0.025em;
 }
 .role {
-  margin-top: var(--s4);
+  margin-top: var(--s2);
   font-size: var(--t-lead);
   line-height: 1.4;
 }
-.contacts { margin-top: var(--s6); font-style: normal; }
+.contacts { margin-top: var(--s4); font-style: normal; }
 .contacts-links {
   list-style: none;
   margin: 0;
@@ -150,7 +148,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 var(--s3);
+  padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -159,13 +157,23 @@ h1 {
   letter-spacing: 0.01em;
   text-decoration: none;
 }
+@media (max-width: 380px) {
+  .contacts-links a { padding: 0 var(--s2); }
+}
 .contacts-links a[href$=".pdf"] {
   background: var(--fg);
   border-color: var(--fg);
   color: var(--bg);
 }
 
-/* The spine: a track, and the run's fill scaled by --run (set by the script; full without it) */
+@media (min-width: 768px) {
+  .masthead { padding-top: var(--s8); padding-bottom: var(--s7); }
+  .role { margin-top: var(--s4); }
+  .contacts { margin-top: var(--s6); }
+  .contacts-links a { padding: 0 var(--s3); }
+}
+
+/* The spine: a track, and the fill scaled by --run (set by the script; full without it) */
 main { position: relative; padding-bottom: var(--s8); }
 main::before, main::after {
   content: "";
@@ -173,7 +181,7 @@ main::before, main::after {
   z-index: 0;
   top: 0;
   bottom: 0;
-  left: calc(var(--gutter) / 2 - 1px);
+  left: calc(var(--gutter) + var(--spine-x) - 1px);
   width: 2px;
   border-radius: 1px;
 }
@@ -184,16 +192,21 @@ main::after {
   transform: scaleY(var(--run, 1));
 }
 
-/* Nodes on the spine: sections (square), roles of the chain, positions */
+/* Nodes on the spine: sections (diamond), roles of the chain, positions */
 main h2, .chain > li, .position { position: relative; }
-main h2 { --node: 14px; --node-y: 0.575em; }
-.chain > li { --node: 12px; --node-y: calc(var(--s3) + 0.75em); }
-.position { --node: 10px; --node-y: 0.75em; }
+main h2 { --node: 10px; --node-y: 0.575em; }
+.chain > li { --node: 8px; --node-y: calc(var(--s3) + 0.8em); }
+.position { --node: 8px; --node-y: 0.8em; }
+@media (min-width: 768px) {
+  main h2 { --node: 14px; }
+  .chain > li { --node: 12px; }
+  .position { --node: 10px; }
+}
 :is(main h2, .chain > li, .position)::before {
   content: "";
   position: absolute;
   z-index: 1;
-  left: calc(var(--gutter) / -2 - var(--node) / 2);
+  left: calc(var(--spine-x) - var(--node) / 2);
   top: calc(var(--node-y) - var(--node) / 2);
   width: var(--node);
   height: var(--node);
@@ -204,19 +217,18 @@ main h2 { --node: 14px; --node-y: 0.575em; }
 main h2::before { border-radius: 2px; rotate: 45deg; }
 .chain > li::before { border-color: var(--accent); background: var(--accent); }
 
-/* Pending: only while the script runs the page, for what the reader has not reached yet */
-.c-run :is(main h2, .chain > li, .position):not(.is-passed)::before {
+/* Pending: only while the script runs, and only the node itself — never the text beside it */
+.spine-run :is(main h2, .chain > li, .position):not(.is-passed)::before {
   border-color: var(--line-strong);
   background: var(--bg);
   transform: scale(0.75);
 }
-.c-run .chain > li:not(.is-passed) .chain-role { color: var(--muted); }
 
-/* Intro */
+/* Intro: who, what, and the two outcomes, all on the first phone screen */
 .intro .def { max-width: 36em; font-size: var(--t-lead); line-height: 1.55; }
 .intro .open {
   position: relative;
-  margin-top: var(--s5);
+  margin-top: var(--s4);
   padding-left: 18px;
   font: 500 var(--t-sm)/1.5 var(--font-mono);
 }
@@ -230,7 +242,24 @@ main h2::before { border-radius: 2px; rotate: 45deg; }
   border-radius: 50%;
   background: var(--accent);
 }
-.intro-more { margin-top: var(--s4); max-width: 65ch; }
+.outcomes {
+  list-style: none;
+  margin: var(--s4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s2);
+  max-width: 65ch;
+}
+.outcomes > li { position: relative; padding-left: 18px; font-weight: 500; }
+.outcomes > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(0.8em - 1px);
+  width: 10px;
+  height: 2px;
+  background: var(--fg);
+}
 
 /* Sections */
 main > section + section { margin-top: var(--s8); }
@@ -242,14 +271,19 @@ main h2 {
 .case > p { max-width: 65ch; }
 .case > p + p { margin-top: var(--s4); }
 .case h3 {
-  margin: var(--s8) 0 var(--s4);
+  margin: var(--s7) 0 var(--s4);
   color: var(--muted);
   font: 600 var(--t-sm)/1.4 var(--font-mono);
   letter-spacing: 0.02em;
 }
+.case .asof {
+  margin-top: var(--s6);
+  color: var(--muted);
+  font: 500 var(--t-sm)/1.5 var(--font-mono);
+}
 
 /* The chain */
-.chain { list-style: none; margin: var(--s6) 0; padding: 0; }
+.chain { list-style: none; margin: var(--s6) 0; padding: 0; max-width: 65ch; }
 .chain > li {
   display: grid;
   gap: var(--s1);
@@ -259,74 +293,16 @@ main h2 {
 .chain > li:last-child { border-bottom: 1px solid var(--line); }
 .chain-role { font-weight: 600; }
 .chain-note { color: var(--muted); }
+.chain + p { margin-top: 0; }
 
-/* Figures */
-.asof {
-  margin-bottom: var(--s4);
-  color: var(--muted);
-  font: 500 var(--t-sm)/1.5 var(--font-mono);
-}
-.figures { list-style: none; margin: 0; padding: 0; }
-.figures > li { max-width: 65ch; padding: var(--s4) 0; border-top: 1px solid var(--line); }
-.figures > li:last-child { border-bottom: 1px solid var(--line); }
-.figures strong { font-family: var(--font-display); font-size: 1.0625em; font-weight: 600; }
-.roles {
-  width: 100%;
-  max-width: 26rem;
-  margin-top: var(--s3);
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-.roles th, .roles td {
-  padding: var(--s2) var(--s4) var(--s2) 0;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-  font-weight: 500;
-}
-.roles thead th { color: var(--muted); font: 600 var(--t-xs)/1.4 var(--font-mono); letter-spacing: 0.02em; }
-.roles td { font: 400 var(--t-sm)/1.5 var(--font-mono); }
-.roles :is(td, thead th:not(:first-child)) { text-align: right; }
-.roles :is(th, td):last-child { padding-right: 0; }
-
-/* Failures: × until the reader reaches the item, then ✓ */
-.failures { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s5); }
-.failures > li { position: relative; max-width: 65ch; padding-left: 40px; }
-.failures > li::before {
-  content: "✓";
-  content: "✓" / "";
-  position: absolute;
-  left: 0;
-  top: 2px;
-  width: 24px;
-  height: 24px;
-  display: grid;
-  place-items: center;
-  border: 1.5px solid var(--accent);
-  border-radius: 4px;
-  background: var(--accent);
-  color: var(--on-accent);
-  font: 700 16px/1 var(--font-mono);
-}
-.c-run .failures > li:not(.is-passed)::before {
-  content: "×";
-  content: "×" / "";
-  border-color: var(--danger);
-  background: transparent;
-  color: var(--danger);
-}
-.c-run .failures > li:not(.is-passed) .fix { color: var(--muted); }
-.fix { margin-top: var(--s2); }
-.fix b { font-weight: 600; }
-
-/* Checks */
-.checks { margin: 0; padding-left: 1.25em; }
-.checks > li { max-width: 65ch; }
-.checks > li + li { margin-top: var(--s3); }
-.checks > li::marker { color: var(--muted); }
+/* Hard problems, measured findings, checks: items between hairlines, the lead phrase in display type */
+.notes { list-style: none; margin: 0; padding: 0; max-width: 65ch; }
+.notes > li { padding: var(--s4) 0; border-top: 1px solid var(--line); }
+.notes > li:last-child { border-bottom: 1px solid var(--line); }
+.notes strong { font-family: var(--font-display); font-size: 1.0625em; font-weight: 600; }
 
 /* Projects */
 .project {
-  position: relative;
   padding: var(--s5);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -338,31 +314,24 @@ main h2 {
   font: 600 1.375rem/1.2 var(--font-display);
   letter-spacing: -0.01em;
 }
-.project h3 a { color: inherit; text-decoration: none; }
-.project h3 a:focus-visible { outline: none; }
-.project h3 a::after { content: ""; position: absolute; inset: 0; border-radius: 8px; }
-.project h3::after {
+.project h3 a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.project h3 a::after {
   content: "↗";
   content: "↗" / "";
-  display: inline-block;
   margin-left: 6px;
   color: var(--muted);
 }
-.project:focus-within { outline: 2px solid var(--focus); outline-offset: 3px; }
-.project p, .project li { font-size: 1rem; }
-.project ul { margin: var(--s3) 0 0; padding-left: 1.1em; }
-.project li + li { margin-top: var(--s1); }
+.project p { max-width: 65ch; font-size: 1rem; }
+.project p + p { margin-top: var(--s3); }
+.project .project-meta {
+  margin-top: var(--s4);
+  color: var(--muted);
+  font: 500 var(--t-sm)/1.5 var(--font-mono);
+}
 .projects-note { margin-top: var(--s5); max-width: 65ch; color: var(--muted); }
 
-@media (min-width: 900px) {
-  .projects { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); align-items: start; }
-  .projects > h2, .projects-note { grid-column: 1 / -1; }
-  .projects > h2 { margin-bottom: var(--s2); }
-  .project + .project { margin-top: 0; }
-  .projects-note { margin-top: var(--s2); }
-}
-
 /* Experience */
+.experience-lead { max-width: 65ch; margin-bottom: var(--s6); }
 .org + .org { margin-top: var(--s7); }
 .org h3 {
   margin: 0 0 var(--s4);
@@ -411,86 +380,30 @@ main h2 {
   color: var(--muted);
   font: 500 var(--t-sm)/1.5 var(--font-mono);
 }
+.colophon li { min-height: 44px; display: flex; align-items: center; }
 .colophon a { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); }
 
-/* Hover, for pointers only */
+/* Hover, for pointers only: colour feedback, never movement */
 @media (hover: hover) {
   a:hover { text-decoration-color: currentColor; text-decoration-thickness: 2px; }
   .contacts-links a:hover { border-color: var(--fg); }
-  .project:hover { border-color: var(--line-strong); }
-  .project:hover h3::after { color: var(--fg); }
+  .project h3 a:hover::after { color: var(--fg); }
 }
 
-/* Motion: all of it, and only, when the reader has not asked for less */
+/* The one motion, only when the reader has not asked for less: hover and focus change at once */
 @media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-
-  /* Entry: the first screen settles in, transform only (text never fades, so contrast holds) */
-  .masthead > *, .intro > * { animation: c-settle var(--dur-slow) var(--ease-out) both; }
-  .masthead > :nth-child(2) { animation-delay: 40ms; }
-  .masthead > :nth-child(3) { animation-delay: 80ms; }
-  .intro > :nth-child(1) { animation-delay: 120ms; }
-  .intro > :nth-child(2) { animation-delay: 160ms; }
-  .intro > :nth-child(3) { animation-delay: 200ms; }
-
-  .skip-link { transition: transform var(--dur-fast) var(--ease-in); }
-  .skip-link:focus { transition-timing-function: var(--ease-out); }
-
-  a { transition: text-decoration-color var(--dur-fast) var(--ease-out); }
-  .contacts-links a, .project {
-    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
-  }
-  .project h3::after { transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
-
-  /* The run: nodes tick to done on the way down (enter), back to pending on the way up (exit) */
+  /* The spine: nodes tick to done on the way down (enter), back to pending on the way up (exit) */
   :is(main h2, .chain > li, .position)::before {
     transition:
       transform var(--dur) var(--ease-out),
       background-color var(--dur) var(--ease-out),
       border-color var(--dur) var(--ease-out);
   }
-  .c-run :is(main h2, .chain > li, .position):not(.is-passed)::before {
+  .spine-run :is(main h2, .chain > li, .position):not(.is-passed)::before {
     transition-duration: 160ms;
     transition-timing-function: var(--ease-in);
   }
-  .chain-role, .fix { transition: color var(--dur) var(--ease-out); }
-
-  /* The role a step has just reached sends one ring out — once per pass, never looping */
-  .c-run .chain > li.is-passed::after {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    left: calc(var(--gutter) / -2 - var(--node) / 2);
-    top: calc(var(--node-y) - var(--node) / 2);
-    width: var(--node);
-    height: var(--node);
-    border: 2px solid var(--accent);
-    border-radius: 50%;
-    opacity: 0;
-    animation: c-ping var(--dur-slow) var(--ease-out);
-  }
-  .c-run .failures > li.is-passed::before { animation: c-pop var(--dur) var(--ease-out); }
 
   /* Classes the script sets before the first frame do not animate */
-  .c-still *, .c-still *::before, .c-still *::after { transition: none !important; }
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .contacts-links a:hover { transform: translateY(-2px); }
-  .contacts-links a:active { transform: translateY(0); transition-duration: 60ms; }
-  .project:hover { transform: translateY(-2px); }
-  .project:hover h3::after { transform: translate(2px, -2px); }
-}
-
-@keyframes c-settle {
-  from { transform: translateY(16px); }
-  to { transform: none; }
-}
-@keyframes c-ping {
-  from { transform: scale(1); opacity: 0.7; }
-  to { transform: scale(2.6); opacity: 0; }
-}
-@keyframes c-pop {
-  from { transform: scale(0.6); }
-  to { transform: none; }
+  .spine-still *, .spine-still *::before, .spine-still *::after { transition: none !important; }
 }

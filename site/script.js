@@ -1,5 +1,5 @@
-// Variant c, lens: motion-first, «the run». Marks what the reader has passed on the spine: one
-// custom property (--run, the fill) and one class (is-passed) per node; it never writes text.
+// The spine follows the reader's scroll: one custom property (--run, the fill) and one class
+// (is-passed) per node. It never writes text, never hides anything and never touches scrolling.
 // With reduced motion it does nothing, and the page stays in its finished state.
 (function () {
   var mq = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)');
@@ -7,7 +7,7 @@
   var root = document.documentElement;
   var main = document.querySelector('main');
   if (!main) return;
-  var items = [].slice.call(main.querySelectorAll('h2, .chain > li, .failures > li, .position'));
+  var items = [].slice.call(main.querySelectorAll('h2, .chain > li, .position'));
   var queued = false;
 
   function update() {
@@ -27,14 +27,14 @@
   function stop() {
     removeEventListener('scroll', queue);
     removeEventListener('resize', queue);
-    root.classList.remove('c-run');
+    root.classList.remove('spine-run');
     main.style.removeProperty('--run');
   }
 
-  root.classList.add('c-run', 'c-still');
+  root.classList.add('spine-run', 'spine-still');
   update();
   requestAnimationFrame(function () {
-    requestAnimationFrame(function () { root.classList.remove('c-still'); });
+    requestAnimationFrame(function () { root.classList.remove('spine-still'); });
   });
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', queue);
