@@ -30,16 +30,14 @@ blockers by what they unblock.
 
 ## Steps
 
-### cv-pdf-rebuild
+### site-v2-sync
 Depends: —
-Read: CLAUDE.md (команды сборки PDF); `~/projects/freelance_leads/cv/cv-en.md`
-Goal: PDF резюме на сайте совпадает с текущим `cv-en.md` под AI product.
-Scope: пересобрать `site/ivan-alexandrov-cv.pdf` командами из CLAUDE.md, проверить страницу 1, снять skip с теста «The PDF matches the current CV»; текст страницы сайта сверить с новым `cv-en.md` и поправить расхождения в фактах.
-Out: правка `cv-en.md` (это `cv-ai-refresh` в роадмапе freelance_leads).
-Done when: PDF на `https://axinvd.github.io/ivan-alexandrov-cv.pdf` с заголовком «AI Product Engineer · Senior Frontend»; тест «The PDF matches the current CV» проходит; полная проверка зелёная.
-Decide: ждёт шага `cv-ai-refresh@freelance_leads` — запускать после его мержа (зависимость между роадмапами скрипт пока не читает).
-
-
+Read: CLAUDE.md (команды сборки PDF); `~/projects/freelance_leads/cv/ai-experience.md` (v2 — подходы), `~/projects/freelance_leads/cv/cv-en.md`
+Goal: сайт и PDF резюме сходятся с ресёрчем подходов v2 и новым `cv-en.md` — ничего сильного не упущено, ничего не противоречит.
+Scope: сверить страницу с записями `ai-experience.md` v2 («задача → подход → почему → что ломалось»): что на сайте нет, но сильнее того, что есть, — добавить в кейс harness или проекты; что расходится с v2 — поправить; подача прежняя (D7: подходы, без счётчиков активности). Пересобрать `site/ivan-alexandrov-cv.pdf` из нового `cv-en.md` командами из CLAUDE.md, снять skip с теста «The PDF matches the current CV». Список «добавлено / не взято и почему» — в PR.
+Out: правка `cv-en.md` и `ai-experience.md` (роадмап freelance_leads).
+Done when: в PR список сверки с v2; PDF на `https://axinvd.github.io/ivan-alexandrov-cv.pdf` с заголовком «AI Product Engineer · Senior Frontend»; тест PDF проходит; полная проверка зелёная, живой сайт проверен в 390.
+Decide: ждёт шагов `ai-experience-v2@freelance_leads` и `cv-ai-refresh@freelance_leads` — запускать после их мержа (зависимость между роадмапами скрипт пока не читает).
 ### walk-fixes-1
 Depends: cv-site
 Goal: мелкие замечания персоны ко второму проходу сайта-резюме, которые не блокировали cv-site.
