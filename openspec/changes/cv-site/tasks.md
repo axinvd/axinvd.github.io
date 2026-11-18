@@ -180,7 +180,7 @@ Implementer. Each task is done when the named tests pass under
   Today: `README.md` only.
 - [x] 2.2 `site/index.html`, built on the designer's chosen variant if there is one: the copy of D7 in
   its order, landmarks, theme by `prefers-color-scheme`, no third-party request. Verify:
-  `tests/page.spec.ts` passes except 1.16, which waits for 2.4. Today: `site/index.html` is the variants scaffold.
+  `tests/page.spec.ts` passes except 1.16, which waits for 2.4. Today: `site/index.html` already holds the D7 copy (designer commit 60354bc); the head, JSON-LD and the search files were missing.
 - [x] 2.3 Search readiness, per D5: the head tags and the JSON-LD `@graph` in `site/index.html`, plus
   `site/robots.txt`, `site/sitemap.xml` and `site/llms.txt`, with the footer linking `llms.txt` and the
   PDF. Verify: `tests/search.spec.ts` passes.
