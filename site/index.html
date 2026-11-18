@@ -121,26 +121,26 @@
 
   <section id="harness" class="case">
     <h2>A multi-agent harness on Claude Code</h2>
-    <p>I build software through my own multi-agent harness on Claude Code. For each roadmap step, an orchestrator leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code, and the implementer may not edit them.</p>
-    <p>Between control points it runs on its own. I start a step with one line, answer only the decisions the agents cannot ground in the specs, and approve the merge on GitHub; a chat message or a PR comment does not count. A step can wait hours for my answer and resume where it stopped.</p>
-    <p>It is my own tool, used daily on my repositories and those of my three-person studio. From a Telegram chat, a request becomes a step through an MCP server I wrote, and the bot acts on GitHub as its own app. The chat agent is tested on the live model against prompt injection.</p>
+    <p>Each roadmap step gets an orchestrator that leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code.</p>
+    <p>I start a step with one line, answer only the decisions the agents cannot ground, and approve the merge on GitHub; a chat message or a PR comment does not count.</p>
+    <p>It is my own tool, used daily on my repositories and my three-person studio's. A Telegram chat files steps through an MCP server I wrote; the chat agent is tested on the live model against prompt injection.</p>
 
-    <h3>What went wrong, and what I changed</h3>
+    <h3>What went wrong</h3>
     <ul class="notes">
-      <li>One agent per step peaked at 130–681k tokens of context and wrote the tests for its own code, so I split it into the roles above.</li>
-      <li>An agent tried to approve its own pull request, and the permission classifier denied it. Now the bot has its own GitHub App identity, with a token scoped to one repository.</li>
+      <li>One agent per step peaked at 130–681k tokens of context and tested its own code, so I split it into roles.</li>
+      <li>An agent tried to approve its own pull request; the bot now has its own GitHub App identity.</li>
     </ul>
 
     <h3>What I measured</h3>
     <ul class="notes">
-      <li><strong>Verifier:</strong> when one agent built each step and a single verifier was the only check, it changed none of 74 steps. After the split into roles it changed 14 of 46.</li>
-      <li><strong>MCP:</strong> the same headless call cost 135,948 tokens with every MCP server loaded, and 6,344 with <code>--strict-mcp-config</code>. The flag now goes on every script call.</li>
-      <li><strong>Lead ranking:</strong> a model put 8 of its top 10 among leads I had skipped myself, so now it only extracts facts and a formula in code does the scoring.</li>
+      <li><strong>Verifier:</strong> as the only check it changed <span class="nowrap">none of 74 steps</span>; after the split into roles, <span class="nowrap">14 of 46</span>.</li>
+      <li><strong>MCP:</strong> the same headless call cost 135,948 tokens with every server loaded, 6,344 with <code>--strict-mcp-config</code>.</li>
+      <li><strong>Lead ranking:</strong> a model put <span class="nowrap">8 of its top 10</span> among leads I had skipped, so code now does the scoring.</li>
     </ul>
 
     <h3>Limits</h3>
-    <p>The write hook covers file tools only; writes through the shell are left to the permission classifier. Role order and pre-merge checks are held by a model following a written skill, with the merge pinned to the reviewed head by <code>--match-head-commit</code>.</p>
-    <p class="asof">Figures as of 12 November 2026, measured on my own runs.</p>
+    <p>The write hook covers file tools only; role order and pre-merge checks are a model following a written skill, with the merge pinned by <code>--match-head-commit</code>.</p>
+    <p class="asof">Figures as of 12 November 2026, from my own runs.</p>
   </section>
 
   <section id="experience" class="experience">
