@@ -11,15 +11,16 @@ Read these and nothing else:
   out. Then Screens, Hands, and the text of ADR-0001 under «ADR».
 - Sources of the copy and the PDF: `~/projects/freelance_leads/cv/cv-en.md`,
   `~/projects/freelance_leads/cv/ai-experience.md` and the profile README `~/projects/axinvd/README.md`.
-  Read them only at the lines D7 names. The owner's answers are in the `### cv-site` Scope of
-  `openspec/ROADMAP.md`.
+  Read them only at the lines D7 names. The project facts (D7 rows tagged CARO: and DH:) were checked
+  in `~/projects/caro_md` and `~/projects/dreamHome`. Do not read those repositories again unless a
+  row is in doubt; they are client repositories, so no code or client detail goes onto the page. The
+  owner's answers are in the `### cv-site` Scope of `openspec/ROADMAP.md` and in D7's intro.
 - `CLAUDE.md` (its second paragraph is rewritten in 2.6) and `adr/README.md` (the ADR format).
 - Contract tests from group 1, which the implementer does not edit: `tests/page.spec.ts`,
   `tests/search.spec.ts`, `tests/deploy.spec.ts`, and their harness `package.json`,
   `playwright.config.ts`, `.gitignore`.
-- `site/index.html` and `site/variants/c/`: the owner chose variant c, and the designer reduces the
-  page to it under the five constraints of design «Screens», with the D7 copy. Build on it; do not
-  restyle it.
+- `site/index.html`, `site/style.css`, `site/script.js`, `site/llms.txt`: variant c, the owner's
+  choice, built by the designer. Group 4 reworks it to D7 v3 and «Screens» 1–11.
 
 Today (2026-11-18, d06d1cf): `ls site` prints `index.html variants`.
 `ls .github package.json playwright.config.ts tests` prints «No such file or directory» for all four.
@@ -203,11 +204,76 @@ Implementer. Each task is done when the named tests pass under
   Stop the server by the listener on its port. Then check every figure on the page against D7: each
   has a row, and none is new.
 
+- [ ] 2.8 Rebuild the PDF after `cv-en.md` changes. The owner updates
+  `~/projects/freelance_leads/cv/cv-en.md` for AI product in his own repository. After that lands,
+  regenerate `site/ivan-alexandrov-cv.pdf` with the two D4 commands (`-f gfm`, A4). Verify: open page
+  1 as an image and check that its headline equals line 3 of `cv-en.md` and the lists are lists
+  (cv-page «The PDF matches the current CV»). `head -c 5` prints `%PDF-`, and «The PDF CV downloads»
+  passes. Today: the PDF carries «Senior Frontend Developer», line 3 of the current `cv-en.md`.
+
 ## 3. Integration
 
 - [x] 3.1 Full check from a clean tree. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test`
   passes with only the manual 1.17 skipped, and `git status --short` prints nothing after the commit
   `cv-site: apply`. Today: `git diff --check` exits 0, and the suite does not exist.
+
+## 4. Revision round (owner, 2026-11-18)
+
+The owner looked at the built page and answered. The changes are in design D7 (v3 copy), «Screens»
+6–11, cv-page and search-readiness. Today (beb6e5b): `export RUN_SLOT=1 && npx playwright test` →
+`40 passed, 1 skipped`.
+
+Tester. Adapt `tests/` to the scenarios as they now read, without reading `site/`, then run the
+suite and expect red on the old page.
+- [ ] 4.1 Changed: cv-page «A recruiter opens the Portfolio URL». The first `p` of `main` contains
+  «I build», and no sentence of it starts with «He ».
+- [ ] 4.2 New: cv-page «Section order». The `h2` texts of `main` come in the given order, and none
+  starts with «Case:».
+- [ ] 4.3 Changed: cv-page «Project links open the live sites». The link texts are the domains, with
+  no `↗`, `→` or `➚` in them.
+- [ ] 4.4 New: cv-page «caro.md leads with its hard part and its practices», and «infodreamhome.com
+  leads with its hard part and its practices». These replace «Each project leads with its hard part».
+  Match each entry by its link to its domain.
+- [ ] 4.5 New: cv-page «Leads, and when the sites were built». «leads come in through the site» in
+  each entry, and the «built before the harness» sentence («both sites» or the two names).
+- [ ] 4.6 New: cv-page «The case fits a screen and a half». At 390 × 844, the
+  `getBoundingClientRect().height` of the harness `section` (the one with the `h2` «A multi-agent
+  harness on Claude Code») is at most 1266.
+- [ ] 4.7 Replaced: «The role chain reads as text» becomes «The pipeline and its control points read as
+  text». The nine words come in order over the harness section's `innerText`, plus «one line» and
+  «three-person studio».
+- [ ] 4.8 Replaced: «Hard problems come with their fixes» becomes «Hard problems come with what
+  changed». One or two items under the hard-problems `h3`, one naming the agent's own pull request
+  and the GitHub App.
+- [ ] 4.9 Changed: cv-page «Measured findings are shown with their baseline and date». No
+  «121 roadmap steps»; the five figures and «as of 12 November 2026» in the harness section.
+- [ ] 4.10 Replaced: «How agents are checked, and the limits» becomes «Live-model testing and the
+  limits».
+- [ ] 4.11 Replaced: «The case does not overclaim or count activity» becomes «The page does not
+  overclaim or count activity», with the new forbidden phrases («121», «roadmap steps have run»,
+  «around the clock»).
+- [ ] 4.12 New, manual: cv-page «The PDF matches the current CV», as `test.skip` pointing to task
+  2.8.
+- [ ] 4.13 Changed: cv-page «No third-party requests and no errors». Also no response status ≥ 400
+  during load.
+- [ ] 4.14 New: cv-page «The icon is inline». Changed: «Weight budget» (no footer sentence). New:
+  «The footer is plain».
+- [ ] 4.15 Replaced: search-readiness «The three copies are identical» becomes «The definition
+  copies agree». JSON-LD `Person.description` equals the `> ` line of `llms.txt` and starts with
+  «Ivan Alexandrov is». It and the first `p` of `main` each contain the three phrases.
+- [ ] 4.16 Red run. Verify: `export RUN_SLOT=1 && npx playwright test` fails, and only the tests of
+  4.1–4.15 fail, each for the old page's content or order, not for a test error. Commit as
+  `cv-site: tests — revision round`.
+
+Designer, then implementer.
+- [ ] 4.17 Designer: rebuild `site/index.html` and `site/style.css` to D7 v3 and «Screens» 1–11.
+  That means the order, the short case, real subheadings, plain project links, the plain footer and
+  the inline SVG favicon. Verify: the 4.x tests pass, and screenshots at 390 × 844 and 1280 × 800 in
+  light and dark are opened. Commit `cv-site: page — revision round`.
+- [ ] 4.18 Implementer: the JSON-LD `Person.description` and the `> ` line of `site/llms.txt` become
+  D7 «def-3p». Verify: `tests/search.spec.ts` passes.
+- [ ] 4.19 Full check. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test` passes,
+  with only the manual tests skipped, and `git status --short` prints nothing after the commit.
 
 ## Workflow follow-up
 

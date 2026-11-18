@@ -2,25 +2,27 @@
 
 ## Purpose
 
-The CV page at the site root: a hiring manager or recruiter who follows the Portfolio URL of an
-application learns who Ivan Alexandrov is, what he built and what made it hard, and how to contact
-him or take his CV as a PDF, on a phone or a desktop. A phrase quoted in a scenario here is matched
-in the page's visible text case-insensitively, with whitespace collapsed; an `href` or a URL is
-matched exactly.
+The CV page at the site root, a résumé: a hiring manager or recruiter who follows the Portfolio URL
+of an application learns who Ivan Alexandrov is, what he shipped and what made it hard, how he works
+with AI agents, and how to contact him or take his CV as a PDF, on a phone or a desktop. A phrase
+quoted in a scenario here is matched in the page's visible text case-insensitively, with whitespace
+collapsed; an `href` or a URL is matched exactly.
 
 ## ADDED Requirements
 
 ### Requirement: The page opens with who Ivan is
 The site root SHALL serve one English page whose only `h1` is «Ivan Alexandrov». A role line follows
 it and names «AI Product Engineer» and «Senior Frontend». The first paragraph of the main content is
-the definition: two plain sentences on what he does, where he works from, and what he builds. An
-open-to-roles line and two named outcomes follow it.
+the lede: two plain sentences in the first person on what he does, where he works from, and what he
+builds. An open-to-roles line and two named outcomes follow it. The whole page speaks in one voice,
+the first person.
 
 #### Scenario: A recruiter opens the Portfolio URL
 - **WHEN** a visitor opens `/`
 - **THEN** the page has `lang="en"` and exactly one `h1`, with the text «Ivan Alexandrov»
 - **AND** the role line under it contains «AI Product Engineer» and «Senior Frontend»
-- **AND** the first paragraph of `main` contains «Chișinău», «remote» and «harness»
+- **AND** the first paragraph of `main` contains «Chișinău», «remote» and «harness», contains «I build»,
+  and has no sentence that starts with «He »
 
 #### Scenario: The page says what roles he is open to
 - **WHEN** a visitor reads the intro block
@@ -32,14 +34,117 @@ open-to-roles line and two named outcomes follow it.
   multi-agent harness on Claude Code
 
 ### Requirement: The first phone screen answers who, what and proof
-At 390 × 844, the first viewport SHALL show, without scrolling, the name, the role line, the
-definition, the two outcomes, and links to GitHub, the PDF CV and email.
+At 390 × 844, the first viewport SHALL show, without scrolling, the name, the role line, the lede,
+the two outcomes, and links to GitHub, the PDF CV and email.
 
 #### Scenario: First screen at phone width
 - **WHEN** the page loads at 390 × 844 and has not scrolled
 - **THEN** the `h1`, the role line, the first paragraph of `main`, both outcome items, and the links to
-  `https://github.com/axinvd`, `/ivan-alexandrov-cv.pdf` and the `mailto:` address each have their top
-  edge above 844 px
+  `https://github.com/axinvd`, `/ivan-alexandrov-cv.pdf` and the header's `mailto:` link each have
+  their top edge above 844 px
+
+### Requirement: The blocks come in résumé order
+The main content SHALL present its blocks in this order: the intro, Projects, the harness case,
+Experience, Skills, then Education and languages.
+
+#### Scenario: Section order
+- **WHEN** the `h2` headings of `main` are read in document order
+- **THEN** they are «Projects», «A multi-agent harness on Claude Code», «Experience», «Skills» and
+  «Education and languages», in this order
+- **AND** no heading starts with «Case:»
+
+### Requirement: The page tells the two production projects as stories
+The page SHALL have a Projects section for caro.md and infodreamhome.com, before the harness case.
+Each entry says what the site is and leads with its hard part. It names how its design was made with
+AI and gives two or three agent practices from the project. It says that leads come in through the
+site and links to the live site with an ordinary text link.
+
+#### Scenario: Project links open the live sites
+- **WHEN** a visitor reads the section headed «Projects»
+- **THEN** it has a link to `https://caro.md/` whose text is «caro.md», and a link to
+  `https://infodreamhome.com/` whose text is «infodreamhome.com»
+- **AND** neither link's text contains an arrow character (`↗`, `→`, `➚`)
+
+#### Scenario: caro.md leads with its hard part and its practices
+- **WHEN** a visitor reads the caro.md entry
+- **THEN** it names the live catalog of «9,000+» cars with a «stale copy» served when the source
+  fails, and the «turnkey» price calculator
+- **AND** it names «Pencil» as the design tool, the Playwright «end-to-end» tests against a mock
+  backend, and the «patch note» written for every fix
+
+#### Scenario: infodreamhome.com leads with its hard part and its practices
+- **WHEN** a visitor reads the infodreamhome.com entry
+- **THEN** it names the «Las Vegas» general contractor, and Lighthouse mobile «100» for accessibility
+  and «90+» for performance
+- **AND** it names «Open Design» as the design tool, the specs with «scenarios» that its late work
+  went through, and the typed «content modules» that hold its copy
+
+#### Scenario: Leads, and when the sites were built
+- **WHEN** a visitor reads the Projects section
+- **THEN** each entry says «leads come in through the site»
+- **AND** one sentence says that both production sites were built with Claude Code before the harness
+  existed. It names them as «caro.md» and «infodreamhome.com», or as «both sites», and either
+  wording passes
+
+### Requirement: The harness case is short and self-contained
+The page SHALL have a section headed «A multi-agent harness on Claude Code», after Projects. It says
+what the pipeline is and how it runs between control points, then one or two hard problems with what
+changed, the measured findings with their baselines and date, and the limits. On a 390 px phone it
+SHALL be at most one and a half screens long. It names no count of steps.
+
+#### Scenario: The case fits a screen and a half
+- **WHEN** the page is loaded at 390 × 844
+- **THEN** the harness section's height is at most 1266 px
+
+#### Scenario: The pipeline and its control points read as text
+- **WHEN** a visitor, or a screen reader, reads the harness section
+- **THEN** its text names, in this order: «orchestrator», «architect», «designer», «tester»,
+  «implementer», «verifier», «pull request», «approve», «merge»
+- **AND** it says he starts a step with «one line», and that a chat message or a PR comment does not
+  count as approval
+- **AND** it says the harness is his own tool, used on his own repositories and those of his
+  «three-person studio»
+
+#### Scenario: Hard problems come with what changed
+- **WHEN** a visitor reads the hard-problems part of the harness section
+- **THEN** it lists one or two problems, each with what changed. One is the agent that tried to
+  approve its own pull request, and the bot getting its own GitHub App identity
+
+#### Scenario: Measured findings are shown with their baseline and date
+- **WHEN** a visitor reads the harness section
+- **THEN** it contains «135,948», «6,344», «none of 74 steps», «14 of 46» and «8 of its top 10»
+- **AND** each of the verifier, MCP and lead-ranking findings says what its figure was compared
+  with, in the sentence that holds the figure or the one just before it. The verifier's «14 of 46»
+  after the split compares with «none of 74 steps» when one verifier was the only check. The MCP
+  figures are the same call with and without every MCP server loaded. The model's top 10 compares
+  with the leads he had skipped
+- **AND** it states that the figures are as of 12 November 2026
+
+#### Scenario: Live-model testing and the limits
+- **WHEN** a visitor reads the harness section
+- **THEN** it says the chat agent is tested on the «live model» against «prompt injection»
+- **AND** a limits part says the write hook covers «file tools» only, and that role order and
+  pre-merge checks are held by a model following a written skill, with the merge pinned by
+  «--match-head-commit»
+
+#### Scenario: The page does not overclaim or count activity
+- **WHEN** the page text is searched
+- **THEN** it contains none of «sandboxed», «eval suite», «011.md», «Distru», «main contributor»,
+  «pull requests merged», «47 pull requests», «31 merged», «121», «roadmap steps have run», «around
+  the clock», «$474.9», «469 role calls», «413 tests», «2,923», «325 of 596», «81 of 108», «circuit
+  breaker», «407», «IP ban»
+
+### Requirement: The page lists experience from the CV
+The page SHALL have an Experience section with every position of `cv-en.md`, with its employer, role
+and dates. Skills, education and languages follow it.
+
+#### Scenario: Positions, education and languages are shown
+- **WHEN** a visitor reads the section headed «Experience»
+- **THEN** it shows the freelance position (Jun 2025 – present), Otherweb (Web Developer, Dec 2024 –
+  May 2025; Lead Mobile Developer, Aug 2023 – Dec 2024), Raters (Jan 2022 – May 2023) and
+  DexTechnology (Frontend Team Lead, Dec 2021 – Jul 2022; React Native Developer, Jul 2018 – Dec 2021)
+- **AND** the page names both degrees from Dniester State University and the languages English and
+  Russian
 
 ### Requirement: The page lists skills from the CV
 The page SHALL have a Skills section with the skill groups of `cv-en.md`: Frontend, Quality, Mobile,
@@ -50,85 +155,10 @@ Backend & data, Integrations, Delivery, AI.
 - **THEN** it names each group «Frontend», «Quality», «Mobile», «Backend & data», «Integrations»,
   «Delivery» and «AI», each followed by its tools from `cv-en.md`
 
-### Requirement: The page lists experience from the CV
-The page SHALL have an Experience section with every position of `cv-en.md`, with its employer, role
-and dates. Education and languages follow it.
-
-#### Scenario: Positions, education and languages are shown
-- **WHEN** a visitor reads the section headed «Experience»
-- **THEN** it shows the freelance position (Jun 2025 – present), Otherweb (Web Developer, Dec 2024 –
-  May 2025; Lead Mobile Developer, Aug 2023 – Dec 2024), Raters (Jan 2022 – May 2023) and
-  DexTechnology (Frontend Team Lead, Dec 2021 – Jul 2022; React Native Developer, Jul 2018 – Dec 2021)
-- **AND** the page names both degrees from Dniester State University and the languages English and
-  Russian
-
-### Requirement: The page tells the harness case by outcomes and judgment
-The page SHALL have a section on Ivan's multi-agent harness. In this order it gives: outcome
-sentences, the role chain as readable text, the hardest problems with their fixes, what was measured
-with its baseline and date, how the agents are checked, and the limits. It presents the harness as
-his own tool.
-
-#### Scenario: The role chain reads as text
-- **WHEN** a visitor, or a screen reader, reads the harness section
-- **THEN** the chain is present as text, in a list or a diagram made of text. Its steps read in this
-  order: «Orchestrator», «Architect», «Designer», «Tester», «Implementer», «Verifier», «Pull
-  request», «Approve», «Merge», where the Approve step names the owner's approval in GitHub
-- **AND** any diagram in it carries the same chain as text, not only as a picture
-
-#### Scenario: Measured findings are shown with their baseline and date
-- **WHEN** a visitor reads the harness section
-- **THEN** it contains «121 roadmap steps», «135,948», «6,344», «none of 74 steps», «14 of 46» and
-  «8 of its top 10»
-- **AND** each of the verifier, MCP and lead-ranking findings states what its figure was compared
-  with, in the sentence that holds the figure or in the sentence just before it (the verifier's
-  «14 of 46» after the split, against «none of 74 steps» with one verifier; the same call with and
-  without every MCP server loaded; the model's top 10 against the leads the owner had skipped)
-- **AND** it states that the figures are as of 12 November 2026
-
-#### Scenario: Hard problems come with their fixes
-- **WHEN** a visitor reads the hard-problems part of the harness section
-- **THEN** it lists three or four problems, each with what happened and what changed. They include an
-  agent trying to approve its own pull request, a PR comment taken as consent, and the case's own
-  numbers failing the first verifier
-
-#### Scenario: How agents are checked, and the limits
-- **WHEN** a visitor reads the harness section
-- **THEN** it says the agents are tested on the live model, including against prompt injection
-- **AND** a limits part says the write hook covers file tools only, and that role order and pre-merge
-  checks are held by a model following a written skill, with the merge pinned by
-  «--match-head-commit»
-
-#### Scenario: The case does not overclaim or count activity
-- **WHEN** the page text is searched
-- **THEN** it says the harness is his own tool, used on his own and his studio's repositories
-- **AND** one sentence says that both production sites were built with Claude Code before the
-  harness existed. The sentence names them as «caro.md» and «infodreamhome.com», or as «both
-  sites»; either wording passes
-- **AND** it contains none of «sandboxed», «eval suite», «011.md», «Distru», «main contributor»,
-  «pull requests merged», «47 pull requests», «31 merged», «$474.9», «469 role calls», «413 tests»,
-  «2,923», «325 of 596», «81 of 108», «circuit breaker», «407», «IP ban» (case-insensitive)
-
-### Requirement: The page tells the two production projects as stories
-The page SHALL have a Projects section for caro.md and infodreamhome.com. Each entry says what the
-site is, leads with its hard part, names how its design was made with AI, says that leads come in
-through it, and links to the live site.
-
-#### Scenario: Project links open the live sites
-- **WHEN** a visitor reads the section headed «Projects»
-- **THEN** it has a link to `https://caro.md/` and a link to `https://infodreamhome.com/`
-
-#### Scenario: Each project leads with its hard part
-- **WHEN** a visitor reads the caro.md entry
-- **THEN** it names the live catalog of «9,000+» cars served with a stale copy when the source
-  fails, the turnkey price calculator, and «Pencil»
-- **WHEN** a visitor reads the infodreamhome.com entry
-- **THEN** it names the Las Vegas general contractor, Lighthouse mobile accessibility «100» and
-  performance «90+», and «Open Design»
-- **AND** each entry says leads come in through the site
-
 ### Requirement: The page gives contacts and the PDF CV
 The page SHALL list the contacts of `cv-en.md` as working links in its header, and SHALL link the CV
-as a PDF file served by the site.
+as a PDF file served by the site. The PDF is generated from `cv-en.md` and carries that file's
+headline at the time it was generated. The page does not require a particular headline in it.
 
 #### Scenario: Contacts are links
 - **WHEN** a visitor looks for contacts
@@ -143,10 +173,15 @@ as a PDF file served by the site.
 - **THEN** `/ivan-alexandrov-cv.pdf` answers 200 with content type `application/pdf`, and the body
   starts with `%PDF`
 
-### Requirement: Facts come only from the source files
+#### Scenario: The PDF matches the current CV
+- **WHEN** the reviewer opens page 1 of the PDF next to `~/projects/freelance_leads/cv/cv-en.md`
+- **THEN** the PDF's headline is the CV's line 3 as it stands, and its lists render as lists
+
+### Requirement: Facts come only from the sources
 Every fact and figure on the page SHALL come from `freelance_leads/cv/cv-en.md`,
-`cv/ai-experience.md`, the profile README, or the owner's answers in the roadmap step, as listed in
-the copy table of the design. The page SHALL carry no closed code, secrets, or client-private details.
+`cv/ai-experience.md`, the profile README, the owner's answers in the roadmap step, or a file of the
+caro_md or dreamHome repository read for this change. Each is listed with its source in the copy
+table of the design. The page SHALL carry no closed code, secrets, or client-private details.
 
 #### Scenario: A reviewer checks the copy
 - **WHEN** the verifier compares the page text with the copy table of `design.md`
@@ -219,15 +254,24 @@ keyboard focus is visible.
 - **THEN** its computed `outline-style` is not `none`, or its `box-shadow` is not `none`
 
 ### Requirement: The page is light and self-contained
-Loading the page SHALL request nothing outside the site's own origin. All its responses together,
-the PDF aside, SHALL weigh at most 150 KB. The footer SHALL say so, and makes no other performance
-claim.
+Loading the page SHALL request nothing outside the site's own origin and SHALL get no error
+response. The page declares its icon inline, so the browser does not ask for `/favicon.ico`. All its
+responses together, the PDF aside, SHALL weigh at most 150 KB. The footer links the PDF and
+`llms.txt`, gives the as-of date, and makes no performance claim.
 
-#### Scenario: No third-party requests
+#### Scenario: No third-party requests and no errors
 - **WHEN** the page loads and the network goes idle
-- **THEN** every request went to the page's own origin
+- **THEN** every request went to the page's own origin, and no response had a status of 400 or above
+
+#### Scenario: The icon is inline
+- **WHEN** the page head is read
+- **THEN** a `link[rel~="icon"]` has an `href` that starts with `data:image/svg+xml`
 
 #### Scenario: Weight budget
 - **WHEN** the page loads and the network goes idle
 - **THEN** the body sizes of all responses add up to at most 150 KB
-- **AND** the footer contains «under 150 KB» and does not contain «Lighthouse»
+
+#### Scenario: The footer is plain
+- **WHEN** the footer is read
+- **THEN** it links `/ivan-alexandrov-cv.pdf` and `/llms.txt` and contains «12 November 2026»
+- **AND** it contains neither «KB» nor «Lighthouse»

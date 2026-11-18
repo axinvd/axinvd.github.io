@@ -12,13 +12,15 @@ dated 2026-11-12, in `cv/cv-en.md` and `cv/ai-experience.md`. What is missing is
 
 ## What Changes
 
-- A single English page at `https://axinvd.github.io/`. Contacts and the PDF CV sit in the header,
-  then come who Ivan is and two named outcomes. The harness case follows: outcomes, the role chain,
-  the hardest problems and what changed, measured findings with their baseline, how agents are checked,
-  and the limits. Then the projects caro.md and infodreamhome.com as stories, hard part first, with how
-  their design was made with AI. Experience, skills and education come last. Following the owner's
-  answers (2026-11-18), the page shows achievements and difficulties, not counts of activity. Every
-  claim comes from the two source files, the profile README or those answers.
+- A single English page at `https://axinvd.github.io/`, a résumé. Contacts and the PDF CV sit in the
+  header. Then come two first-person sentences on who Ivan is, the roles he is open to, and two named
+  outcomes. The projects caro.md and infodreamhome.com follow as stories, hard part first, each with
+  its design tool (Pencil, Open Design) and two or three agent practices checked in its repository.
+  The harness case comes after them, at most one and a half phone screens: what the pipeline is, its
+  control points, one or two hard problems, measured findings with their baselines, and the limits.
+  Experience, skills and education close the page. Following the owner's answers (2026-11-18), the
+  page shows achievements and difficulties, with no counts of activity or steps. Every claim comes
+  from the CV sources, the profile README, the owner's answers, or the project repositories.
 - The look is variant c, the owner's choice: a restrained page with one signature spine, whose motion
   is additive and never in the way.
 - Plain static files under `site/`: the page, `robots.txt`, `sitemap.xml`, `llms.txt` and the PDF CV.

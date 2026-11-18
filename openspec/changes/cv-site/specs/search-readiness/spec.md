@@ -52,14 +52,18 @@ location and profile links shown on the page.
   check compares the two values and holds no literal address)
 
 ### Requirement: One definition answers who Ivan is
-The page's definition (the first paragraph of `main`, two plain sentences in the third person) SHALL
-be repeated word for word as the `Person` `description` in JSON-LD and as the one-line summary of
-`llms.txt`. That way every reader, human or machine, gets the same answer.
+The JSON-LD `Person` `description` and the one-line summary of `llms.txt` SHALL be the same text: the
+page's lede (the first paragraph of `main`) told in the third person, about «Ivan Alexandrov». The
+page itself speaks in the first person. Its lede and the third-person definition share the three
+phrases that carry the answer, so every reader, human or machine, gets the same facts.
 
-#### Scenario: The three copies are identical
-- **WHEN** the first paragraph of `main`, the JSON-LD `Person.description` and the blockquote line of
-  `llms.txt` are compared after collapsing whitespace
-- **THEN** all three are the same text
+#### Scenario: The definition copies agree
+- **WHEN** the JSON-LD `Person.description` and the `> ` line of `llms.txt` are compared after
+  collapsing whitespace
+- **THEN** they are the same text, and it starts with «Ivan Alexandrov is»
+- **AND** that text and the first paragraph of `main` each contain «AI product and frontend engineer
+  working remotely from Chișinău, Moldova», «web products in React and Next.js for clients» and
+  «multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request»
 
 ### Requirement: The site serves llms.txt
 The site SHALL serve `/llms.txt` in the llmstxt.org format. It holds an `h1` with the name, a
@@ -82,7 +86,7 @@ script see the whole page.
 
 #### Scenario: JavaScript disabled
 - **WHEN** the page is loaded in a browser context with JavaScript disabled
-- **THEN** the `h1`, the definition, the harness's measured findings, the project links, the contacts
+- **THEN** the `h1`, the lede, the harness's measured findings, the project links, the contacts
   and the PDF link are all present and visible
 
 ### Requirement: Internal links resolve
