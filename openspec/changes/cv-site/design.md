@@ -91,9 +91,10 @@ lists that follow a paragraph in `cv-en.md` come out as run-on text. The command
 - The PDF keeps the CV's own headline, «Senior Frontend Developer». It is the CV as sent today. Any
   change to the CV is made in `cv-en.md` first.
 
-### D5. Search readiness: one definition sentence, JSON-LD `@graph`, `llms.txt`
-- The definition sentence (copy table, row «def») is the first paragraph of `main`, the `Person`
-  `description` and the `> ` line of `llms.txt`, word for word. It is the 40–60-word answer block
+### D5. Search readiness: one definition, JSON-LD `@graph`, `llms.txt`
+- The definition (copy table, row «def»: two plain sentences, 43 words) is the first paragraph of
+  `main`, the `Person` `description` and the `> ` line of `llms.txt`, word for word. It is the
+  40–60-word answer block
   the ai-seo skill recommends.
 - JSON-LD is one block holding a `@graph` of `WebSite` (name, url) and `ProfilePage` (url, name,
   `mainEntity`). The `Person` in it carries name, `jobTitle` «AI Product Engineer», url,
@@ -122,109 +123,134 @@ Tests use `4111 + 10n` and the preview uses `4011 + 10n`. Both are clear of 011'
 On 2026-11-18, `lsof -i :4121 -i :4021` printed nothing.
 
 ### D7. Page copy and its sources
-The page says these things in this order: intro, harness case, projects, experience, skills,
-education and languages, contacts, footer. The designer may move contacts up into the header, but
-the text itself does not change. Wording is the implementer's to polish. A new fact or figure is not:
-if it has no row here, it does not go on the page. The voice is first person in the sections and
-third person in the definition sentence, since that sentence is also the JSON-LD description.
+The owner answered on 2026-11-18 (roadmap Scope, after the content and design research). The page
+shows achievements, wins and difficulties, not counts of activity. A number stays only where it is a
+measured finding that changed a design. Each one says what it was compared with, so any reader can
+interpret it, and the as-of line dates them all.
+
+Order: header (name, role, contacts with «CV (PDF)») → intro (def, open, out1, out2) → harness case
+(o1–o4, chain, bridge, hard problems, what was measured, how agents are checked, limits, asof) →
+projects (caro.md, infodreamhome.com, p-note) → experience (exp-lead, exp) → skills → education and
+languages → footer.
+
+Wording is the implementer's to polish, as long as a phrase the specs quote stays in one text run. A
+new fact or figure is not: if it has no row here, it does not go on the page. The voice is first
+person, except the definition, which is third person because it is also the JSON-LD description.
+Sources: CV:n and AX:n as above. RM:n is line n of the profile README `~/projects/axinvd/README.md`.
+OWN is the owner's answer in the roadmap Scope, 2026-11-18. «plan:48» is
+`freelance_leads/docs/ai-product-engineer.md` line 48.
 
 | id | Text (as on the page) | Source |
 |---|---|---|
 | name | Ivan Alexandrov | CV:1 |
-| role | AI Product Engineer · Senior Frontend Developer (React, Next.js, TypeScript) | CV:3; headline «AI Product Engineer»: `docs/ai-product-engineer.md`:48 |
-| def | Ivan Alexandrov is a senior frontend and AI product engineer in Chișinău, Moldova, working remotely: React and TypeScript since 2018, two production Next.js sites shipped in 2026, and his own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request. | CV:4, CV:10, CV:88; AX:39–41, AX:334–335 |
-| open | Open to remote AI product engineer and senior frontend roles · EET (UTC+2/+3) | roadmap Goal (owner 2026-11-18); CV:4, CV:15 |
-| intro2 | Earlier I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and contributed a fix to React Native core. | CV:12–13 |
+| role | AI Product Engineer · Senior Frontend Developer (React, Next.js, TypeScript) | CV:3; plan:48 |
+| contacts | In the header: the links of CV:4–5 as they are (email, LinkedIn, GitHub, phone, Telegram), plus «CV (PDF)». The `href`s are listed in the cv-page spec, «Contacts are links». | CV:4–5 |
+| def | Ivan Alexandrov is an AI product and frontend engineer working remotely from Chișinău, Moldova. He builds web products in React and Next.js for clients and his own multi-agent harness on Claude Code, which takes a roadmap step from plan to merged pull request. | RM:3–4; CV:4; AX:39–41 |
+| open | Open to remote AI product engineer and senior frontend roles · EET (UTC+2/+3) | roadmap Goal; CV:4, CV:15 |
+| out1 | Two production Next.js sites for clients in 2026: caro.md and infodreamhome.com. | CV:10–11 |
+| out2 | A multi-agent harness on Claude Code that takes a step from plan to merged pull request, and nothing merges without my approval. | AX:39–41, AX:140–143 |
 | h-case | Case: a multi-agent harness on Claude Code | AX:39 |
-| case-lead | One orchestrator session per roadmap step leads role subagents, from the plan to the merged pull request. It is my own tool, used daily on my and my studio's repositories. | AX:39–41, AX:335 |
-| chain | Orchestrator (one session per step, keeps it until the merge) → Architect (turns the step into an OpenSpec change: spec scenarios and tasks) → Designer (on screens: 2–3 variants on one preview, switched by `?variant=`) → Tester (writes contract tests red from the spec scenarios without reading the implementation) → Implementer (builds against them and may not edit them) → Verifier (a fresh agent checks the step) → Pull request (a draft until the verifier's ok) → Owner's Approve in GitHub (a chat word or a PR comment is not consent) → Merge (pinned to the reviewed head with `--match-head-commit`) | AX:39–45, AX:64, AX:71–72, AX:140–143, AX:170–172 |
+| o1 | I ship software through a multi-agent harness I built on Claude Code. One orchestrator session per roadmap step leads an architect, a designer, a tester, an implementer and a fresh verifier, from the plan to the merged pull request. | AX:39–41; RM:16–18 |
+| o2 | Nothing merges until I approve it on GitHub; a chat message or a PR comment does not count as approval. | AX:140–143; RM:18–19 |
+| o3 | The tester writes the tests from the spec without reading the code, and the implementer may not edit them. | AX:44–45; RM:18 |
+| o4 | 121 roadmap steps have run through it, with the cost of every role measured. It is my own tool, used daily on my and my studio's repositories. | AX:46–48, AX:335 |
+| chain | Orchestrator (one session per step, keeps it until the merge) → Architect (turns the step into spec scenarios and tasks) → Designer (on screens: 2–3 variants on one preview) → Tester (tests from the spec, without the code) → Implementer (builds against them, may not edit them) → Verifier (a fresh agent checks the step) → Pull request (a draft until the verifier's ok) → Owner's Approve in GitHub → Merge (pinned to the reviewed head) | AX:39–45, AX:64, AX:71–72, AX:140–143, AX:170–172 |
 | chain-par | Up to three steps run at once, each in its own git worktree. | AX:75–76 |
-| bridge | A Telegram bridge lets a team chat start work: a chat agent answers through my MCP server (4 tools: `reply`, `status`, `pr_comment`, `write_step`). `write_step` is the only way a chat changes the repository: a one-shot `step-check` agent answers pass, return or ask before the bridge commits. The bridge is one 2,923-line Python file with no dependencies and 413 tests. | AX:100–107, AX:202 |
-| asof | Figures as of 12 November 2026, counted from git, `gh`, tests and transcripts. | AX:5, AX:13–15 |
-| f-steps | 121 roadmap steps ran through it with per-role cost measured: 74 as one agent per step, then 47 with split roles: 469 role calls, $474.9. | AX:46–48 |
-| f-roles | After the split (calls / spend): architect 50 / $169.2 (36%), implementer 59 / $82.3, tester 47 / $52.9, verifier 81 / $16.1. | AX:53–54 |
-| f-why | Why split: one agent per step peaked at 130–681k tokens of context, re-paid everything it had read on 100–180 apply calls, and wrote tests for its own code. A replay of real calls predicted peak context at 0.54 of that and total input at 0.42 (a simulation, stated as optimistic). | AX:49–52 |
-| f-prs | 47 pull requests opened by harness steps across four repositories, Nov 1–12; 31 merged. | AX:59–63 |
-| f-empty | 74 of 362 judged role calls (20%) changed nothing, and cost $39.6 of $474.9 (8%): empty calls are mostly cheap verifiers. | AX:55–56 |
-| f-persona | Cheapest finding: a persona reading the spec deltas, at $0.24 per finding, against $0.62 for a verifier finding that changed a step. | AX:57–58 |
-| f-verifier | When one verifier was the only check, it changed none of 74 steps; after the split it found something on 17 of 46 steps, and 14 changed. | AX:293–295 |
-| f-mcp | A headless call that loaded every MCP server cost 135,948 tokens for an «ok»; with `--strict-mcp-config`, 6,344 (21x fewer). The flag now goes on every script call, guarded by a test. | AX:116–118 |
-| h-broke | What broke and how it was fixed | AX:262 |
-| b1 | An agent tried to approve its own pull request: the run wrote to GitHub under my login, and the permission classifier denied the approval. Fix: the bot writes as its own GitHub App, with a token scoped to one repository. | AX:268–270, AX:138–139 |
-| b2 | A comment taken as consent: an «ok» in a PR comment archived a step, and two bridges acted on it. Fix: consent is a GitHub Approve; the PR author and bots don't count. | AX:264–267 |
-| b3 | A batch delivered twice: a SIGTERM between delivery and saving the cursor re-sent the batch in about one test run of two. Fix: the signal is blocked until the cursor is written. | AX:150–152, AX:271–272 |
-| b4 | Two agents, one test database: parallel subagents truncated each other's tables. Fix: each agent gets its own database name, now a standing rule. | AX:285–287 |
-| b5 | An assumption about permissions: «subagents inherit the session's permissions» was assumed, not checked. Fix: measured in `dontAsk` mode, then rebuilt as an orchestrator session with a path-scoped write hook. | AX:273–275 |
-| b6 | This case's own numbers: the first verifier found two counts that did not reproduce. Fix: recounted with the command written next to each number, and the second verifier passed. | AX:296–300 |
+| bridge | tg-flow lets my studio start work from a Telegram chat. The chat agent has four tools through an MCP server I wrote. The only one that changes the repository, `write_step`, first passes a one-shot check agent that answers pass, return or ask. The bot acts on GitHub as its own app, never as me. | AX:100–105; RM:20–23 |
+| h-hard | The hardest problems, and what I changed | AX:262 |
+| hard1 | One agent per step did not scale. It peaked at 130–681k tokens of context, paid again for everything it had read on each of 100–180 apply calls, and wrote the tests for its own code. I split it into roles. A replay of real calls predicted peak context per agent at 0.54 of the single agent's, and total input at 0.42. That is a simulation, and I treat it as optimistic. | AX:49–52 |
+| hard2 | An agent tried to approve its own pull request: the run wrote to GitHub under my login, and the permission classifier denied the approval. Now the bot acts as its own GitHub App, with a token scoped to one repository. | AX:268–270, AX:138–139 |
+| hard3 | An «ok» in a PR comment archived a step, and two bridges acted on it. Now consent is a GitHub Approve, and the PR author and bots do not count. | AX:264–267 |
+| hard4 | The figures of this very case failed their first verifier: two counts did not reproduce. I recounted them with the command written next to each figure, and the second verifier passed. | AX:296–300 |
+| h-measured | What I measured | AX:209 |
+| m1 | The verifier, before and after the split. When one agent built each step and a single verifier was the only check, the verifier changed none of 74 steps. Once the roles were split, it found something on 17 and changed 14 of 46 steps. | AX:293–295 |
+| m2 | MCP schemas. The same headless call that answers «ok» cost 135,948 tokens with every MCP server loaded, and 6,344 with `--strict-mcp-config`: 21 times fewer. The flag now goes on every script call, and a test guards it. | AX:116–118 |
+| m3 | Where code replaced a model. A model that ranked job leads by verdict put 8 of its top 10 among leads I had skipped myself. Now the model only extracts 15 facts by JSON schema, and a formula in code does the scoring. | AX:309–316 |
 | h-check | How the agents are checked | AX:209 |
-| c1 | Code and its contract tests come from different agents. | AX:44–45 |
-| c2 | 46 live-model tests drive the real `claude -p` with the real agent definition over a fake Telegram, fake herdr and fake GitHub: 36 chat-agent cases (a page that gives orders, a request by voice, staying silent in a quarrel) and 10 step-check cases. A red case is fixed in the agent's definition, not in the test. | AX:214–218 |
-| c3 | Prompt injection is tested on the live model: a web page and a PDF that give orders, and a file name that tries to forge a message line; the fixture plants a fake secret. | AX:148–149 |
-| c4 | Where code replaced the model: a lead-ranking model gave a verdict per lead, and 8 of its top 10 were leads I had skipped. Now the model only extracts 15 facts by JSON schema and the score is a formula in code: 540 leads read at $0.0014 each, 0 failures. | AX:309–316 |
-| c5 | Write scope: a hook lets agents write files only inside the project or a temp directory; Bash writes are left to the permission classifier. | AX:129–132 |
-| c6 | Every session becomes a typed digest linked to its transcript; step cost is computed from transcripts by a script, not estimated by a model. | AX:155–159 |
-| p-caro | caro.md: a car import platform (Korea, China, USA → Moldova), in production. Main contributor to the web app (325 of 596 commits, 169 of 172 pull requests merged): Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian). Korea catalog of 9,000+ cars read live from the Encar API through a pool of proxy exits, with Redis caching and a stale-copy fallback; turnkey cost calculator for three markets in USD, EUR and MDL at live rates; 40+ case pages; Playwright end-to-end tests and Sentry. Link: `https://caro.md/` | CV:36–45; AX:25–29 |
-| p-dh | infodreamhome.com: the production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it (81 of 108 commits on main): Next.js 16 App Router with every route prerendered, Lighthouse mobile accessibility 100 and performance 90+ on the key pages, a quote form with email delivery through Resend, JSON-LD and a sitemap. Link: `https://infodreamhome.com/` | CV:47–56; AX:30–31 |
-| p-note | Both were built with Claude Code before the harness existed (it appeared on 3 November 2026): 340 and 104 commits carry a Claude co-author trailer. | AX:92–96, AX:340–342 |
-| exp | Every position with its bullets: freelance Jun 2025 – present (caro.md, Dream Home, agency prototypes in one or two lines each, since Projects carries the detail); Otherweb (acquired by S.A.I.), Web Developer Dec 2024 – May 2025 and Lead Mobile Developer Aug 2023 – Dec 2024, with the PlatformColor fix link `https://github.com/react/react-native/pull/39893`; Raters (freelance) Jan 2022 – May 2023; DexTechnology, Frontend Team Lead Dec 2021 – Jul 2022 and React Native Developer Jul 2018 – Dec 2021. | CV:34–91 |
+| k1 | The chat agent and the step check are tested on the live model, against prompt injection too: the real `claude -p` with the real agent definition, over a fake Telegram, a fake herdr and a fake GitHub. Among the cases are a web page and a PDF that give orders, a file name that tries to forge a message line, a request by voice, and staying silent in a quarrel. A red case is fixed in the agent's definition, not in the test. | AX:214–218, AX:148–149 |
+| k2 | Every session becomes a typed digest linked to its transcript. The cost of a step is computed from transcripts by a script, not estimated by a model. | AX:155–159 |
+| h-limits | Limits | AX:332 |
+| l1 | The write hook covers file tools only; writes through the shell are left to the permission classifier. Role order and pre-merge checks are held by a model following a written skill, with the merge pinned to the reviewed head by `--match-head-commit`. That is a documented trade-off, not code. | AX:129–132, AX:329–330 |
+| asof | Figures as of 12 November 2026, measured on my own runs. | AX:5, AX:13–15 |
+| h-proj | Projects | — |
+| caro-1 | caro.md imports cars to Moldova from Korea, China and the USA, and it is in production. I build its web app. | CV:36–37; RM:8–9 |
+| caro-hard | The hard part is the Korean catalog: 9,000+ cars read live from the source marketplace through a pool of proxy exits, with Redis caching and a stale copy served when the source fails. | CV:38–39; RM:9–10; OWN («9 000+» stays) |
+| caro-calc | A calculator turns a car on another continent into a turnkey price: car price, auction fees, shipping and Moldovan customs from the official customs API, in USD, EUR and MDL at live rates. | CV:40–41; RM:10–12 |
+| caro-practice | Case pages with photo galleries are seeded from the client's documents by a parsing script. Playwright end-to-end tests and Sentry stand behind the site. | CV:42–44 |
+| caro-ai | The design was made with AI in Pencil, and the site was built with Claude Code. Leads come in through the site. | OWN; AX:92–96 |
+| caro-meta | Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian) · link `https://caro.md/` | CV:36–37 |
+| dh-1 | infodreamhome.com is the production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it. | CV:47–48; RM:13–14 |
+| dh-hard | The hard part was a photo-heavy site that stays fast on a phone. Every route is prerendered, and photos are served as AVIF or WebP at the device's width, the main image first. On the key pages, Lighthouse mobile scores 100 for accessibility and 90+ for performance, out of 100. | CV:49–52 |
+| dh-practice | Copy lives in typed per-block content modules. Quote requests land in the owner's inbox through Resend, with field-level validation and silent bot filtering. Each page has a canonical URL and a link preview, and JSON-LD (GeneralContractor, FAQPage, breadcrumbs) and a sitemap tell search engines about the business. | CV:49–50, CV:53–56; RM:14–15 |
+| dh-ai | The design was made with AI in Open Design, and the site was built with Claude Code; its late work ran as OpenSpec changes. Leads come in through the site. | OWN; AX:92–96 |
+| dh-meta | Next.js 16 App Router, Bun in Docker · link `https://infodreamhome.com/` | CV:49 |
+| p-note | Both sites were built with Claude Code before the harness existed; it appeared on 3 November 2026. | AX:92–96, AX:340–342 |
+| exp-lead | Before going freelance, I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and contributed a fix to React Native core. | CV:12–13; RM:39–40 |
+| exp | Every position with its bullets from the CV. Freelance, Jun 2025 – present: caro.md, Dream Home and the agency prototypes, one line each, since Projects carries the detail (not «main contributor»). Otherweb (acquired by S.A.I.): Web Developer Dec 2024 – May 2025 and Lead Mobile Developer Aug 2023 – Dec 2024, with the PlatformColor fix link `https://github.com/react/react-native/pull/39893`. Raters (freelance), Jan 2022 – May 2023. DexTechnology: Frontend Team Lead Dec 2021 – Jul 2022 and React Native Developer Jul 2018 – Dec 2021. | CV:34–91 |
 | skills | The seven groups with their tools, verbatim. | CV:17–30 |
 | edu | MSc, Information Systems and Technologies, 2017–2019; BS, Informatics and Computer Engineering, 2013–2017; both Dniester State University. GPAs as in the CV. | CV:93–96 |
 | lang | English (fluent), Russian (native) | CV:98–100 |
-| contacts | The links of CV:4–5 as they are (email, LinkedIn, GitHub, phone, Telegram), plus Chișinău, Moldova, remote, EET. The `href`s are listed in the cv-page spec, «Contacts are links». | CV:4–5 |
-| footer | CV (PDF) · llms.txt · Figures as of 12 November 2026 | D4, D5 |
+| footer | CV (PDF) · llms.txt · This page weighs under 150 KB and loads nothing from other sites · Figures as of 12 November 2026 | D4, D5; cv-page «Weight budget», «No third-party requests» |
 
-Kept out on purpose («Честно», AX:332–377): «sandboxed» (the hook covers file tools only), «eval
-suite» (there is no labelled set), «the split made steps cheaper» (the before and after are not
-comparable), fathom «shipped through the bridge», the name 011.md (the site does not open), the
-caro.md IP-ban incident (client operations), counts taken from digests where a primary count exists,
-and Distru (the page is for every application). Classifier denial counts (AX:144–147) come from
-digests, so the page names no number for them.
+Kept out on purpose:
+- Activity counts, by the owner (OWN): pull request counts (47 opened, 31 merged, 169 of 172),
+  «main contributor», commit shares (325 of 596, 81 of 108) and co-author trailer counts (340, 104),
+  line counts (2,923 lines), test counts (413, 46), the per-role spend table, $474.9 and 469 role calls,
+  the empty-call share ($39.6 of $474.9), the cost per finding ($0.24 against $0.62), and
+  «540 leads at $0.0014».
+- The caro.md IP ban and circuit breaker (AX:162–166), by the owner.
+- Failures b3–b5 of the first draft (duplicate batch, shared test database, permissions
+  assumption). The owner's three judgment items plus the split story replace the incident log.
+- Home page performance 73 → 96 and LCP 12.6 s → 2.7 s (AX:192–194): the before was measured with
+  Lighthouse on the dev stand and the after with PageSpeed on production, so there is no common
+  baseline.
+- The Dream Home fact check against the Nevada contractor register (AX:190–191), because it is a
+  client matter.
+- From «Честно» (AX:332–377): «sandboxed», «eval suite», «the split made steps cheaper», fathom
+  «shipped through the bridge», the name 011.md, and Distru. Counts from digests where a primary count
+  exists, and classifier denial counts (AX:144–147), stay out too.
 
 ## Screens
 
 New screen: `site/index.html`, one long page. Who reads it and in what situation: a recruiter or a
 hiring engineer who followed the Portfolio URL of an application, on a phone or a laptop. In the first
-screen they want to know who this is and what he does. Then the harness case, which is the reason
-the page exists, then proof (the projects), then the CV detail. Fixed by the specs and D7: the copy and
-its order, one `h1`, landmarks, text that needs no script, light and dark by system setting, no
-third-party requests (system fonts or self-hosted ones within the 150 KB budget), no horizontal scroll
-at 390. The role chain is text, an ordered list or a diagram built from text, never only a picture.
+screen they want to know who this is, what he does, and the proof. Then the harness case, which is the
+reason the page exists, then proof (the projects), then the CV detail. Fixed by the specs and D7: the
+copy and its order, one `h1`, landmarks, text that needs no script, light and dark by system setting,
+no third-party requests (system fonts or self-hosted ones within the 150 KB budget), no horizontal
+scroll at 390. The role chain is text, an ordered list or a diagram built from text, never only a
+picture.
 
-Left to the designer: the visual design and its variants. Every variant uses the same HTML content
-from D7 and differs only in look. The `?variant=<letter>` switch and the files of the losing variants
-are scaffolding, removed when a variant is chosen. The chosen page must pass the JavaScript-disabled
-scenario.
+The owner's design constraints (2026-11-18, roadmap Scope, from the design research): a restrained
+page with one signature element, the spine of variant c.
+1. The first screen at 390 × 844 answers who, what and proof before any motion: role, the one-line
+   positioning (def), the two outcomes (out1, out2), and links to GitHub, the CV PDF and email. This is
+   the cv-page spec, «First screen at phone width».
+2. On a phone the spine shrinks to a thin rail or progress line that costs the text column no width.
+   The first paragraph of `main` is at least 330 px wide at 390.
+3. The motion is additive only. All content is in the DOM and readable from the start: nothing dimmed,
+   hidden or delayed until scrolled, no scroll snap, no wheel interception. With
+   `prefers-reduced-motion` the page shows its finished state. This is the cv-page requirement
+   «Motion is one, additive and never in the way».
+4. One motion only: the spine following the scroll. Variant c's rise of the first screen on load and
+   the 2px hover lift of pills and cards go away.
+5. Craft that reviewers inspect: semantic HTML, a visible keyboard focus, AA contrast in both themes,
+   and the PDF link in the header. The footer states the page weight («under 150 KB»), which the
+   weight test keeps true. It names no Lighthouse score, since this change does not measure one.
 
 ## Variants
 
-Switch: `site/variants/switch.js`, `?variant=<letter>`, without a parameter `a`.
+Chosen: c, by the owner (roadmap Scope, «Owner, 2026-11-18: take c»), with the five constraints
+above. Next comes the designer: removing `a` and `b`, the switch and the variant scaffolding in a
+commit of the step's branch, applying the five constraints, and putting the D7 copy into
+`site/index.html`. The architect does not touch `site/`.
 
-The content is single-sourced in the scaffold: `site/index.html` carries the whole D7 copy, the same
-for every letter. A letter is only its folder: `style.css`, the whole look (tokens on `:root`, light
-and dark), and `script.js`, an optional enhancement loaded deferred that never carries content.
-A letter changes no words in `index.html`; a hook it needs there (a class, a wrapper, an attribute)
-goes into its own commit. Without JavaScript the preview shows `a`. Contacts and the PDF link sit in
-the header (D7 allows it), so a recruiter has them on the first screen. The location is not repeated
-there, since the intro right under it says Chișinău, remote and EET. A phrase the specs quote
-(«121 roadmap steps», «47 pull requests», «main contributor») stays in one text run, so no style
-splits it.
-
-- a — `site/variants/a/` — lens: layout-first — direction: a spec sheet on a five-column grid with
-  hairline rules, DIN-like system display type and mono labels. The first screen puts the name, role
-  and definition on the left and a grid of contact tap targets on the right, with CV (PDF) as the one
-  accent button. The harness case is the one full-width band: the orchestrator is a column holding
-  the other eight steps as a 4×2 track. The CV below reads as a ledger (label, item, detail). On a
-  phone it is one column, and the chain is a vertical rail. No script.
-- b — `site/variants/b/` — lens: content-first — direction: a well-set profile article. A serif
-  reading face (Charter stack) carries the words, mono carries facts and meta, and the definition is
-  the standfirst under the name. The harness case is the one story with a display headline, and its
-  chain is a numbered table of steps. The CV detail below is reference matter with its headings in
-  the left margin. One green accent marks the open-to-roles line and the owner's Approve. No script.
-- c — `site/variants/c/` — lens: motion-first — direction: «the run». One reading column hangs on a
-  left spine, and as you scroll a step travels down it: section and role nodes tick from pending to
-  done, the reached role sends one ring, failures flip from × to ✓, and fixes brighten. The first
-  screen rises a few pixels on load, and pills and cards lift 2px on hover. Without the script or
-  with reduced motion, the page shows its finished state.
+What the variants were, for the record:
+- a: layout-first, a spec sheet on a five-column grid, with no script.
+- b: content-first, a well-set profile article in a serif reading face, with no script.
+- c: motion-first, «the run». One reading column hangs on a left spine, and section and role nodes
+  tick from pending to done as you scroll. Without the script, or with reduced motion, the page shows
+  its finished state.
 
 ## Risks / Trade-offs
 
@@ -274,7 +300,13 @@ re-run the workflow.
 | PDF source | Committed file from `cv-en.md` via pandoc and `playwright pdf` (D4) | Source not reachable from CI; probe produced a good 3-page PDF |
 | PDF headline | Keep «Senior Frontend Developer» as in `cv-en.md` | The PDF is the CV as sent; no claim is invented |
 | Years of experience | «since 2018», no count | `cv-en.md` says 7+, `ai-experience.md` says 8+; the date is true in both |
-| Copy and order | Table D7, first person, one definition sentence | Brief: wording is the architect's; every row sourced |
+| Copy and order | Table D7, first person, one two-sentence definition | Brief: wording is the architect's; every row sourced |
+| Content by the owner's answers | D7 rewritten: outcomes, hard problems and measured findings with a baseline; activity counts out | Owner's answers in the roadmap Scope, 2026-11-18; content research |
+| «121 roadmap steps» | Kept as one scale line in the harness case (o4), not on the first screen | Owner: «your call»; it shows scale, and its source is primary (AX:46–48) |
+| The split story | Kept as a hard problem (hard1) with its simulation stated as one | A measured finding that changed the design (owner's rule); «Честно» asks to call the simulation a simulation |
+| Pencil and Open Design | «The design was made with AI in Pencil / Open Design», nothing more | Owner's answer; the sources say nothing more about either tool |
+| Business result | «Leads come in through the site», no figure | Owner's answer; nothing was measured |
+| Footer claim | Page weight only («under 150 KB»), no Lighthouse | Owner: state it only if measured and kept true; the weight test keeps it true, and nothing measures Lighthouse here |
 | What to leave out | List under D7 | «Честно» section of `ai-experience.md`; repo is public |
 | Phone on the page | Shown, as in `cv-en.md` | Brief: contacts from `cv-en.md` |
 | JSON-LD types | `WebSite` and `ProfilePage` with `Person` (D5) | Schema skill: supported types only, matching visible content |

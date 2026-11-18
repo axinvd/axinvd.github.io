@@ -49,10 +49,10 @@ location and profile links shown on the page.
   `addressCountry` «MD»
 - **AND** its `sameAs` includes `https://www.linkedin.com/in/axinvd/` and `https://github.com/axinvd`
 
-### Requirement: One definition sentence answers who Ivan is
-The page's definition sentence (the first paragraph of `main`) SHALL be repeated word for word as the
-`Person` `description` in JSON-LD and as the summary of `llms.txt`. That way every reader, human or
-machine, gets the same answer.
+### Requirement: One definition answers who Ivan is
+The page's definition (the first paragraph of `main`, two plain sentences in the third person) SHALL
+be repeated word for word as the `Person` `description` in JSON-LD and as the one-line summary of
+`llms.txt`. That way every reader, human or machine, gets the same answer.
 
 #### Scenario: The three copies are identical
 - **WHEN** the first paragraph of `main`, the JSON-LD `Person.description` and the blockquote line of
@@ -80,8 +80,8 @@ script see the whole page.
 
 #### Scenario: JavaScript disabled
 - **WHEN** the page is loaded in a browser context with JavaScript disabled
-- **THEN** the `h1`, the definition sentence, the harness figures, the project links, the contacts and
-  the PDF link are all present and visible
+- **THEN** the `h1`, the definition, the harness's measured findings, the project links, the contacts
+  and the PDF link are all present and visible
 
 ### Requirement: Internal links resolve
 Every link and resource on the page that points inside the site SHALL answer 200.

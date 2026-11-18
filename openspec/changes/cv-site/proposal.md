@@ -12,14 +12,19 @@ dated 2026-11-12, in `cv/cv-en.md` and `cv/ai-experience.md`. What is missing is
 
 ## What Changes
 
-- A single English page at `https://axinvd.github.io/`: who Ivan is and what he does, skills,
-  experience, the harness case (role chain, figures, failures and their fixes, how agents are checked),
-  the projects caro.md and infodreamhome.com with links, contacts, and a link to a PDF CV. Every claim
-  comes from the two source files.
+- A single English page at `https://axinvd.github.io/`. Contacts and the PDF CV sit in the header,
+  then come who Ivan is and two named outcomes. The harness case follows: outcomes, the role chain,
+  the hardest problems and what changed, measured findings with their baseline, how agents are checked,
+  and the limits. Then the projects caro.md and infodreamhome.com as stories, hard part first, with how
+  their design was made with AI. Experience, skills and education come last. Following the owner's
+  answers (2026-11-18), the page shows achievements and difficulties, not counts of activity. Every
+  claim comes from the two source files, the profile README or those answers.
+- The look is variant c, the owner's choice: a restrained page with one signature spine, whose motion
+  is additive and never in the way.
 - Plain static files under `site/`: the page, `robots.txt`, `sitemap.xml`, `llms.txt` and the PDF CV.
   There is no framework and no build step.
 - Search readiness for SEO, AEO and GEO: canonical URL, meta and Open Graph tags, JSON-LD
-  (`WebSite` and `ProfilePage` with a `Person`), and a definition sentence that the page,
+  (`WebSite` and `ProfilePage` with a `Person`), and a two-sentence definition that the page,
   the JSON-LD and `llms.txt` share. The content stays readable with JavaScript off.
 - Deploy: a GitHub Actions Pages workflow publishes `site/` only, on every push to `main`. Repository
   files (`CLAUDE.md`, `openspec/`, `adr/`) stop being served as pages.
