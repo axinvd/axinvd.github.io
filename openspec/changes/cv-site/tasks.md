@@ -236,14 +236,15 @@ suite and expect red on the old page.
   Match each entry by its link to its domain.
 - [ ] 4.5 New: cv-page «Leads, and when the sites were built». «leads come in through the site» in
   each entry, and the «built before the harness» sentence («both sites» or the two names).
-- [ ] 4.6 New: cv-page «The case fits a screen and a half». At 390 × 844, the
+- [ ] 4.6 New: cv-page «The case fits a screen and a half». At 390 × 844 and again at 375 × 812, the
   `getBoundingClientRect().height` of the harness `section` (the one with the `h2` «A multi-agent
-  harness on Claude Code») is at most 1266.
+  harness on Claude Code») is at most 1266. The computed `font-size` of every `p` in it is at least
+  16 px.
 - [ ] 4.7 Replaced: «The role chain reads as text» becomes «The pipeline and its control points read as
   text». The nine words come in order over the harness section's `innerText`, plus «one line» and
   «three-person studio».
 - [ ] 4.8 Replaced: «Hard problems come with their fixes» becomes «Hard problems come with what
-  changed». One or two items under the hard-problems `h3`, one naming the agent's own pull request
+  changed». One or two items under the `h3` «What went wrong», one naming the agent's own pull request
   and the GitHub App.
 - [ ] 4.9 Changed: cv-page «Measured findings are shown with their baseline and date». No
   «121 roadmap steps»; the five figures and «as of 12 November 2026» in the harness section.
@@ -270,6 +271,9 @@ Designer, then implementer.
   That means the order, the short case, real subheadings, plain project links, the plain footer and
   the inline SVG favicon. Verify: the 4.x tests pass, and screenshots at 390 × 844 and 1280 × 800 in
   light and dark are opened. Commit `cv-site: page — revision round`.
+- [ ] 4.17a Designer: re-set the case in the shortened D7 v4 copy (o1–o3, hard1–2, m1–3, l1, asof,
+  `h3` «What went wrong») at the 16 px phone body, dropping the 15 px exception. Verify: the case
+  measures about 1150 px at 390 and stays at or below 1266 px at 375, with the screenshot opened.
 - [ ] 4.18 Implementer: the JSON-LD `Person.description` and the `> ` line of `site/llms.txt` become
   D7 «def-3p». Verify: `tests/search.spec.ts` passes.
 - [ ] 4.19 Full check. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test` passes,

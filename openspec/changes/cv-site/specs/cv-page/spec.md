@@ -89,12 +89,14 @@ site and links to the live site with an ordinary text link.
 ### Requirement: The harness case is short and self-contained
 The page SHALL have a section headed «A multi-agent harness on Claude Code», after Projects. It says
 what the pipeline is and how it runs between control points, then one or two hard problems with what
-changed, the measured findings with their baselines and date, and the limits. On a 390 px phone it
-SHALL be at most one and a half screens long. It names no count of steps.
+changed, the measured findings with their baselines and date, and the limits. On a phone 390 or
+375 px wide it SHALL be at most one and a half screens long, in the page's normal body type. It
+names no count of steps.
 
 #### Scenario: The case fits a screen and a half
-- **WHEN** the page is loaded at 390 × 844
-- **THEN** the harness section's height is at most 1266 px
+- **WHEN** the page is loaded at 390 × 844, and again at 375 × 812
+- **THEN** the harness section's height is at most 1266 px both times
+- **AND** the computed `font-size` of its paragraphs is at least 16 px
 
 #### Scenario: The pipeline and its control points read as text
 - **WHEN** a visitor, or a screen reader, reads the harness section

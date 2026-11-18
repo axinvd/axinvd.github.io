@@ -173,19 +173,19 @@ go on the page. Sources:
 | dh-meta | Next.js 16 App Router, Bun in Docker · link `https://infodreamhome.com/`, text «infodreamhome.com» | CV:49 |
 | p-note | Both sites were built with Claude Code before the harness existed; it appeared on 3 November 2026. | AX:92–96, AX:340–342 |
 | h-case | A multi-agent harness on Claude Code | AX:39 |
-| o1 | I build software through my own multi-agent harness on Claude Code. For each roadmap step, an orchestrator leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code, and the implementer may not edit them. | AX:39–45 |
-| o2 | Between control points it runs on its own. I start a step with one line, answer only the decisions the agents cannot ground in the specs, and approve the merge on GitHub; a chat message or a PR comment does not count. A step can wait hours for my answer and resume where it stopped. | AX:77–79, AX:170–172, AX:140–143, AX:69–70 |
-| o3 | It is my own tool, used daily on my repositories and those of my three-person studio. From a Telegram chat, a request becomes a step through an MCP server I wrote, and the bot acts on GitHub as its own app. The chat agent is tested on the live model against prompt injection. | AX:335, AX:249–250, RM:20–23, AX:100–105, AX:148–149 |
-| h-hard | What went wrong, and what I changed | AX:262 |
-| hard1 | One agent per step peaked at 130–681k tokens of context and wrote the tests for its own code, so I split it into the roles above. | AX:49–52 |
-| hard2 | An agent tried to approve its own pull request, and the permission classifier denied it. Now the bot has its own GitHub App identity, with a token scoped to one repository. | AX:268–270, AX:138–139 |
+| o1 | Each roadmap step gets an orchestrator that leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code. | AX:39–45 |
+| o2 | I start a step with one line, answer only the decisions the agents cannot ground, and approve the merge on GitHub; a chat message or a PR comment does not count. | AX:77–79, AX:170–172, AX:140–143 |
+| o3 | It is my own tool, used daily on my repositories and my three-person studio's. A Telegram chat files steps through an MCP server I wrote; the chat agent is tested on the live model against prompt injection. | AX:335, AX:249–250, RM:20–23, AX:100–105, AX:148–149 |
+| h-hard | What went wrong | AX:262 |
+| hard1 | One agent per step peaked at 130–681k tokens of context and tested its own code, so I split it into roles. | AX:49–52 |
+| hard2 | An agent tried to approve its own pull request; the bot now has its own GitHub App identity. | AX:268–270, AX:138–139 |
 | h-measured | What I measured | AX:209 |
-| m1 | Verifier: when one agent built each step and a single verifier was the only check, it changed none of 74 steps. After the split into roles it changed 14 of 46. | AX:293–295 |
-| m2 | MCP: the same headless call cost 135,948 tokens with every MCP server loaded, and 6,344 with `--strict-mcp-config`. The flag now goes on every script call. | AX:116–118 |
-| m3 | Lead ranking: a model put 8 of its top 10 among leads I had skipped myself, so now it only extracts facts and a formula in code does the scoring. | AX:309–316 |
+| m1 | Verifier: as the only check it changed none of 74 steps; after the split into roles, 14 of 46. | AX:293–295 |
+| m2 | MCP: the same headless call cost 135,948 tokens with every server loaded, 6,344 with `--strict-mcp-config`. | AX:116–118 |
+| m3 | Lead ranking: a model put 8 of its top 10 among leads I had skipped, so code now does the scoring. | AX:309–316 |
 | h-limits | Limits | AX:332 |
-| l1 | The write hook covers file tools only; writes through the shell are left to the permission classifier. Role order and pre-merge checks are held by a model following a written skill, with the merge pinned to the reviewed head by `--match-head-commit`. | AX:129–132, AX:329–330 |
-| asof | Figures as of 12 November 2026, measured on my own runs. | AX:5, AX:13–15 |
+| l1 | The write hook covers file tools only; role order and pre-merge checks are a model following a written skill, with the merge pinned by `--match-head-commit`. | AX:129–132, AX:329–330 |
+| asof | Figures as of 12 November 2026, from my own runs. | AX:5, AX:13–15 |
 | exp-lead | Before going freelance, I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and contributed a fix to React Native core. | CV:12–13; RM:39–40 |
 | exp | Every position with its bullets from the CV. Freelance, Jun 2025 – present: caro.md, Dream Home and the agency prototypes, one line each, since Projects carries the detail (not «main contributor»). Otherweb (acquired by S.A.I.): Web Developer Dec 2024 – May 2025 and Lead Mobile Developer Aug 2023 – Dec 2024, with the PlatformColor fix link `https://github.com/react/react-native/pull/39893`. Raters (freelance), Jan 2022 – May 2023. DexTechnology: Frontend Team Lead Dec 2021 – Jul 2022 and React Native Developer Jul 2018 – Dec 2021. | CV:34–91 |
 | skills | The seven groups with their tools, verbatim. | CV:17–30 |
@@ -239,12 +239,12 @@ with one signature element, the spine of variant c.
 The revision round (owner, 2026-11-18):
 6. Order: intro → Projects → harness case → Experience → Skills → Education and languages. The
    spine's nodes follow this order.
-7. The harness case is at most one and a half phone screens at 390 (1266 px). That means no role
-   list or table: o1–o3 are prose, and the three small lists (hard problems, measured findings,
-   limits) are short. The D7 copy fits that only with the case set at 15 px / 1.45 on phones
-   (1233 px at 390, 1254 at 375; at 16 px it measured 1278 or more); from 768 px up it is 16 px.
-   Getting 16 px back on phones means shortening o1–o3 or l1.
-8. The case's subheadings («What went wrong, and what I changed», «What I measured», «Limits») are
+7. The harness case is at most one and a half phone screens (1266 px) at 390 and at 375, in the
+   page's 16 px body type on phones too: there is no smaller type for the case. The D7 copy (v4,
+   shortened) is sized to about 1150 px at 390, which leaves a margin of 100 px or more. That means no
+   role list or table: o1–o3 are prose, and the three small lists (what went wrong, what I measured,
+   limits) hold one sentence per item.
+8. The case's subheadings («What went wrong», «What I measured», «Limits») are
    real headings, set as headings in the page's type scale. They are not grey mono captions. The `h2`
    is «A multi-agent harness on Claude Code», with no «Case:» prefix.
 9. Project links use the browser's ordinary link styling (underlined text in the link color). The link
@@ -312,7 +312,7 @@ re-run the workflow.
 | «Around the clock» | Not written; o2 says what the sources support (one line starts a step; a step waits hours and resumes) | AX:69–70, AX:77–79; no source for round-the-clock running |
 | Project practices | Three per project, each checked in the project's repository (D7, CARO: and DH: rows) | Owner: two or three practices, verified, without client detail |
 | caro.md stack | Next.js web app with a Django admin and API | CARO:web/package.json, CARO:.ai-factory/ROADMAP.md:3, live headers; the projects map's «Django-шаблоны» is wrong for the public site |
-| Harness case length | At most 1266 px at 390 (one and a half screens), tested | Owner: «a screen and a half on a phone at most» |
+| Harness case length | At most 1266 px at 390 and 375 in 16 px type, tested; the copy is sized to about 1150 px | Owner: «a screen and a half on a phone at most»; the designer measured the v3 copy at 1420 px in 16 px, so the copy was shortened rather than the type |
 | `llms.txt` charset on the local server | Accepted as preview-only: Python's `http.server` sends `text/plain` without a charset, and Pages sends UTF-8 | Fixing it needs a custom handler script; the owner accepted it unless the fix is free |
 | The split story | Kept as a hard problem (hard1), without the replay simulation | A measured finding that changed the design; the case must stay short |
 | Pencil and Open Design | What each repository shows: one Pencil file edited through Pencil's MCP and checked by screenshot; Open Design for the site and its later point designs | Owner's answer; CARO:docs/Project layout.md; DH archive designs |
