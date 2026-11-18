@@ -240,9 +240,11 @@ page with one signature element, the spine of variant c.
 
 ## Variants
 
-Chosen: c, by the owner (roadmap Scope, «Owner, 2026-11-18: take c»), with the five constraints
-above. Next comes the designer: removing `a` and `b`, the switch and the variant scaffolding in a
-commit of the step's branch, applying the five constraints, and putting the D7 copy into
+Chosen: c — owner, 2026-11-18: take c.
+
+The choice is in the roadmap Scope, «Owner, 2026-11-18: take c», with the five constraints above.
+`a`, `b`, the switch and the variant folders are gone; c lives in `site/style.css` and
+`site/script.js`. The designer applies the five constraints and puts the D7 copy into
 `site/index.html`. The architect does not touch `site/`.
 
 What the variants were, for the record:
