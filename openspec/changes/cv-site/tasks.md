@@ -175,29 +175,29 @@ titled with the scenario name.
 Implementer. Each task is done when the named tests pass under
 `export RUN_SLOT=1 && npx playwright test <file>`.
 
-- [ ] 2.1 Write `adr/0001-the-site-is-static-html-published-from-site-by-a-pages-workflow.md` from
+- [x] 2.1 Write `adr/0001-the-site-is-static-html-published-from-site-by-a-pages-workflow.md` from
   design «ADR», in the format of `adr/README.md`. Verify: `ls adr` prints `0001-…` and `README.md`.
   Today: `README.md` only.
-- [ ] 2.2 `site/index.html`, built on the designer's chosen variant if there is one: the copy of D7 in
+- [x] 2.2 `site/index.html`, built on the designer's chosen variant if there is one: the copy of D7 in
   its order, landmarks, theme by `prefers-color-scheme`, no third-party request. Verify:
   `tests/page.spec.ts` passes except 1.16, which waits for 2.4. Today: `site/index.html` is the variants scaffold.
-- [ ] 2.3 Search readiness, per D5: the head tags and the JSON-LD `@graph` in `site/index.html`, plus
+- [x] 2.3 Search readiness, per D5: the head tags and the JSON-LD `@graph` in `site/index.html`, plus
   `site/robots.txt`, `site/sitemap.xml` and `site/llms.txt`, with the footer linking `llms.txt` and the
   PDF. Verify: `tests/search.spec.ts` passes.
-- [ ] 2.4 Generate `site/ivan-alexandrov-cv.pdf` with the two commands of D4 (`-f gfm`, A4).
+- [x] 2.4 Generate `site/ivan-alexandrov-cv.pdf` with the two commands of D4 (`-f gfm`, A4).
   Verify: `head -c 5 site/ivan-alexandrov-cv.pdf` prints `%PDF-`; the size is about 100 KB; test
   1.16 passes. Open page 1 as an image (`sips -s format png … --out /tmp/roadmap-run/cv-site/p1.png`) and
   look at it: the lists are lists, not run-on text.
-- [ ] 2.5 `.github/workflows/pages.yml`, per D2. Verify: `tests/deploy.spec.ts` passes. Today: no
+- [x] 2.5 `.github/workflows/pages.yml`, per D2. Verify: `tests/deploy.spec.ts` passes. Today: no
   `.github/`.
-- [ ] 2.6 `CLAUDE.md`, second paragraph rewritten. Full check: `git diff --check && npx playwright test`.
+- [x] 2.6 `CLAUDE.md`, second paragraph rewritten. Full check: `git diff --check && npx playwright test`.
   `setup`: `npm ci`, plus once per machine `npx playwright install chromium`. `RUN_SLOT=<n>`: tests on
   port `4111 + 10n`, preview on `4011 + 10n`. Preview command from D3. The PDF regeneration commands of
   D4. Live check after a deploy: `BASE_URL=https://axinvd.github.io npx playwright test`. PR preview:
   none, the step's preview is the local server. Verify: the full-check command exactly as written in
   `CLAUDE.md` passes with `export RUN_SLOT=1`. Today, `CLAUDE.md:8` reads «Полная проверка — пока
   `git diff --check`…».
-- [ ] 2.7 Look at the page: raise the preview (`lsof -i :4021` empty first), then take screenshots
+- [x] 2.7 Look at the page: raise the preview (`lsof -i :4021` empty first), then take screenshots
   with playwright-cli at 390 x 844 and 1280 x 800, each in light and dark. Open every image: no
   clipped text, the role chain readable, the tap targets of contacts and links clear of each other.
   Stop the server by the listener on its port. Then check every figure on the page against D7: each
@@ -205,7 +205,7 @@ Implementer. Each task is done when the named tests pass under
 
 ## 3. Integration
 
-- [ ] 3.1 Full check from a clean tree. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test`
+- [x] 3.1 Full check from a clean tree. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test`
   passes with only the manual 1.17 skipped, and `git status --short` prints nothing after the commit
   `cv-site: apply`. Today: `git diff --check` exits 0, and the suite does not exist.
 

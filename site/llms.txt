@@ -1,0 +1,15 @@
+# Ivan Alexandrov
+
+> Ivan Alexandrov is an AI product and frontend engineer working remotely from Chișinău, Moldova. He builds web products in React and Next.js for clients and his own multi-agent harness on Claude Code, which takes a roadmap step from plan to merged pull request.
+
+Open to remote AI product engineer and senior frontend roles (EET, UTC+2/+3).
+
+## Pages
+
+- [Ivan Alexandrov, CV site](https://axinvd.github.io/): who he is, the multi-agent harness case, the production projects caro.md and infodreamhome.com, experience and skills
+- [CV (PDF)](https://axinvd.github.io/ivan-alexandrov-cv.pdf): the CV as sent with applications
+
+## Profiles
+
+- [LinkedIn](https://www.linkedin.com/in/axinvd/)
+- [GitHub](https://github.com/axinvd)
