@@ -1,1 +1,1 @@
-// Variant a, lens: layout-first. Stub: optional enhancement, loaded deferred; never carries content.
+// Variant a, lens: layout-first. No script: the layout is CSS only, and the page is complete without JS.
