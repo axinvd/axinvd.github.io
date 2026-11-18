@@ -30,102 +30,145 @@ Today (2026-11-18, d06d1cf): `ls site` prints `index.html variants`.
 Tester. Write every test red from the scenarios, without reading `site/`. One `test()` per scenario,
 titled with the scenario name.
 
-- [ ] 1.1 Harness, per design D3. `package.json` (`"private": true`, devDependencies pinned exactly
+- [x] 1.1 Harness, per design D3. `package.json` (`"private": true`, devDependencies pinned exactly
   `@playwright/test` `1.64.1` and `@axe-core/playwright` `4.14.0`, script `"test": "playwright test"`),
   `package-lock.json` from `npm install`, `playwright.config.ts` (port `4111 + 10 * RUN_SLOT`;
   `BASE_URL` switches off the `webServer`; `webServer` `python3 -m http.server <port> --bind 127.0.0.1 --directory site`),
   and a `.gitignore` for `node_modules/`, `test-results/`, `playwright-report/`. Verify:
   `npx playwright test --list` lists every test below. Today: `npx --no-install playwright test` →
   `npm error npx canceled due to missing packages`.
-- [ ] 1.2 `tests/page.spec.ts`, cv-page «A recruiter opens the Portfolio URL»: `lang`, one `h1`, role
+  → package.json, package-lock.json, playwright.config.ts, .gitignore: `npx playwright test --list` lists 41 tests
+- [x] 1.2 `tests/page.spec.ts`, cv-page «A recruiter opens the Portfolio URL»: `lang`, one `h1`, role
   line, first paragraph of `main`.
-- [ ] 1.3 cv-page «The page says what roles he is open to».
-- [ ] 1.4 cv-page «Two named outcomes follow the intro»: the intro block names caro.md,
+  → tests/page.spec.ts: A recruiter opens the Portfolio URL
+- [x] 1.3 cv-page «The page says what roles he is open to».
+  → tests/page.spec.ts: The page says what roles he is open to
+- [x] 1.4 cv-page «Two named outcomes follow the intro»: the intro block names caro.md,
   infodreamhome.com and the harness.
-- [ ] 1.5 cv-page «First screen at phone width»: at 390 × 844 with no scroll, `getBoundingClientRect().top < 844`
+  → tests/page.spec.ts: Two named outcomes follow the intro
+- [x] 1.5 cv-page «First screen at phone width»: at 390 × 844 with no scroll, `getBoundingClientRect().top < 844`
   for the `h1`, the role line, the first `p` of `main`, both outcome items and the GitHub, PDF and
   `mailto:` links.
-- [ ] 1.6 cv-page «Skill groups are shown».
-- [ ] 1.7 cv-page «Positions, education and languages are shown».
-- [ ] 1.8 cv-page «The role chain reads as text»: inside the harness section, the chain's list (or
+  → tests/page.spec.ts: First screen at phone width
+- [x] 1.6 cv-page «Skill groups are shown».
+  → tests/page.spec.ts: Skill groups are shown
+- [x] 1.7 cv-page «Positions, education and languages are shown».
+  → tests/page.spec.ts: Positions, education and languages are shown
+- [x] 1.8 cv-page «The role chain reads as text»: inside the harness section, the chain's list (or
   diagram) text holds the nine step names in the given order, matched case-insensitively. Match on the
   chain element, not on the whole section, since the outcome sentences name the roles too.
-- [ ] 1.9 cv-page «Measured findings are shown with their baseline and date»: the six quoted phrases
+  → tests/page.spec.ts: The role chain reads as text
+- [x] 1.9 cv-page «Measured findings are shown with their baseline and date»: the six quoted phrases
   (case-insensitive) and «as of 12 November 2026» in the harness section. The baseline clause, in the
   same sentence or the one before, is checked by the verifier against D7 (m1–m3).
-- [ ] 1.10 cv-page «Hard problems come with their fixes»: three or four items, with the three named
+  → tests/page.spec.ts: Measured findings are shown with their baseline and date
+- [x] 1.10 cv-page «Hard problems come with their fixes»: three or four items, with the three named
   topics (own approval, comment as consent, the first verifier).
-- [ ] 1.11 cv-page «How agents are checked, and the limits»: «live model», «prompt injection»,
+  → tests/page.spec.ts: Hard problems come with their fixes
+- [x] 1.11 cv-page «How agents are checked, and the limits»: «live model», «prompt injection»,
   «file tools», «--match-head-commit» in the harness section.
-- [ ] 1.12 cv-page «The case does not overclaim or count activity»: the required statements present (for
+  → tests/page.spec.ts: How agents are checked, and the limits
+- [x] 1.12 cv-page «The case does not overclaim or count activity»: the required statements present (for
   the «built before the harness» sentence, «both sites» or the two names both pass),
   every listed phrase absent (case-insensitive, over `body.innerText`).
-- [ ] 1.13 cv-page «Project links open the live sites»: the two `href`s, with no network call to the
+  → tests/page.spec.ts: The case does not overclaim or count activity
+- [x] 1.13 cv-page «Project links open the live sites»: the two `href`s, with no network call to the
   external sites.
-- [ ] 1.14 cv-page «Each project leads with its hard part»: per entry, «9,000+», «stale copy»,
+  → tests/page.spec.ts: Project links open the live sites
+- [x] 1.14 cv-page «Each project leads with its hard part»: per entry, «9,000+», «stale copy»,
   «turnkey», «Pencil»; «Las Vegas», «100», «90+», «Open Design»; «leads come in» in both
   (case-insensitive).
-- [ ] 1.15 cv-page «Contacts are links»: the four literal `href`s inside `header`. For email, one
+  → tests/page.spec.ts: Each project leads with its hard part
+- [x] 1.15 cv-page «Contacts are links»: the four literal `href`s inside `header`. For email, one
   `mailto:` link in `header` whose `href` matches `^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$` and whose
   visible text equals the address after `mailto:`. No literal email address anywhere in `tests/`:
   a privacy hook on this machine refuses it, and no role works around the hook.
-- [ ] 1.16 cv-page «The PDF CV downloads»: status, content type, `%PDF` magic bytes.
-- [ ] 1.17 cv-page «A reviewer checks the copy»: a manual scenario. Write it as `test.skip` whose
+  → tests/page.spec.ts: Contacts are links
+- [x] 1.16 cv-page «The PDF CV downloads»: status, content type, `%PDF` magic bytes.
+  → tests/page.spec.ts: The PDF CV downloads
+- [x] 1.17 cv-page «A reviewer checks the copy»: a manual scenario. Write it as `test.skip` whose
   title points to the D7 table, so the list shows it.
-- [ ] 1.18 cv-page «Phone width has no horizontal scroll»: at 390 × 844, `scrollWidth <= 390`, every
+  → tests/page.spec.ts: A reviewer checks the copy (test.skip, manual)
+- [x] 1.18 cv-page «Phone width has no horizontal scroll»: at 390 × 844, `scrollWidth <= 390`, every
   element's `getBoundingClientRect().right <= 390`, and the first `p` of `main` at least 330 px wide.
   Save a full-page screenshot to `test-results/` for the human look.
-- [ ] 1.19 cv-page «Desktop width has no horizontal scroll» (1280 × 800).
-- [ ] 1.20 cv-page «Content is readable at once»: right after load, with no scroll, the listed elements
+  → tests/page.spec.ts: Phone width has no horizontal scroll
+- [x] 1.19 cv-page «Desktop width has no horizontal scroll» (1280 × 800).
+  → tests/page.spec.ts: Desktop width has no horizontal scroll
+- [x] 1.20 cv-page «Content is readable at once»: right after load, with no scroll, the listed elements
   in `main` have computed opacity `1` and visibility `visible`.
-- [ ] 1.21 cv-page «Scrolling is the browser's own»: `page.mouse.wheel(0, 800)`, then `scrollY` within
+  → tests/page.spec.ts: Content is readable at once
+- [x] 1.21 cv-page «Scrolling is the browser's own»: `page.mouse.wheel(0, 800)`, then `scrollY` within
   700–900 after 500 ms; `scroll-snap-type` of `html` and `body` is `none`.
-- [ ] 1.22 cv-page «One motion only»: `getAnimations()` of `header` and the intro, including their
+  → tests/page.spec.ts: Scrolling is the browser's own
+- [x] 1.22 cv-page «One motion only»: `getAnimations()` of `header` and the intro, including their
   subtrees, is empty after load; after `hover()` on the first project entry and on a contact link,
   their computed `transform` is `none`.
-- [ ] 1.23 cv-page «Reduced motion shows the finished state»: `reducedMotion: 'reduce'`, scroll to the
+  → tests/page.spec.ts: One motion only
+- [x] 1.23 cv-page «Reduced motion shows the finished state»: `reducedMotion: 'reduce'`, scroll to the
   bottom, `document.getAnimations().length === 0`.
-- [ ] 1.24 cv-page «Dark preference gets the dark theme»: `colorScheme` emulated as `dark` and as
+  → tests/page.spec.ts: Reduced motion shows the finished state
+- [x] 1.24 cv-page «Dark preference gets the dark theme»: `colorScheme` emulated as `dark` and as
   `light`; computed `body` background and text colors differ.
-- [ ] 1.25 cv-page «axe finds nothing serious»: AxeBuilder in both color schemes; no violation of
+  → tests/page.spec.ts: Dark preference gets the dark theme
+- [x] 1.25 cv-page «axe finds nothing serious»: AxeBuilder in both color schemes; no violation of
   impact `serious` or `critical`.
-- [ ] 1.26 cv-page «Structure is navigable»: one each of `header`, `main`, `footer`; no heading-level
+  → tests/page.spec.ts: axe finds nothing serious
+- [x] 1.26 cv-page «Structure is navigable»: one each of `header`, `main`, `footer`; no heading-level
   jump greater than 1.
-- [ ] 1.27 cv-page «Focus is visible»: `keyboard.press('Tab')`, then the focused element's
+  → tests/page.spec.ts: Structure is navigable
+- [x] 1.27 cv-page «Focus is visible»: `keyboard.press('Tab')`, then the focused element's
   `outline-style` is not `none`, or its `box-shadow` is not `none`.
-- [ ] 1.28 cv-page «No third-party requests»: every request's origin equals the page origin.
-- [ ] 1.29 cv-page «Weight budget»: the sum of response body sizes, the PDF aside, is at most
+  → tests/page.spec.ts: Focus is visible
+- [x] 1.28 cv-page «No third-party requests»: every request's origin equals the page origin.
+  → tests/page.spec.ts: No third-party requests
+- [x] 1.29 cv-page «Weight budget»: the sum of response body sizes, the PDF aside, is at most
   150 × 1024 bytes; the `footer` text contains «under 150 KB» and not «Lighthouse».
-- [ ] 1.30 `tests/search.spec.ts`, search-readiness «robots.txt allows all and points to the
+  → tests/page.spec.ts: Weight budget
+- [x] 1.30 `tests/search.spec.ts`, search-readiness «robots.txt allows all and points to the
   sitemap».
-- [ ] 1.31 search-readiness «The sitemap lists the canonical URL»: parse it with `DOMParser` in the
+  → tests/search.spec.ts: robots.txt allows all and points to the sitemap
+- [x] 1.31 search-readiness «The sitemap lists the canonical URL»: parse it with `DOMParser` in the
   page context; namespace, and exactly one `loc`.
-- [ ] 1.32 search-readiness «Head tags are present and consistent»: canonical, `og:*`,
+  → tests/search.spec.ts: The sitemap lists the canonical URL
+- [x] 1.32 search-readiness «Head tags are present and consistent»: canonical, `og:*`,
   `twitter:card`, title length at most 60, description 120–160, viewport, no `noindex`.
-- [ ] 1.33 search-readiness «JSON-LD parses and matches the page»: `jobTitle` text present in
+  → tests/search.spec.ts: Head tags are present and consistent
+- [x] 1.33 search-readiness «JSON-LD parses and matches the page»: `jobTitle` text present in
   `body.innerText`; `Person.email`, if present, equals the header `mailto:` link's `href`, with no
   literal address.
-- [ ] 1.34 search-readiness «The three copies are identical»: first `p` of `main`,
+  → tests/search.spec.ts: JSON-LD parses and matches the page
+- [x] 1.34 search-readiness «The three copies are identical»: first `p` of `main`,
   `Person.description` and the `> ` line of `/llms.txt`, whitespace collapsed.
-- [ ] 1.35 search-readiness «llms.txt is in llmstxt.org shape».
-- [ ] 1.36 search-readiness «The page links llms.txt».
-- [ ] 1.37 search-readiness «JavaScript disabled»: a new context with `javaScriptEnabled: false`;
+  → tests/search.spec.ts: The three copies are identical
+- [x] 1.35 search-readiness «llms.txt is in llmstxt.org shape».
+  → tests/search.spec.ts: llms.txt is in llmstxt.org shape
+- [x] 1.36 search-readiness «The page links llms.txt».
+  → tests/search.spec.ts: The page links llms.txt
+- [x] 1.37 search-readiness «JavaScript disabled»: a new context with `javaScriptEnabled: false`;
   the named elements are visible.
-- [ ] 1.38 search-readiness «No broken internal link»: every same-origin `href` or `src` answers 200.
-- [ ] 1.39 `tests/deploy.spec.ts`, site-deploy «The workflow uploads site/ only»: read
+  → tests/search.spec.ts: JavaScript disabled
+- [x] 1.38 search-readiness «No broken internal link»: every same-origin `href` or `src` answers 200.
+  → tests/search.spec.ts: No broken internal link
+- [x] 1.39 `tests/deploy.spec.ts`, site-deploy «The workflow uploads site/ only»: read
   `.github/workflows/pages.yml` from disk; check `path: site`, `actions/upload-pages-artifact`,
   `actions/deploy-pages`, the two permissions, and no `write` permission other than `pages`.
-- [ ] 1.40 site-deploy «Triggers and concurrency»: `push` to `main`, `workflow_dispatch`,
+  → tests/deploy.spec.ts: The workflow uploads site/ only
+- [x] 1.40 site-deploy «Triggers and concurrency»: `push` to `main`, `workflow_dispatch`,
   `concurrency`.
-- [ ] 1.41 site-deploy «Repository files are not served»: `/CLAUDE.html` and `/openspec/ROADMAP.html`
+  → tests/deploy.spec.ts: Triggers and concurrency
+- [x] 1.41 site-deploy «Repository files are not served»: `/CLAUDE.html` and `/openspec/ROADMAP.html`
   answer 404 against the base URL. This holds locally too, since the server serves `site/` only.
-- [ ] 1.42 site-deploy «Local run» and «Live run after the deploy»: covered by the config itself.
+  → tests/deploy.spec.ts: Repository files are not served
+- [x] 1.42 site-deploy «Local run» and «Live run after the deploy»: covered by the config itself.
   Write one test asserting `baseURL` is `BASE_URL` when set, else `http://127.0.0.1:<4111 + 10 × RUN_SLOT>`.
   The live run itself is a post-deploy step (Workflow follow-up).
-- [ ] 1.43 Red run. Verify: `export RUN_SLOT=1 && npx playwright test` fails. Each failing test fails
+  → tests/deploy.spec.ts: Local run and live run are one config: BASE_URL or the local server on site/
+- [x] 1.43 Red run. Verify: `export RUN_SLOT=1 && npx playwright test` fails. Each failing test fails
   for what is missing: no PDF, no search files, no workflow, or a page element or text the D7 copy
   does not have yet. None fails from a test error. 1.41 and 1.42 pass already. Tests that pass on the
   designer's page as it stands are fine; list them in the report. Commit as `cv-site: tests`.
+  → npx playwright test: red run, RUN_SLOT=1: 41 tests, 1 skipped, 30 pass, 10 red
 
 ## 2. Site
 
