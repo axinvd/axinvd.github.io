@@ -290,9 +290,9 @@ Designer, then implementer.
 - [ ] 4.17a Designer: re-set the case in the shortened D7 v4 copy (o1–o3, hard1–2, m1–3, l1, asof,
   `h3` «What went wrong») at the 16 px phone body, dropping the 15 px exception. Verify: the case
   measures about 1150 px at 390 and stays at or below 1266 px at 375, with the screenshot opened.
-- [ ] 4.18 Implementer: the JSON-LD `Person.description` and the `> ` line of `site/llms.txt` become
+- [x] 4.18 Implementer: the JSON-LD `Person.description` and the `> ` line of `site/llms.txt` become
   D7 «def-3p». Verify: `tests/search.spec.ts` passes.
-- [ ] 4.19 Full check. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test` passes,
+- [x] 4.19 Full check. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test` passes,
   with only the manual tests skipped, and `git status --short` prints nothing after the commit.
 
 ## Workflow follow-up
