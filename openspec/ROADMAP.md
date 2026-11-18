@@ -30,6 +30,16 @@ blockers by what they unblock.
 
 ## Steps
 
+### cv-pdf-rebuild
+Depends: —
+Read: CLAUDE.md (команды сборки PDF); `~/projects/freelance_leads/cv/cv-en.md`
+Goal: PDF резюме на сайте совпадает с текущим `cv-en.md` под AI product.
+Scope: пересобрать `site/ivan-alexandrov-cv.pdf` командами из CLAUDE.md, проверить страницу 1, снять skip с теста «The PDF matches the current CV»; текст страницы сайта сверить с новым `cv-en.md` и поправить расхождения в фактах.
+Out: правка `cv-en.md` (это `cv-ai-refresh` в роадмапе freelance_leads).
+Done when: PDF на `https://axinvd.github.io/ivan-alexandrov-cv.pdf` с заголовком «AI Product Engineer · Senior Frontend»; тест «The PDF matches the current CV» проходит; полная проверка зелёная.
+Decide: ждёт шага `cv-ai-refresh@freelance_leads` — запускать после его мержа (зависимость между роадмапами скрипт пока не читает).
+
+
 ### walk-fixes-1
 Depends: cv-site
 Goal: мелкие замечания персоны ко второму проходу сайта-резюме, которые не блокировали cv-site.
