@@ -101,8 +101,9 @@ his own tool.
 #### Scenario: The case does not overclaim or count activity
 - **WHEN** the page text is searched
 - **THEN** it says the harness is his own tool, used on his own and his studio's repositories
-- **AND** it says that caro.md and infodreamhome.com were built with Claude Code before the
-  harness existed
+- **AND** one sentence says that both production sites were built with Claude Code before the
+  harness existed. The sentence names them as «caro.md» and «infodreamhome.com», or as «both
+  sites»; either wording passes
 - **AND** it contains none of «sandboxed», «eval suite», «011.md», «Distru», «main contributor»,
   «pull requests merged», «47 pull requests», «31 merged», «$474.9», «469 role calls», «413 tests»,
   «2,923», «325 of 596», «81 of 108», «circuit breaker», «407», «IP ban» (case-insensitive)
@@ -131,8 +132,11 @@ as a PDF file served by the site.
 
 #### Scenario: Contacts are links
 - **WHEN** a visitor looks for contacts
-- **THEN** the page has links to `mailto:axinvd@gmail.com`, `https://www.linkedin.com/in/axinvd/`,
-  `https://github.com/axinvd`, `https://t.me/axinvd` and `tel:+37378297494`
+- **THEN** the header has links to `https://www.linkedin.com/in/axinvd/`, `https://github.com/axinvd`,
+  `https://t.me/axinvd` and `tel:+37378297494`
+- **AND** the header has one `mailto:` link whose `href` matches `^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$`
+  and whose visible text is the same address. The page carries the real address of `cv-en.md` (CV:5),
+  and the tests hold no literal address: they check its shape and its agreement with the page
 
 #### Scenario: The PDF CV downloads
 - **WHEN** a visitor follows the link to the CV PDF

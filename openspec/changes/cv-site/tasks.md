@@ -57,14 +57,18 @@ titled with the scenario name.
   topics (own approval, comment as consent, the first verifier).
 - [ ] 1.11 cv-page «How agents are checked, and the limits»: «live model», «prompt injection»,
   «file tools», «--match-head-commit» in the harness section.
-- [ ] 1.12 cv-page «The case does not overclaim or count activity»: the required statements present,
+- [ ] 1.12 cv-page «The case does not overclaim or count activity»: the required statements present (for
+  the «built before the harness» sentence, «both sites» or the two names both pass),
   every listed phrase absent (case-insensitive, over `body.innerText`).
 - [ ] 1.13 cv-page «Project links open the live sites»: the two `href`s, with no network call to the
   external sites.
 - [ ] 1.14 cv-page «Each project leads with its hard part»: per entry, «9,000+», «stale copy»,
   «turnkey», «Pencil»; «Las Vegas», «100», «90+», «Open Design»; «leads come in» in both
   (case-insensitive).
-- [ ] 1.15 cv-page «Contacts are links»: the five `href`s, inside `header`.
+- [ ] 1.15 cv-page «Contacts are links»: the four literal `href`s inside `header`. For email, one
+  `mailto:` link in `header` whose `href` matches `^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$` and whose
+  visible text equals the address after `mailto:`. No literal email address anywhere in `tests/`:
+  a privacy hook on this machine refuses it, and no role works around the hook.
 - [ ] 1.16 cv-page «The PDF CV downloads»: status, content type, `%PDF` magic bytes.
 - [ ] 1.17 cv-page «A reviewer checks the copy»: a manual scenario. Write it as `test.skip` whose
   title points to the D7 table, so the list shows it.
@@ -99,7 +103,8 @@ titled with the scenario name.
 - [ ] 1.32 search-readiness «Head tags are present and consistent»: canonical, `og:*`,
   `twitter:card`, title length at most 60, description 120–160, viewport, no `noindex`.
 - [ ] 1.33 search-readiness «JSON-LD parses and matches the page»: `jobTitle` text present in
-  `body.innerText`.
+  `body.innerText`; `Person.email`, if present, equals the header `mailto:` link's `href`, with no
+  literal address.
 - [ ] 1.34 search-readiness «The three copies are identical»: first `p` of `main`,
   `Person.description` and the `> ` line of `/llms.txt`, whitespace collapsed.
 - [ ] 1.35 search-readiness «llms.txt is in llmstxt.org shape».

@@ -48,6 +48,8 @@ location and profile links shown on the page.
   that appears in the page text, and an `address` with `addressLocality` «Chișinău» and
   `addressCountry` «MD»
 - **AND** its `sameAs` includes `https://www.linkedin.com/in/axinvd/` and `https://github.com/axinvd`
+- **AND** its `email`, when present, equals the `href` of the page's own header `mailto:` link (the
+  check compares the two values and holds no literal address)
 
 ### Requirement: One definition answers who Ivan is
 The page's definition (the first paragraph of `main`, two plain sentences in the third person) SHALL
