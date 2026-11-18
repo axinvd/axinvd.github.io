@@ -5,9 +5,18 @@
 `ai-experience.md`); там же — почему сайт и для кого (`docs/ai-product-engineer.md`). Профиль GitHub
 (README) — соседний репо `~/projects/axinvd`.
 
-Полная проверка — пока `git diff --check`; шаг `cv-site` заменяет её сборкой и проверками сайта и
-вписывает сюда. `setup` свежего worktree — ничего до `cv-site`. `RUN_SLOT` — порт локального сервера
-сайта, когда он появится. Превью PR — нет; превью шага — локальный сервер из worktree.
+Сайт — статический HTML и CSS в `site/`, без сборки; на Pages его публикует `.github/workflows/pages.yml`
+(только `site/`, ADR-0001). Pages Source должен оставаться «GitHub Actions».
+
+Полная проверка: `git diff --check && npx playwright test`. `setup` свежего worktree: `npm ci`, и раз на
+машину `npx playwright install chromium`. `RUN_SLOT=<n>` — тесты на порту `4111 + 10n`, превью на
+`4011 + 10n`: `python3 -m http.server $((4011 + 10 * ${RUN_SLOT:-0})) --bind 127.0.0.1 --directory site`.
+Проверка живого сайта после деплоя: `BASE_URL=https://axinvd.github.io npx playwright test`. Превью PR —
+нет; превью шага — локальный сервер из worktree.
+
+PDF CV (`site/ivan-alexandrov-cv.pdf`) собирается из `cv-en.md`; после правки CV пересобрать:
+`pandoc -f gfm ~/projects/freelance_leads/cv/cv-en.md -s --metadata pagetitle="Ivan Alexandrov — CV" -o /tmp/cv.html`,
+затем `npx playwright pdf --paper-format A4 file:///tmp/cv.html site/ivan-alexandrov-cv.pdf`.
 
 <!-- openspec-kit -->
 ## OpenSpec

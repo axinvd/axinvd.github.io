@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ivan Alexandrov — AI Product Engineer, Senior Frontend</title>
+<meta name="description" content="Ivan Alexandrov: AI product engineer and senior frontend developer (React, TypeScript), remote from Chișinău. Built a multi-agent harness on Claude Code.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314171a'/%3E%3Cpath d='M10 5v22' stroke='%233fd18f' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='12' r='4' fill='%233fd18f'/%3E%3Cpath d='M18 12h8M18 19h6' stroke='%23e9ecef' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://axinvd.github.io/">
+<meta property="og:title" content="Ivan Alexandrov — AI Product Engineer, Senior Frontend">
+<meta property="og:description" content="Ivan Alexandrov: AI product engineer and senior frontend developer (React, TypeScript), remote from Chișinău. Built a multi-agent harness on Claude Code.">
+<meta property="og:url" content="https://axinvd.github.io/">
+<meta property="og:type" content="profile">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://axinvd.github.io/#website",
+      "name": "Ivan Alexandrov",
+      "url": "https://axinvd.github.io/"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://axinvd.github.io/#profile",
+      "url": "https://axinvd.github.io/",
+      "name": "Ivan Alexandrov — AI Product Engineer, Senior Frontend",
+      "mainEntity": { "@id": "https://axinvd.github.io/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://axinvd.github.io/#person",
+      "name": "Ivan Alexandrov",
+      "jobTitle": "AI Product Engineer",
+      "url": "https://axinvd.github.io/",
+      "description": "Ivan Alexandrov is an AI product and frontend engineer working remotely from Chișinău, Moldova. He builds web products in React and Next.js for clients, and his own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Chișinău",
+        "addressCountry": "MD"
+      },
+      "email": "mailto:axinvd@gmail.com",
+      "sameAs": [
+        "https://www.linkedin.com/in/axinvd/",
+        "https://github.com/axinvd",
+        "https://t.me/axinvd"
+      ],
+      "knowsLanguage": ["en", "ru"],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Dniester State University"
+      },
+      "knowsAbout": ["React", "Next.js", "TypeScript", "Claude Code", "multi-agent systems", "Playwright"]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="/style.css">
+<script src="/script.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <h1>Ivan Alexandrov</h1>
+  <p class="role">AI Product Engineer · Senior Frontend Developer (React, Next.js, TypeScript)</p>
+  <address class="contacts">
+    <ul class="contacts-links">
+      <li><a href="mailto:axinvd@gmail.com">axinvd@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/axinvd/">LinkedIn</a></li>
+      <li><a href="https://github.com/axinvd">GitHub</a></li>
+      <li><a href="https://t.me/axinvd">Telegram</a></li>
+      <li><a href="tel:+37378297494">+373 78 297 494</a></li>
+      <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
+    </ul>
+  </address>
+</header>
+
+<main id="main">
+  <section class="intro">
+    <p class="lede">I'm an AI product and frontend engineer working remotely from Chișinău, Moldova. I build web products in React and Next.js for clients, and my own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.</p>
+    <p class="open">Open to remote AI product engineer and senior frontend roles · EET (UTC+2/+3)</p>
+    <ul class="outcomes">
+      <li>Two production Next.js sites for clients in 2026: caro.md and infodreamhome.com.</li>
+      <li>My own multi-agent harness on Claude Code: a step goes from plan to merged pull request, and nothing merges without my approval.</li>
+    </ul>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>Projects</h2>
+    <article class="project">
+      <h3><a href="https://caro.md/">caro.md</a></h3>
+      <p>caro.md imports cars to Moldova from Korea, China and the USA, and it is in production. I build its Next.js web app; a Django admin and API sit behind it.</p>
+      <p>The hard part is the Korean catalog: 9,000+ cars read live from the source marketplace through a pool of proxy exits, with Redis caching and a stale copy served when the source fails.</p>
+      <p>A calculator turns a car on another continent into a turnkey price: car price, auction fees, shipping and Moldovan customs from the official customs API, in USD, EUR and MDL at live rates.</p>
+      <ul class="practices">
+        <li>The design lives in one Pencil file with every page and reusable component. The agent edits it through Pencil's MCP server and checks each change on a rendered screenshot.</li>
+        <li>Playwright end-to-end tests cover the calculator, the request forms, both languages and ad attribution, against a mock backend.</li>
+        <li>Every fix gets a short patch note (problem, root cause, solution, prevention), and the notes are folded into the rules the implementing agent reads, so a mistake is not repeated.</li>
+      </ul>
+      <p>Leads come in through the site.</p>
+      <p class="project-meta">Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian), Django admin</p>
+    </article>
+    <article class="project">
+      <h3><a href="https://infodreamhome.com/">infodreamhome.com</a></h3>
+      <p>infodreamhome.com is the production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it.</p>
+      <p>The hard part was a photo-heavy site that stays fast on a phone. Every route is prerendered, and photos are served as AVIF or WebP at the device's width, the main image first. On the key pages, Lighthouse mobile scores 100 for accessibility and 90+ for performance, out of 100.</p>
+      <ul class="practices">
+        <li>The site was designed with Open Design. Later pages, such as the 404 and the navigation, were designed the same way inside the site's own design language.</li>
+        <li>Its late work went through OpenSpec changes. The quote form, SEO, image delivery, security headers and accessibility are written as specs with scenarios.</li>
+        <li>All copy lives in typed per-block content modules whose IDs match the blocks on the page, so the client's text edits land in one place.</li>
+      </ul>
+      <p>Quote requests land in the owner's inbox through Resend, with silent bot filtering. Leads come in through the site.</p>
+      <p class="project-meta">Next.js 16 App Router, Bun in Docker</p>
+    </article>
+    <p class="projects-note">Both sites were built with Claude Code before the harness existed; it appeared on 3 November 2026.</p>
+  </section>
+
+  <section id="harness" class="case">
+    <h2>A multi-agent harness on Claude Code</h2>
+    <p>Each roadmap step gets an orchestrator that leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code.</p>
+    <p>I start a step with one line, answer only the decisions the agents cannot ground, and approve the merge on GitHub; a chat message or a PR comment does not count.</p>
+    <p>It is my own tool, used daily on my repositories and my three-person studio's. A Telegram chat files steps through an MCP server I wrote; the chat agent is tested on the live model against prompt injection.</p>
+
+    <h3>What went wrong</h3>
+    <ul class="notes">
+      <li>One agent per step peaked at 130–681k tokens of context and tested its own code, so I split it into roles.</li>
+      <li>An agent tried to approve its own pull request; the bot now has its own GitHub App identity.</li>
+    </ul>
+
+    <h3>What I measured</h3>
+    <ul class="notes">
+      <li><strong>Verifier:</strong> as the only check it changed <span class="nowrap">none of 74 steps</span>; after the split into roles, <span class="nowrap">14 of 46</span>.</li>
+      <li><strong>MCP:</strong> the same headless call cost 135,948 tokens with every server loaded, 6,344 with <code>--strict-mcp-config</code>.</li>
+      <li><strong>Lead ranking:</strong> a model put <span class="nowrap">8 of its top 10</span> among leads I had skipped, so code now does the scoring.</li>
+    </ul>
+
+    <h3>Limits</h3>
+    <p>The write hook covers file tools only; role order and pre-merge checks are a model following a written skill, with the merge pinned by <code>--match-head-commit</code>.</p>
+    <p class="asof">Figures as of 12 November 2026, from my own runs.</p>
+  </section>
+
+  <section id="experience" class="experience">
+    <h2>Experience</h2>
+    <p class="experience-lead">Before going freelance, I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and contributed a fix to React Native core.</p>
+    <article class="org">
+      <h3>Freelance</h3>
+      <div class="position">
+        <h4>Senior Frontend Developer</h4>
+        <p class="when">Jun 2025 – present</p>
+        <ul>
+          <li>caro.md: car import platform (Korea, China, USA → Moldova), in production.</li>
+          <li>Dream Home Construction (infodreamhome.com): production website for a licensed Las Vegas general contractor, live since October 2026; built most of the site.</li>
+          <li>Agency prototypes: e-commerce prototypes and a modular shop template (Vendure, Payload, Next.js) for agency leads; AI-agent-driven workflow from discovery to deployed prototype.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="org">
+      <h3>Otherweb (acquired by S.A.I.) · Chișinău</h3>
+      <div class="position">
+        <h4>Web Developer</h4>
+        <p class="when">Dec 2024 – May 2025</p>
+        <ul>
+          <li>Autoblogger, an AI post generator (React): real-time AI chat over SSE, Stripe payments, React Query caching fix, Clerk edge cases, custom lint pipeline (oxlint, ESLint, Stylelint).</li>
+        </ul>
+      </div>
+      <div class="position">
+        <h4>Lead Mobile Developer</h4>
+        <p class="when">Aug 2023 – Dec 2024</p>
+        <ul>
+          <li>News aggregator app (React Native): led mobile development, moved to native navigation and fixed Android 13 crashes; contributed a <a href="https://github.com/react/react-native/pull/39893">PlatformColor fix</a> to React Native core.</li>
+          <li>Generated API clients with Orval + RTK Query and styles/icons from the Figma REST API; CI/CD on GitHub Actions with a Mac Mini runner; Sentry with Redux and navigation logging; offline audio; image resizer service in Next.js; pre-push linting with Husky, moved the project to Bun.</li>
+          <li>Mentored junior developers and improved the team's code quality.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="org">
+      <h3>Raters (freelance)</h3>
+      <div class="position">
+        <h4>Frontend Developer</h4>
+        <p class="when">Jan 2022 – May 2023</p>
+        <ul>
+          <li>Social network for movie lovers (Next.js): full internationalization, Redux Toolkit with Next.js routing.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="org">
+      <h3>DexTechnology · Tiraspol</h3>
+      <div class="position">
+        <h4>Frontend Team Lead</h4>
+        <p class="when">Dec 2021 – Jul 2022</p>
+        <ul>
+          <li>Winline / FC Krasnodar club app: runtime SVG ticket selector with 200+ seats, native navigation; managed 5 in-house developers.</li>
+          <li>Sbermarket delivery app: offline product storage (WatermelonDB), event-driven logic (RxJS), Storybook design-review app; managed 3 outsourced developers.</li>
+          <li>Mentored junior developers and improved the team's code quality.</li>
+        </ul>
+      </div>
+      <div class="position">
+        <h4>React Native Developer</h4>
+        <p class="when">Jul 2018 – Dec 2021</p>
+        <ul>
+          <li>KFC: automated builds with Fastlane, live updates with Expo.</li>
+          <li>Papa John's: Yandex Maps native module, handling of 10 MB+ API responses.</li>
+          <li>Big3 basketball club: chat with Redux Saga.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <dl class="skill-groups">
+      <div><dt>Frontend</dt><dd>React, Next.js (App Router, prerendering), TypeScript, JavaScript, HTML, CSS, Tailwind CSS, React Hook Form, Zod, TanStack Query, Redux Toolkit, Redux Saga, RxJS, next-intl / i18n, Storybook, Figma REST API</dd></div>
+      <div><dt>Quality</dt><dd>Playwright end-to-end tests, Lighthouse (performance, accessibility), WCAG AA contrast, Core Web Vitals, SEO (structured data, sitemaps, link previews), Sentry</dd></div>
+      <div><dt>Mobile</dt><dd>React Native, Expo, native navigation, Fastlane, offline storage (WatermelonDB), audio (react-native-track-player), native modules</dd></div>
+      <div><dt>Backend &amp; data</dt><dd>Node.js, NestJS, Hono, Prisma, PostgreSQL, Redis, Django admin, REST, GraphQL</dd></div>
+      <div><dt>Integrations</dt><dd>Stripe, Clerk, Resend, Firebase, third-party APIs and proxies</dd></div>
+      <div><dt>Delivery</dt><dd>GitHub Actions, Docker, Dokploy, Orval API clients, ESLint / oxlint, Husky, Bun</dd></div>
+      <div><dt>AI</dt><dd>LLM features (OpenAI, Claude), real-time chat over SSE, AI-assisted development (Claude Code, GitHub Copilot)</dd></div>
+    </dl>
+  </section>
+
+  <section id="education" class="education">
+    <h2>Education and languages</h2>
+    <ul class="degrees">
+      <li><span class="degree">MSc, Information Systems and Technologies</span> <span class="degree-where">Dniester State University, 2017–2019, GPA 4.2/5</span></li>
+      <li><span class="degree">BS, Informatics and Computer Engineering</span> <span class="degree-where">Dniester State University, 2013–2017, GPA 4.5/5</span></li>
+    </ul>
+    <p class="languages">English (fluent) · Russian (native)</p>
+  </section>
+</main>
+
+<footer class="colophon">
+  <ul>
+    <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
+    <li><a href="/llms.txt">llms.txt</a></li>
+    <li>Figures as of 12 November 2026</li>
+  </ul>
+</footer>
+</body>
+</html>
