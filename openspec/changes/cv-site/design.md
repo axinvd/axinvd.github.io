@@ -195,6 +195,24 @@ from D7 and differs only in look. The `?variant=<letter>` switch and the files o
 are scaffolding, removed when a variant is chosen. The chosen page must pass the JavaScript-disabled
 scenario.
 
+## Variants
+
+Switch: `site/variants/switch.js`, `?variant=<letter>`, without a parameter `a`.
+
+The content is single-sourced in the scaffold: `site/index.html` carries the whole D7 copy, the same
+for every letter. A letter is only its folder: `style.css`, the whole look (tokens on `:root`, light
+and dark), and `script.js`, an optional enhancement loaded deferred that never carries content.
+A letter changes no words in `index.html`; a hook it needs there (a class, a wrapper, an attribute)
+goes into its own commit. Without JavaScript the preview shows `a`. Contacts and the PDF link sit in
+the header (D7 allows it), so a recruiter has them on the first screen. The location is not repeated
+there, since the intro right under it says Chișinău, remote and EET. A phrase the specs quote
+(«121 roadmap steps», «47 pull requests», «main contributor») stays in one text run, so no style
+splits it.
+
+- a — `site/variants/a/` — lens: layout-first — direction: (its fork)
+- b — `site/variants/b/` — lens: content-first — direction: (its fork)
+- c — `site/variants/c/` — lens: motion-first — direction: (its fork)
+
 ## Risks / Trade-offs
 
 - [The first deploy fails while Pages Source is still «Deploy from a branch»] → Hands line. After the

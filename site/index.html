@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ivan Alexandrov — AI Product Engineer, Senior Frontend</title>
+<meta name="description" content="Ivan Alexandrov: AI product engineer and senior frontend developer (React, TypeScript), remote from Chișinău. Built a multi-agent harness on Claude Code.">
+<meta name="color-scheme" content="light dark">
+<!-- Variants scaffold (cv-site): the switch picks /variants/<letter>/ by ?variant=; removed when a variant is chosen. -->
+<script src="/variants/switch.js"></script>
+<noscript><link rel="stylesheet" href="/variants/a/style.css"></noscript>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <h1>Ivan Alexandrov</h1>
+  <p class="role">AI Product Engineer · Senior Frontend Developer (React, Next.js, TypeScript)</p>
+  <address class="contacts">
+    <ul class="contacts-links">
+      <li><a href="mailto:axinvd@gmail.com">axinvd@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/axinvd/">LinkedIn</a></li>
+      <li><a href="https://github.com/axinvd">GitHub</a></li>
+      <li><a href="https://t.me/axinvd">Telegram</a></li>
+      <li><a href="tel:+37378297494">+373 78 297 494</a></li>
+      <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
+    </ul>
+  </address>
+</header>
+
+<main id="main">
+  <section class="intro">
+    <p class="def">Ivan Alexandrov is a senior frontend and AI product engineer in Chișinău, Moldova, working remotely: React and TypeScript since 2018, two production Next.js sites shipped in 2026, and his own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.</p>
+    <p class="open">Open to remote AI product engineer and senior frontend roles · EET (UTC+2/+3)</p>
+    <p class="intro-more">Earlier I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and contributed a fix to React Native core.</p>
+  </section>
+
+  <section id="case" class="case">
+    <h2>Case: a multi-agent harness on Claude Code</h2>
+    <p class="case-lead">One orchestrator session per roadmap step leads role subagents, from the plan to the merged pull request. It is my own tool, used daily on my and my studio's repositories.</p>
+
+    <ol class="chain">
+      <li><span class="chain-role">Orchestrator</span> <span class="chain-note">one session per step, keeps it until the merge</span></li>
+      <li><span class="chain-role">Architect</span> <span class="chain-note">turns the step into an OpenSpec change: spec scenarios and tasks</span></li>
+      <li><span class="chain-role">Designer</span> <span class="chain-note">on screens: 2–3 variants on one preview, switched by <code>?variant=</code></span></li>
+      <li><span class="chain-role">Tester</span> <span class="chain-note">writes contract tests red from the spec scenarios without reading the implementation</span></li>
+      <li><span class="chain-role">Implementer</span> <span class="chain-note">builds against them and may not edit them</span></li>
+      <li><span class="chain-role">Verifier</span> <span class="chain-note">a fresh agent checks the step</span></li>
+      <li><span class="chain-role">Pull request</span> <span class="chain-note">a draft until the verifier's ok</span></li>
+      <li><span class="chain-role">Owner's Approve in GitHub</span> <span class="chain-note">a chat word or a PR comment is not consent</span></li>
+      <li><span class="chain-role">Merge</span> <span class="chain-note">pinned to the reviewed head with <code>--match-head-commit</code></span></li>
+    </ol>
+    <p class="chain-par">Up to three steps run at once, each in its own git worktree.</p>
+    <p class="bridge">A Telegram bridge lets a team chat start work: a chat agent answers through my MCP server (4 tools: <code>reply</code>, <code>status</code>, <code>pr_comment</code>, <code>write_step</code>). <code>write_step</code> is the only way a chat changes the repository: a one-shot <code>step-check</code> agent answers pass, return or ask before the bridge commits. The bridge is one 2,923-line Python file with no dependencies and 413 tests.</p>
+
+    <h3>Figures</h3>
+    <p class="asof">Figures as of 12 November 2026, counted from git, <code>gh</code>, tests and transcripts.</p>
+    <ul class="figures">
+      <li><strong>121 roadmap steps</strong> ran through it with per-role cost measured: 74 as one agent per step, then 47 with split roles: 469 role calls, $474.9.</li>
+      <li><strong>After the split</strong>, calls and spend per role:
+        <table class="roles">
+          <thead><tr><th scope="col">Role</th><th scope="col">Calls</th><th scope="col">Spend</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Architect</th><td>50</td><td>$169.2 (36%)</td></tr>
+            <tr><th scope="row">Implementer</th><td>59</td><td>$82.3</td></tr>
+            <tr><th scope="row">Tester</th><td>47</td><td>$52.9</td></tr>
+            <tr><th scope="row">Verifier</th><td>81</td><td>$16.1</td></tr>
+          </tbody>
+        </table>
+      </li>
+      <li><strong>Why split:</strong> one agent per step peaked at 130–681k tokens of context, re-paid everything it had read on 100–180 apply calls, and wrote tests for its own code. A replay of real calls predicted peak context at 0.54 of that and total input at 0.42 (a simulation, stated as optimistic).</li>
+      <li><strong>47 pull requests</strong> opened by harness steps across four repositories, Nov 1–12; 31 merged.</li>
+      <li><strong>74 of 362</strong> judged role calls (20%) changed nothing, and cost $39.6 of $474.9 (8%): empty calls are mostly cheap verifiers.</li>
+      <li><strong>Cheapest finding:</strong> a persona reading the spec deltas, at $0.24 per finding, against $0.62 for a verifier finding that changed a step.</li>
+      <li><strong>The verifier:</strong> when one verifier was the only check, it changed none of 74 steps; after the split it found something on 17 of 46 steps, and 14 changed.</li>
+      <li><strong>MCP overhead:</strong> a headless call that loaded every MCP server cost 135,948 tokens for an “ok”; with <code>--strict-mcp-config</code>, 6,344 (21x fewer). The flag now goes on every script call, guarded by a test.</li>
+    </ul>
+
+    <h3>What broke and how it was fixed</h3>
+    <ul class="failures">
+      <li>
+        <p class="failure"><strong>An agent tried to approve its own pull request.</strong> The run wrote to GitHub under my login, and the permission classifier denied the approval.</p>
+        <p class="fix"><b>Fix:</b> the bot writes as its own GitHub App, with a token scoped to one repository.</p>
+      </li>
+      <li>
+        <p class="failure"><strong>A comment taken as consent.</strong> An “ok” in a PR comment archived a step, and two bridges acted on it.</p>
+        <p class="fix"><b>Fix:</b> consent is a GitHub Approve; the PR author and bots don't count.</p>
+      </li>
+      <li>
+        <p class="failure"><strong>A batch delivered twice.</strong> A SIGTERM between delivery and saving the cursor re-sent the batch in about one test run of two.</p>
+        <p class="fix"><b>Fix:</b> the signal is blocked until the cursor is written.</p>
+      </li>
+      <li>
+        <p class="failure"><strong>Two agents, one test database.</strong> Parallel subagents truncated each other's tables.</p>
+        <p class="fix"><b>Fix:</b> each agent gets its own database name, now a standing rule.</p>
+      </li>
+      <li>
+        <p class="failure"><strong>An assumption about permissions.</strong> “Subagents inherit the session's permissions” was assumed, not checked.</p>
+        <p class="fix"><b>Fix:</b> measured in <code>dontAsk</code> mode, then rebuilt as an orchestrator session with a path-scoped write hook.</p>
+      </li>
+      <li>
+        <p class="failure"><strong>This case's own numbers.</strong> The first verifier found two counts that did not reproduce.</p>
+        <p class="fix"><b>Fix:</b> recounted with the command written next to each number, and the second verifier passed.</p>
+      </li>
+    </ul>
+
+    <h3>How the agents are checked</h3>
+    <ul class="checks">
+      <li>Code and its contract tests come from different agents.</li>
+      <li><strong>46 live-model tests</strong> drive the real <code>claude -p</code> with the real agent definition over a fake Telegram, fake herdr and fake GitHub: 36 chat-agent cases (a page that gives orders, a request by voice, staying silent in a quarrel) and 10 step-check cases. A red case is fixed in the agent's definition, not in the test.</li>
+      <li><strong>Prompt injection</strong> is tested on the live model: a web page and a PDF that give orders, and a file name that tries to forge a message line; the fixture plants a fake secret.</li>
+      <li><strong>Where code replaced the model:</strong> a lead-ranking model gave a verdict per lead, and 8 of its top 10 were leads I had skipped. Now the model only extracts 15 facts by JSON schema and the score is a formula in code: 540 leads read at $0.0014 each, 0 failures.</li>
+      <li><strong>Write scope:</strong> a hook lets agents write files only inside the project or a temp directory; Bash writes are left to the permission classifier.</li>
+      <li>Every session becomes a typed digest linked to its transcript; step cost is computed from transcripts by a script, not estimated by a model.</li>
+    </ul>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>Projects</h2>
+    <article class="project">
+      <h3><a href="https://caro.md/">caro.md</a></h3>
+      <p>A car import platform (Korea, China, USA → Moldova), in production. I'm the main contributor to the web app (325 of 596 commits, 169 of 172 pull requests merged): Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian).</p>
+      <ul>
+        <li>Korea catalog of 9,000+ cars read live from the Encar API through a pool of proxy exits, with Redis caching and a stale-copy fallback.</li>
+        <li>Turnkey cost calculator for three markets in USD, EUR and MDL at live rates.</li>
+        <li>40+ case pages.</li>
+        <li>Playwright end-to-end tests and Sentry.</li>
+      </ul>
+    </article>
+    <article class="project">
+      <h3><a href="https://infodreamhome.com/">infodreamhome.com</a></h3>
+      <p>The production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it (81 of 108 commits on main).</p>
+      <ul>
+        <li>Next.js 16 App Router with every route prerendered.</li>
+        <li>Lighthouse mobile accessibility 100 and performance 90+ on the key pages.</li>
+        <li>A quote form with email delivery through Resend.</li>
+        <li>JSON-LD and a sitemap.</li>
+      </ul>
+    </article>
+    <p class="projects-note">Both were built with Claude Code before the harness existed (it appeared on 3 November 2026): 340 and 104 commits carry a Claude co-author trailer.</p>
+  </section>
+
+  <section id="experience" class="experience">
+    <h2>Experience</h2>
+    <article class="org">
+      <h3>Freelance</h3>
+      <div class="position">
+        <h4>Senior Frontend Developer</h4>
+        <p class="when">Jun 2025 – present</p>
+        <ul>
+          <li>caro.md: car import platform (Korea, China, USA → Moldova), in production; main contributor to the web app.</li>
+          <li>Dream Home Construction (infodreamhome.com): production website for a licensed Las Vegas general contractor, live since October 2026; built most of the site.</li>
+          <li>Agency prototypes: e-commerce prototypes and a modular shop template (Vendure, Payload, Next.js) for agency leads; AI-agent-driven workflow from discovery to deployed prototype.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="org">
+      <h3>Otherweb (acquired by S.A.I.) · Chișinău</h3>
+      <div class="position">
+        <h4>Web Developer</h4>
+        <p class="when">Dec 2024 – May 2025</p>
+        <ul>
+          <li>Autoblogger, an AI post generator (React): real-time AI chat over SSE, Stripe payments, React Query caching fix, Clerk edge cases, custom lint pipeline (oxlint, ESLint, Stylelint).</li>
+        </ul>
+      </div>
+      <div class="position">
+        <h4>Lead Mobile Developer</h4>
+        <p class="when">Aug 2023 – Dec 2024</p>
+        <ul>
+          <li>News aggregator app (React Native): led mobile development, moved to native navigation and fixed Android 13 crashes; contributed a <a href="https://github.com/react/react-native/pull/39893">PlatformColor fix</a> to React Native core.</li>
+          <li>Generated API clients with Orval + RTK Query and styles/icons from the Figma REST API; CI/CD on GitHub Actions with a Mac Mini runner; Sentry with Redux and navigation logging; offline audio; image resizer service in Next.js; pre-push linting with Husky, moved the project to Bun.</li>
+          <li>Mentored junior developers and improved the team's code quality.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="org">
+      <h3>Raters (freelance)</h3>
+      <div class="position">
+        <h4>Frontend Developer</h4>
+        <p class="when">Jan 2022 – May 2023</p>
+        <ul>
+          <li>Social network for movie lovers (Next.js): full internationalization, Redux Toolkit with Next.js routing.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="org">
+      <h3>DexTechnology · Tiraspol</h3>
+      <div class="position">
+        <h4>Frontend Team Lead</h4>
+        <p class="when">Dec 2021 – Jul 2022</p>
+        <ul>
+          <li>Winline / FC Krasnodar club app: runtime SVG ticket selector with 200+ seats, native navigation; managed 5 in-house developers.</li>
+          <li>Sbermarket delivery app: offline product storage (WatermelonDB), event-driven logic (RxJS), Storybook design-review app; managed 3 outsourced developers.</li>
+          <li>Mentored junior developers and improved the team's code quality.</li>
+        </ul>
+      </div>
+      <div class="position">
+        <h4>React Native Developer</h4>
+        <p class="when">Jul 2018 – Dec 2021</p>
+        <ul>
+          <li>KFC: automated builds with Fastlane, live updates with Expo.</li>
+          <li>Papa John's: Yandex Maps native module, handling of 10 MB+ API responses.</li>
+          <li>Big3 basketball club: chat with Redux Saga.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <dl class="skill-groups">
+      <div><dt>Frontend</dt><dd>React, Next.js (App Router, prerendering), TypeScript, JavaScript, HTML, CSS, Tailwind CSS, React Hook Form, Zod, TanStack Query, Redux Toolkit, Redux Saga, RxJS, next-intl / i18n, Storybook, Figma REST API</dd></div>
+      <div><dt>Quality</dt><dd>Playwright end-to-end tests, Lighthouse (performance, accessibility), WCAG AA contrast, Core Web Vitals, SEO (structured data, sitemaps, link previews), Sentry</dd></div>
+      <div><dt>Mobile</dt><dd>React Native, Expo, native navigation, Fastlane, offline storage (WatermelonDB), audio (react-native-track-player), native modules</dd></div>
+      <div><dt>Backend &amp; data</dt><dd>Node.js, NestJS, Hono, Prisma, PostgreSQL, Redis, Django admin, REST, GraphQL</dd></div>
+      <div><dt>Integrations</dt><dd>Stripe, Clerk, Resend, Firebase, third-party APIs and proxies</dd></div>
+      <div><dt>Delivery</dt><dd>GitHub Actions, Docker, Dokploy, Orval API clients, ESLint / oxlint, Husky, Bun</dd></div>
+      <div><dt>AI</dt><dd>LLM features (OpenAI, Claude), real-time chat over SSE, AI-assisted development (Claude Code, GitHub Copilot)</dd></div>
+    </dl>
+  </section>
+
+  <section id="education" class="education">
+    <h2>Education and languages</h2>
+    <ul class="degrees">
+      <li><span class="degree">MSc, Information Systems and Technologies</span> <span class="degree-where">Dniester State University, 2017–2019, GPA 4.2/5</span></li>
+      <li><span class="degree">BS, Informatics and Computer Engineering</span> <span class="degree-where">Dniester State University, 2013–2017, GPA 4.5/5</span></li>
+    </ul>
+    <p class="languages">English (fluent) · Russian (native)</p>
+  </section>
+</main>
+
+<footer class="colophon">
+  <ul>
+    <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
+    <li><a href="/llms.txt">llms.txt</a></li>
+    <li>Figures as of 12 November 2026</li>
+  </ul>
+</footer>
+</body>
+</html>
