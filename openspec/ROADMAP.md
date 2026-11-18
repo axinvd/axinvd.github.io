@@ -39,34 +39,13 @@ Out: тексты LinkedIn; раздел для фриланс-клиентов.
 Done when: сайт открыт по `https://axinvd.github.io`, проходит проверку телефона (390) и SEO/AEO по правилам владельца.
 Decide: —
 
-### walk-fixes-1
-Depends: cv-site
-Goal: поправить сайт-резюме по замечаниям персоны (нанимающий менеджер AI-продукта) и дизайнера после cv-site.
-Scope: замечания, которые не блокировали cv-site, одной строкой на каждое (friction → polish):
-- friction — у кейса harness нет ссылки на репозиторий, демо или пример прогона, проверить «правда ли это» нельзя; ждётся ссылка или честное «private; shown on request» (решение владельца: что можно показать).
-- friction — кейс harness занимает около 4000 px прокрутки на телефоне до блока Projects, вторая половина — жаргон (MCP, `--strict-mcp-config`, `claude -p`, `--match-head-commit`, worktree); ждётся короткое резюме сверху, детали свёрнуты или после проектов (меняет порядок блоков из D7 и спеку).
-- friction — «121 roadmap steps» рядом с «harness appeared 3 November 2026» и «as of 12 November» читается как завышение: страница не говорит, что такое шаг и каков диапазон дат; ждётся строка-определение шага и даты.
-- friction — PDF позиционирует иначе, чем страница: «Senior Frontend Developer», «Looking for remote frontend roles», без harness; сайт ведёт с AI product engineer (решение владельца: обновить `cv-en.md` или оставить как есть).
-- friction — у карточек caro.md и infodreamhome.com нет скриншота, результаты (Lighthouse 100/90+, 9 000+) ничем не подтверждены.
-- polish — голос меняется: лид в третьем лице («He builds…»), дальше первое лицо («I ship…»).
-- polish — «my studio» / «tg-flow lets my studio…»: студия нигде не представлена.
-- polish — подзаголовки кейса («The hardest problems…», «What I measured», «How the agents are checked», «Limits») мелкие серые моно и читаются как подписи, а не заголовки.
-- polish — строка футера «under 150 KB and loads nothing from other sites» читателю-нанимателю не нужна (спека cv-page требует «under 150 KB»: правка спеки).
-- polish — `/favicon.ico` отдаёт 404: ошибка в консоли и пустая иконка вкладки.
-- polish — заголовок «Case: a multi-agent harness on Claude Code» с префиксом «Case:» звучит странно.
-- polish — `/llms.txt` на локальном `python3 -m http.server` отдаётся без charset (Chișinău читается как «ChiÈ™inÄƒu»); на Pages charset utf-8, так что только превью шага: тестовому и превью-серверу дать UTF-8 или принять.
-Out: новые разделы; тексты LinkedIn.
-Done when: каждая строка либо исправлена, либо снята владельцем с причиной; полная проверка зелёная; телефон 390 без обрезки.
-Decide: —
-
 ## Follow-ups
 
 - После мержа cv-site руками владельца: Settings → Pages → Source «GitHub Actions» (или `gh api -X PUT repos/axinvd/axinvd.github.io/pages -f build_type=workflow`), один раз запустить workflow Pages, затем живая проверка `BASE_URL=https://axinvd.github.io npx playwright test`, скриншот живой страницы в 390 и `/CLAUDE.html` → 404 (из cv-site, репо axinvd.github.io)
 - JSON-LD: `Person` должен быть отдельным узлом `@graph`, а `ProfilePage.mainEntity` — ссылкой по `@id`; хелпер контрактных тестов разворачивает только `@graph`, вложенный `Person` ломает «The three copies are identical» (из cv-site, репо axinvd.github.io; знание для правки JSON-LD)
 - GitHub App бота не может пушить `.github/workflows/*` без права `workflows` (владелец выдал 2026-11-18); любой шаг, трогающий workflow, зависит от него (из cv-site, репо axinvd.github.io)
-- Вопросы владельцу по странице: формулировка про Pencil и Open Design (в источниках нет, что делал каждый инструмент), есть ли измеренный бизнес-результат проектов, оставлять ли телефон на публичной странице (из cv-site, репо axinvd.github.io)
+- Обновить `~/projects/freelance_leads/cv/cv-en.md` под AI product (заголовок, summary, строка про harness: сейчас «Senior Frontend Developer», «Looking for remote frontend roles»), затем пересобрать `site/ivan-alexandrov-cv.pdf` двумя командами из CLAUDE.md репо axinvd.github.io, открыть страницу 1 и снять skip с теста «The PDF matches the current CV» (из cv-site; обновление CV — репо freelance_leads, PDF — репо axinvd.github.io)
+- В `~/.claude/memory/projects-map.md` у `caro_md` вместо «Django-шаблоны» написать «Next.js + Django admin»: публичный сайт на Next.js, Django только админка и API (проверено в репо caro_md при cv-site; репо `.claude`)
+- `/llms.txt` на локальном `python3 -m http.server` отдаётся без charset (Chișinău читается кракозябрами); на Pages utf-8, так что касается только превью и тестового сервера шага (из cv-site, репо axinvd.github.io)
 
 ## Candidates (user decides)
-- Короткая строка простым языком, как гейты одобрения, журнал и «ничего не мержится без человека» переносятся на работу в регулируемой отрасли — нанимающий менеджер из регулируемой отрасли: история харнесса ровно про его заботу, а связь приходится додумывать (from cv-site)
-- Ссылка на публичный репозиторий или запись прохода одного шага харнесса, чтобы проверить заявленное за пару минут — нанимающий менеджер: на странице нечего проверить (from cv-site)
-- Порядок «сначала проекты, глубокий разбор ниже» или меню перехода — нанимающий менеджер с телефона: продакшен-сайты клиентов видны только после пяти экранов кейса (from cv-site)
