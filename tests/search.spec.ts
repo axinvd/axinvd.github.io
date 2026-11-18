@@ -129,7 +129,7 @@ test('JSON-LD parses and matches the page', async ({ page }) => {
   }
 });
 
-test('The three copies are identical', async ({ page, request }) => {
+test('The definition copies agree', async ({ page, request }) => {
   await open(page);
   const ld = await jsonld(page);
   const types = (n: any) => ([] as string[]).concat(n['@type'] || []);
@@ -141,9 +141,16 @@ test('The three copies are identical', async ({ page, request }) => {
   expect(firstP, 'a first paragraph in main').not.toBeNull();
   expect(person?.description, 'a Person description').toBeTruthy();
   expect(quote, 'a «> » line in llms.txt').toBeTruthy();
-  const def = collapse(firstP!);
-  expect(collapse(person.description)).toBe(def);
-  expect(collapse(quote!.slice(2))).toBe(def);
+  const def = collapse(person.description);
+  expect(collapse(quote!.slice(2)), 'llms.txt summary equals Person.description').toBe(def);
+  expect(def.startsWith('Ivan Alexandrov is'), `description starts with «Ivan Alexandrov is»: ${def.slice(0, 40)}`).toBe(true);
+  const phrases = [
+    'AI product and frontend engineer working remotely from Chișinău, Moldova',
+    'web products in React and Next.js for clients',
+    'multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request',
+  ];
+  expect(missing(def, phrases), 'the three phrases in Person.description').toEqual([]);
+  expect(missing(firstP!, phrases), 'the three phrases in the first paragraph of main').toEqual([]);
 });
 
 test('llms.txt is in llmstxt.org shape', async ({ request }) => {

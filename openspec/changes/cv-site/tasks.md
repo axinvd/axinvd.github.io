@@ -58,28 +58,28 @@ titled with the scenario name.
 - [x] 1.8 cv-page «The role chain reads as text»: inside the harness section, the chain's list (or
   diagram) text holds the nine step names in the given order, matched case-insensitively. Match on the
   chain element, not on the whole section, since the outcome sentences name the roles too.
-  → tests/page.spec.ts: The role chain reads as text
+  → tests/page.spec.ts: The pipeline and its control points read as text (revised by 4.7)
 - [x] 1.9 cv-page «Measured findings are shown with their baseline and date»: the six quoted phrases
   (case-insensitive) and «as of 12 November 2026» in the harness section. The baseline clause, in the
   same sentence or the one before, is checked by the verifier against D7 (m1–m3).
   → tests/page.spec.ts: Measured findings are shown with their baseline and date
 - [x] 1.10 cv-page «Hard problems come with their fixes»: three or four items, with the three named
   topics (own approval, comment as consent, the first verifier).
-  → tests/page.spec.ts: Hard problems come with their fixes
+  → tests/page.spec.ts: Hard problems come with what changed (revised by 4.8)
 - [x] 1.11 cv-page «How agents are checked, and the limits»: «live model», «prompt injection»,
   «file tools», «--match-head-commit» in the harness section.
-  → tests/page.spec.ts: How agents are checked, and the limits
+  → tests/page.spec.ts: Live-model testing and the limits (revised by 4.10)
 - [x] 1.12 cv-page «The case does not overclaim or count activity»: the required statements present (for
   the «built before the harness» sentence, «both sites» or the two names both pass),
   every listed phrase absent (case-insensitive, over `body.innerText`).
-  → tests/page.spec.ts: The case does not overclaim or count activity
+  → tests/page.spec.ts: The page does not overclaim or count activity (revised by 4.11)
 - [x] 1.13 cv-page «Project links open the live sites»: the two `href`s, with no network call to the
   external sites.
   → tests/page.spec.ts: Project links open the live sites
 - [x] 1.14 cv-page «Each project leads with its hard part»: per entry, «9,000+», «stale copy»,
   «turnkey», «Pencil»; «Las Vegas», «100», «90+», «Open Design»; «leads come in» in both
   (case-insensitive).
-  → tests/page.spec.ts: Each project leads with its hard part
+  → tests/page.spec.ts: caro.md leads with its hard part and its practices; infodreamhome.com leads with its hard part and its practices (revised by 4.4)
 - [x] 1.15 cv-page «Contacts are links»: the four literal `href`s inside `header`. For email, one
   `mailto:` link in `header` whose `href` matches `^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$` and whose
   visible text equals the address after `mailto:`. No literal email address anywhere in `tests/`:
@@ -122,7 +122,7 @@ titled with the scenario name.
   `outline-style` is not `none`, or its `box-shadow` is not `none`.
   → tests/page.spec.ts: Focus is visible
 - [x] 1.28 cv-page «No third-party requests»: every request's origin equals the page origin.
-  → tests/page.spec.ts: No third-party requests
+  → tests/page.spec.ts: No third-party requests and no errors (revised by 4.13)
 - [x] 1.29 cv-page «Weight budget»: the sum of response body sizes, the PDF aside, is at most
   150 × 1024 bytes; the `footer` text contains «under 150 KB» and not «Lighthouse».
   → tests/page.spec.ts: Weight budget
@@ -141,7 +141,7 @@ titled with the scenario name.
   → tests/search.spec.ts: JSON-LD parses and matches the page
 - [x] 1.34 search-readiness «The three copies are identical»: first `p` of `main`,
   `Person.description` and the `> ` line of `/llms.txt`, whitespace collapsed.
-  → tests/search.spec.ts: The three copies are identical
+  → tests/search.spec.ts: The definition copies agree (revised by 4.15)
 - [x] 1.35 search-readiness «llms.txt is in llmstxt.org shape».
   → tests/search.spec.ts: llms.txt is in llmstxt.org shape
 - [x] 1.36 search-readiness «The page links llms.txt».
@@ -169,7 +169,7 @@ titled with the scenario name.
   for what is missing: no PDF, no search files, no workflow, or a page element or text the D7 copy
   does not have yet. None fails from a test error. 1.41 and 1.42 pass already. Tests that pass on the
   designer's page as it stands are fine; list them in the report. Commit as `cv-site: tests`.
-  → npx playwright test: red run, RUN_SLOT=1: 41 tests, 1 skipped, 30 pass, 10 red
+  → npx playwright test: first red run, RUN_SLOT=1: 41 tests, 1 skipped, 30 pass, 10 red (superseded by 4.16)
 
 ## 2. Site
 
@@ -225,46 +225,62 @@ The owner looked at the built page and answered. The changes are in design D7 (v
 
 Tester. Adapt `tests/` to the scenarios as they now read, without reading `site/`, then run the
 suite and expect red on the old page.
-- [ ] 4.1 Changed: cv-page «A recruiter opens the Portfolio URL». The first `p` of `main` contains
+- [x] 4.1 Changed: cv-page «A recruiter opens the Portfolio URL». The first `p` of `main` contains
   «I build», and no sentence of it starts with «He ».
-- [ ] 4.2 New: cv-page «Section order». The `h2` texts of `main` come in the given order, and none
+  → tests/page.spec.ts: A recruiter opens the Portfolio URL
+- [x] 4.2 New: cv-page «Section order». The `h2` texts of `main` come in the given order, and none
   starts with «Case:».
-- [ ] 4.3 Changed: cv-page «Project links open the live sites». The link texts are the domains, with
+  → tests/page.spec.ts: Section order
+- [x] 4.3 Changed: cv-page «Project links open the live sites». The link texts are the domains, with
   no `↗`, `→` or `➚` in them.
-- [ ] 4.4 New: cv-page «caro.md leads with its hard part and its practices», and «infodreamhome.com
+  → tests/page.spec.ts: Project links open the live sites
+- [x] 4.4 New: cv-page «caro.md leads with its hard part and its practices», and «infodreamhome.com
   leads with its hard part and its practices». These replace «Each project leads with its hard part».
   Match each entry by its link to its domain.
-- [ ] 4.5 New: cv-page «Leads, and when the sites were built». «leads come in through the site» in
+  → tests/page.spec.ts: caro.md leads with its hard part and its practices; infodreamhome.com leads with its hard part and its practices
+- [x] 4.5 New: cv-page «Leads, and when the sites were built». «leads come in through the site» in
   each entry, and the «built before the harness» sentence («both sites» or the two names).
-- [ ] 4.6 New: cv-page «The case fits a screen and a half». At 390 × 844 and again at 375 × 812, the
+  → tests/page.spec.ts: Leads, and when the sites were built
+- [x] 4.6 New: cv-page «The case fits a screen and a half». At 390 × 844 and again at 375 × 812, the
   `getBoundingClientRect().height` of the harness `section` (the one with the `h2` «A multi-agent
   harness on Claude Code») is at most 1266. The computed `font-size` of every `p` in it is at least
   16 px.
-- [ ] 4.7 Replaced: «The role chain reads as text» becomes «The pipeline and its control points read as
+  → tests/page.spec.ts: The case fits a screen and a half (390 × 844); The case fits a screen and a half (375 × 812)
+- [x] 4.7 Replaced: «The role chain reads as text» becomes «The pipeline and its control points read as
   text». The nine words come in order over the harness section's `innerText`, plus «one line» and
   «three-person studio».
-- [ ] 4.8 Replaced: «Hard problems come with their fixes» becomes «Hard problems come with what
+  → tests/page.spec.ts: The pipeline and its control points read as text
+- [x] 4.8 Replaced: «Hard problems come with their fixes» becomes «Hard problems come with what
   changed». One or two items under the `h3` «What went wrong», one naming the agent's own pull request
   and the GitHub App.
-- [ ] 4.9 Changed: cv-page «Measured findings are shown with their baseline and date». No
+  → tests/page.spec.ts: Hard problems come with what changed
+- [x] 4.9 Changed: cv-page «Measured findings are shown with their baseline and date». No
   «121 roadmap steps»; the five figures and «as of 12 November 2026» in the harness section.
-- [ ] 4.10 Replaced: «How agents are checked, and the limits» becomes «Live-model testing and the
+  → tests/page.spec.ts: Measured findings are shown with their baseline and date
+- [x] 4.10 Replaced: «How agents are checked, and the limits» becomes «Live-model testing and the
   limits».
-- [ ] 4.11 Replaced: «The case does not overclaim or count activity» becomes «The page does not
+  → tests/page.spec.ts: Live-model testing and the limits
+- [x] 4.11 Replaced: «The case does not overclaim or count activity» becomes «The page does not
   overclaim or count activity», with the new forbidden phrases («121», «roadmap steps have run»,
   «around the clock»).
-- [ ] 4.12 New, manual: cv-page «The PDF matches the current CV», as `test.skip` pointing to task
+  → tests/page.spec.ts: The page does not overclaim or count activity
+- [x] 4.12 New, manual: cv-page «The PDF matches the current CV», as `test.skip` pointing to task
   2.8.
-- [ ] 4.13 Changed: cv-page «No third-party requests and no errors». Also no response status ≥ 400
+  → tests/page.spec.ts: The PDF matches the current CV (test.skip, manual)
+- [x] 4.13 Changed: cv-page «No third-party requests and no errors». Also no response status ≥ 400
   during load.
-- [ ] 4.14 New: cv-page «The icon is inline». Changed: «Weight budget» (no footer sentence). New:
+  → tests/page.spec.ts: No third-party requests and no errors
+- [x] 4.14 New: cv-page «The icon is inline». Changed: «Weight budget» (no footer sentence). New:
   «The footer is plain».
-- [ ] 4.15 Replaced: search-readiness «The three copies are identical» becomes «The definition
+  → tests/page.spec.ts: The icon is inline; Weight budget; The footer is plain
+- [x] 4.15 Replaced: search-readiness «The three copies are identical» becomes «The definition
   copies agree». JSON-LD `Person.description` equals the `> ` line of `llms.txt` and starts with
   «Ivan Alexandrov is». It and the first `p` of `main` each contain the three phrases.
-- [ ] 4.16 Red run. Verify: `export RUN_SLOT=1 && npx playwright test` fails, and only the tests of
+  → tests/search.spec.ts: The definition copies agree
+- [x] 4.16 Red run. Verify: `export RUN_SLOT=1 && npx playwright test` fails, and only the tests of
   4.1–4.15 fail, each for the old page's content or order, not for a test error. Commit as
   `cv-site: tests — revision round`.
+  → npx playwright test, RUN_SLOT=1: 49 tests, 2 skipped (manual), 46 pass, 1 red (Person.description lacks def-3p, task 4.18). On the old page (beb6e5b, BASE_URL): 15 red, 32 pass
 
 Designer, then implementer.
 - [ ] 4.17 Designer: rebuild `site/index.html` and `site/style.css` to D7 v3 and «Screens» 1–11.

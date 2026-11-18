@@ -34,7 +34,9 @@ test.describe('Who he is', () => {
     expect(d.role, 'a role line after the h1 naming both roles').not.toBeNull();
     expect(missing(d.role!, ['AI Product Engineer', 'Senior Frontend'])).toEqual([]);
     expect(d.firstP, 'a paragraph in main').not.toBeNull();
-    expect(missing(d.firstP!, ['Chișinău', 'remote', 'harness'])).toEqual([]);
+    expect(missing(d.firstP!, ['Chișinău', 'remote', 'harness', 'I build'])).toEqual([]);
+    const he = d.firstP!.split(/(?<=[.!?])\s+/).filter((x) => x.startsWith('he '));
+    expect(he, 'sentences of the first paragraph that start with «He »').toEqual([]);
   });
 
   test('The page says what roles he is open to', async ({ page }) => {
@@ -83,7 +85,7 @@ test.describe('The first phone screen', () => {
         outcome2: top(p.out2),
         github: link('a[href="https://github.com/axinvd"]'),
         pdf: link('a[href="/ivan-alexandrov-cv.pdf"]'),
-        email: link('a[href^="mailto:"]'),
+        email: link('header a[href^="mailto:"]'),
       };
     });
     expect(tops.scrollY).toBe(0);
@@ -93,6 +95,22 @@ test.describe('The first phone screen', () => {
       expect(top as number, `${name} top edge is above 844 px`).toBeLessThan(844);
     }
   });
+});
+
+test('Section order', async ({ page }) => {
+  await open(page);
+  const d = await page.evaluate(() => ({
+    h2: Array.from(document.querySelectorAll('main h2')).map((h) => window.__t.norm(h.textContent || '')),
+    all: Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,h6')).map((h) => window.__t.norm(h.textContent || '')),
+  }));
+  expect(d.h2).toEqual([
+    'projects',
+    'a multi-agent harness on claude code',
+    'experience',
+    'skills',
+    'education and languages',
+  ]);
+  expect(d.all.filter((h) => h.startsWith('case:')), 'headings that start with «Case:»').toEqual([]);
 });
 
 const SKILLS: Record<string, string[]> = {
@@ -170,100 +188,150 @@ test('Positions, education and languages are shown', async ({ page }) => {
 });
 
 test.describe('The harness case', () => {
-  const NINE = ['Orchestrator', 'Architect', 'Designer', 'Tester', 'Implementer', 'Verifier', 'Pull request', 'Approve', 'Merge'];
+  const NINE = ['orchestrator', 'architect', 'designer', 'tester', 'implementer', 'verifier', 'pull request', 'approve', 'merge'];
+  const harnessText = async (page: any): Promise<string | null> =>
+    page.evaluate(() => {
+      const h = window.__t.harness();
+      return h ? h.text : null;
+    });
 
-  test('The role chain reads as text', async ({ page }) => {
+  for (const vp of [{ width: 390, height: 844 }, { width: 375, height: 812 }]) {
+    test(`The case fits a screen and a half (${vp.width} × ${vp.height})`, async ({ page }) => {
+      await page.setViewportSize(vp);
+      await open(page);
+      const d = await page.evaluate(() => {
+        const h = window.__t.harness();
+        if (!h || !h.section) return null;
+        const sizes = Array.from(h.section.querySelectorAll('p')).map((p) => parseFloat(getComputedStyle(p).fontSize));
+        return { height: h.section.getBoundingClientRect().height, sizes };
+      });
+      expect(d, 'a section holding the h2 «A multi-agent harness on Claude Code»').not.toBeNull();
+      expect(d!.height, `height of the harness section at ${vp.width} px`).toBeLessThanOrEqual(1266);
+      expect(d!.sizes.length, 'paragraphs in the harness section').toBeGreaterThan(0);
+      expect(Math.min(...d!.sizes), 'smallest paragraph font-size in it').toBeGreaterThanOrEqual(16);
+    });
+  }
+
+  test('The pipeline and its control points read as text', async ({ page }) => {
     await open(page);
-    const d = await page.evaluate((nine) => {
+    const text = await harnessText(page);
+    expect(text, 'a section with the h2 «A multi-agent harness on Claude Code»').not.toBeNull();
+    let at = 0;
+    for (const w of NINE) {
+      const i = text!.indexOf(w, at);
+      expect(i, `«${w}» comes after the one before it`).toBeGreaterThanOrEqual(0);
+      at = i + w.length;
+    }
+    expect(missing(text!, ['one line', 'three-person studio', 'own tool']), 'phrases of the pipeline part').toEqual([]);
+    expect(missing(text!, ['chat message', 'comment', 'count']), 'a chat message or a PR comment does not count').toEqual([]);
+  });
+
+  test('Hard problems come with what changed', async ({ page }) => {
+    await open(page);
+    const items = await page.evaluate(() => {
       const t = window.__t;
-      const r = t.region(/harness/);
+      const r = t.region(/^what went wrong$/);
       if (!r) return null;
-      const inOrder = (txt: string) => {
-        let at = 0;
-        for (const n of nine) {
-          const i = txt.indexOf(n.toLowerCase(), at);
-          if (i < 0) return false;
-          at = i + n.length;
-        }
-        return true;
-      };
-      const cands = t.leafMatches(r.els, (txt: string) => inOrder(txt));
-      return cands.map((el: Element) => ({ tag: el.tagName, text: t.norm(el.textContent || '') }));
-    }, NINE);
-    expect(d, 'a heading naming the harness').not.toBeNull();
-    expect(d!.length, 'an element of the harness section that holds the nine steps in order').toBeGreaterThan(0);
-    // The chain element, not the whole section: it is small, and it is not a section or main.
-    const chain = d!.find((c) => c.text.length <= 1500 && !['SECTION', 'MAIN', 'BODY', 'ARTICLE'].includes(c.tag));
-    expect(chain, `a chain element of its own (found: ${d!.map((c) => c.tag + ':' + c.text.length).join(', ')})`).toBeTruthy();
-    const txt = chain!.text;
-    const pr = txt.indexOf('pull request', txt.indexOf('verifier'));
-    const merge = txt.indexOf('merge', txt.indexOf('approve', pr));
-    const approveStep = txt.slice(pr, merge);
-    expect(approveStep, "the Approve step names GitHub").toContain('github');
-    expect(/owner|\bmy\b|\bhis\b|ivan/.test(approveStep), "the Approve step is the owner's").toBe(true);
+      const lis = r.els.filter((e: Element) => e.tagName === 'LI');
+      const list = lis.length ? lis : r.els.filter((e: Element) => e.tagName === 'P');
+      return list.filter((l: Element) => !list.some((o: Element) => o !== l && l.contains(o))).map((e: Element) => t.norm(e.textContent || ''));
+    });
+    expect(items, 'an h3 «What went wrong»').not.toBeNull();
+    expect(items!.length, `one or two problems (got ${items!.length})`).toBeGreaterThanOrEqual(1);
+    expect(items!.length, `one or two problems (got ${items!.length})`).toBeLessThanOrEqual(2);
+    expect(
+      items!.some((s) => s.includes('approve') && s.includes('own pull request') && s.includes('github app')),
+      "an item names the agent's own pull request and the GitHub App",
+    ).toBe(true);
+    const fix = /\b(now|changed|instead|fix\w*|split|recount\w*|replac\w*|moved|since|so i|no longer)\b/;
+    for (const s of items!) expect(fix.test(s), `an item says what changed: «${s.slice(0, 80)}…»`).toBe(true);
   });
 
   test('Measured findings are shown with their baseline and date', async ({ page }) => {
     await open(page);
-    const text = await page.evaluate(() => {
-      const r = window.__t.region(/harness/);
-      return r ? r.lines.join(' ') : null;
-    });
-    expect(text, 'a heading naming the harness').not.toBeNull();
-    expect(
-      missing(text!, ['121 roadmap steps', '135,948', '6,344', 'none of 74 steps', '14 of 46', '8 of its top 10', 'as of 12 November 2026']),
-    ).toEqual([]);
+    const text = await harnessText(page);
+    expect(text, 'a harness section').not.toBeNull();
+    expect(missing(text!, ['135,948', '6,344', 'none of 74 steps', '14 of 46', '8 of its top 10', 'as of 12 November 2026'])).toEqual([]);
+    expect(found(text!, ['121 roadmap steps']), 'no step count').toEqual([]);
   });
 
-  test('Hard problems come with their fixes', async ({ page }) => {
+  test('Live-model testing and the limits', async ({ page }) => {
     await open(page);
-    const d = await page.evaluate(() => {
-      const t = window.__t;
-      const r = t.region(/hardest problems|hard problems/);
-      if (!r) return null;
-      const lis = r.els.filter((e: Element) => e.tagName === 'LI');
-      const dts = r.els.filter((e: Element) => e.tagName === 'DT');
-      const arts = r.els.filter((e: Element) => e.tagName === 'ARTICLE');
-      const ps = r.els.filter((e: Element) => e.tagName === 'P');
-      // The items are the list items, or the definition terms, or the articles, or else the paragraphs.
-      let items: string[];
-      if (lis.length) items = lis.filter((l: Element) => !lis.some((o: Element) => o !== l && l.contains(o))).map((e: Element) => t.norm(e.textContent || ''));
-      else if (dts.length) items = dts.map((e: Element) => t.norm((e.textContent || '') + ' ' + (e.nextElementSibling?.textContent || '')));
-      else if (arts.length) items = arts.map((e: Element) => t.norm(e.textContent || ''));
-      else items = ps.map((e: Element) => t.norm(e.textContent || ''));
-      return items;
-    });
-    expect(d, 'a heading «The hardest problems…»').not.toBeNull();
-    const items = d!;
-    expect(items.length, `three or four problems (got ${items.length})`).toBeGreaterThanOrEqual(3);
-    expect(items.length, `three or four problems (got ${items.length})`).toBeLessThanOrEqual(4);
-    const has = (pred: (s: string) => boolean) => items.some(pred);
-    expect(has((s) => s.includes('approve') && s.includes('own pull request')), 'an agent trying to approve its own pull request').toBe(true);
-    expect(has((s) => s.includes('comment') && (s.includes('consent') || s.includes('approve'))), 'a PR comment taken as consent').toBe(true);
-    expect(has((s) => s.includes('first verifier')), "the case's own numbers failing the first verifier").toBe(true);
-    const fix = /\b(now|changed|instead|fix\w*|split|recount\w*|replac\w*|moved|since|so that|no longer)\b/;
-    for (const s of items) expect(fix.test(s), `an item says what changed: «${s.slice(0, 80)}…»`).toBe(true);
+    const text = await harnessText(page);
+    expect(text, 'a harness section').not.toBeNull();
+    expect(missing(text!, ['chat agent', 'live model', 'prompt injection', 'file tools', '--match-head-commit'])).toEqual([]);
   });
 
-  test('How agents are checked, and the limits', async ({ page }) => {
-    await open(page);
-    const text = await page.evaluate(() => {
-      const r = window.__t.region(/harness/);
-      return r ? r.lines.join(' ') : null;
-    });
-    expect(text, 'a heading naming the harness').not.toBeNull();
-    expect(missing(text!, ['live model', 'prompt injection', 'file tools', '--match-head-commit'])).toEqual([]);
-  });
-
-  test('The case does not overclaim or count activity', async ({ page }) => {
+  test('The page does not overclaim or count activity', async ({ page }) => {
     await open(page);
     const body = await page.evaluate(() => document.body.innerText);
-    const flat = norm(body);
-    const sents = flat.split(/(?<=[.!?])\s+/);
-    expect(
-      sents.some((s) => s.includes('own tool') && s.includes('studio') && s.includes('repositories')),
-      "a sentence says the harness is his own tool, used on his own and his studio's repositories",
-    ).toBe(true);
+    const banned = [
+      'sandboxed', 'eval suite', '011.md', 'Distru', 'main contributor', 'pull requests merged', '47 pull requests',
+      '31 merged', '121', 'roadmap steps have run', 'around the clock', '$474.9', '469 role calls', '413 tests', '2,923',
+      '325 of 596', '81 of 108', 'circuit breaker', '407', 'IP ban',
+    ];
+    expect(found(body, banned), 'phrases the page must not contain').toEqual([]);
+  });
+});
+
+test.describe('Projects', () => {
+  const CARO = 'https://caro.md/';
+  const DH = 'https://infodreamhome.com/';
+  async function entry(page: any, href: string, other: string) {
+    return page.evaluate(([h, o]: string[]) => {
+      const e = window.__t.entryOf(h, o);
+      return e ? { text: e.text, linkText: e.linkText } : null;
+    }, [href, other]);
+  }
+
+  test('Project links open the live sites', async ({ page }) => {
+    await open(page);
+    const d = await page.evaluate(() => {
+      const r = window.__t.region(/^projects$/);
+      if (!r) return null;
+      return r.els
+        .filter((e: Element) => e.tagName === 'A')
+        .map((e: Element) => ({
+          href: e.getAttribute('href'),
+          text: (e.textContent || '').replace(/\s+/g, ' ').trim(),
+          pseudo: getComputedStyle(e, '::before').content + getComputedStyle(e, '::after').content,
+        }));
+    });
+    expect(d, 'a heading «Projects»').not.toBeNull();
+    for (const [href, text] of [[CARO, 'caro.md'], [DH, 'infodreamhome.com']]) {
+      const l = d!.find((x: any) => x.href === href);
+      expect(l, `a link to ${href}`).toBeTruthy();
+      expect(l.text, `link text of ${href}`).toBe(text);
+      expect(l.text + l.pseudo, 'no arrow glyph in the text or added by CSS').not.toMatch(/[↗→➚]/);
+    }
+  });
+
+  test('caro.md leads with its hard part and its practices', async ({ page }) => {
+    await open(page);
+    const e = await entry(page, CARO, DH);
+    expect(e, 'a caro.md entry (the ancestor of its link that holds no other project)').not.toBeNull();
+    expect(missing(e.text, ['9,000+', 'stale copy', 'turnkey', 'Pencil', 'end-to-end', 'patch note'])).toEqual([]);
+  });
+
+  test('infodreamhome.com leads with its hard part and its practices', async ({ page }) => {
+    await open(page);
+    const e = await entry(page, DH, CARO);
+    expect(e, 'an infodreamhome.com entry (the ancestor of its link that holds no other project)').not.toBeNull();
+    expect(missing(e.text, ['Las Vegas', 'Lighthouse', '100', '90+', 'Open Design', 'scenarios', 'content modules'])).toEqual([]);
+  });
+
+  test('Leads, and when the sites were built', async ({ page }) => {
+    await open(page);
+    const caro = await entry(page, CARO, DH);
+    const dh = await entry(page, DH, CARO);
+    expect(caro && dh, 'both project entries').toBeTruthy();
+    expect(missing(caro.text, ['leads come in through the site']), 'caro.md entry').toEqual([]);
+    expect(missing(dh.text, ['leads come in through the site']), 'infodreamhome.com entry').toEqual([]);
+    const text = await page.evaluate(() => {
+      const r = window.__t.region(/^projects$/);
+      return r ? r.lines.join(' ') : '';
+    });
+    const sents = norm(text).split(/(?<=[.!?])\s+/);
     expect(
       sents.some(
         (s) =>
@@ -271,59 +339,8 @@ test.describe('The harness case', () => {
           s.includes('claude code') &&
           (s.includes('both sites') || (s.includes('caro.md') && s.includes('infodreamhome.com'))),
       ),
-      'a sentence says caro.md and infodreamhome.com were built with Claude Code before the harness existed',
+      'a sentence in Projects says both production sites were built with Claude Code before the harness existed',
     ).toBe(true);
-    const banned = [
-      'sandboxed', 'eval suite', '011.md', 'Distru', 'main contributor', 'pull requests merged', '47 pull requests',
-      '31 merged', '$474.9', '469 role calls', '413 tests', '2,923', '325 of 596', '81 of 108', 'circuit breaker', '407', 'IP ban',
-    ];
-    expect(found(body, banned), 'phrases the page must not contain').toEqual([]);
-  });
-});
-
-test.describe('Projects', () => {
-  // The entry of a site: the text under the heading that names it inside the Projects section; if
-  // the entries have no headings of their own, the lines from the first mention of the site.
-  async function entries(page: any) {
-    return page.evaluate(() => {
-      const t = window.__t;
-      const r = t.region(/^projects$/);
-      if (!r) return null;
-      const entry = (site: string, other: string) => {
-        const h = r.els.find((e: Element) => t.isHeading(e) && t.norm(e.textContent || '').includes(site));
-        if (h) {
-          const stop = t.endOf(h);
-          return t.lines(h, stop).join(' ');
-        }
-        const a = r.lines.findIndex((l: string) => t.norm(l).includes(site));
-        if (a < 0) return null;
-        const b = r.lines.findIndex((l: string, i: number) => i > a && t.norm(l).includes(other));
-        return r.lines.slice(a, b > a ? b : undefined).join(' ');
-      };
-      return {
-        links: r.els.filter((e: Element) => e.tagName === 'A').map((e: Element) => e.getAttribute('href')),
-        caro: entry('caro.md', 'infodreamhome.com'),
-        dh: entry('infodreamhome.com', 'caro.md'),
-      };
-    });
-  }
-
-  test('Project links open the live sites', async ({ page }) => {
-    await open(page);
-    const d = await entries(page);
-    expect(d, 'a heading «Projects»').not.toBeNull();
-    expect(d.links).toContain('https://caro.md/');
-    expect(d.links).toContain('https://infodreamhome.com/');
-  });
-
-  test('Each project leads with its hard part', async ({ page }) => {
-    await open(page);
-    const d = await entries(page);
-    expect(d, 'a heading «Projects»').not.toBeNull();
-    expect(d.caro, 'a caro.md entry').not.toBeNull();
-    expect(d.dh, 'an infodreamhome.com entry').not.toBeNull();
-    expect(missing(d.caro, ['9,000+', 'stale copy', 'turnkey', 'Pencil', 'leads come in']), 'caro.md entry').toEqual([]);
-    expect(missing(d.dh, ['Las Vegas', 'Lighthouse', '100', '90+', 'Open Design', 'leads come in']), 'infodreamhome.com entry').toEqual([]);
   });
 });
 
@@ -349,6 +366,9 @@ test('The PDF CV downloads', async ({ request }) => {
   expect(res.headers()['content-type']).toMatch(/^application\/pdf/);
   expect((await res.body()).subarray(0, 4).toString('latin1')).toBe('%PDF');
 });
+
+// Manual: the reviewer opens page 1 of the PDF next to cv-en.md (task 2.8).
+test.skip('The PDF matches the current CV: page 1 headline is cv-en.md line 3 and lists render as lists (task 2.8)', () => {});
 
 // Manual: the verifier compares the page text with the copy table of design.md (D7).
 test.skip('A reviewer checks the copy: each figure and claim on the page has a row in the D7 table of design.md', () => {});
@@ -523,13 +543,24 @@ test.describe('Themes and accessibility', () => {
 });
 
 test.describe('Light and self-contained', () => {
-  test('No third-party requests', async ({ page, baseURL }) => {
+  test('No third-party requests and no errors', async ({ page, baseURL }) => {
     const urls: string[] = [];
+    const bad: string[] = [];
     page.on('request', (r) => urls.push(r.url()));
+    page.on('response', (r) => {
+      if (r.status() >= 400) bad.push(`${r.status()} ${r.url()}`);
+    });
     await page.goto('/', { waitUntil: 'networkidle' });
     const origin = new URL(baseURL!).origin;
     const foreign = urls.filter((u) => /^https?:/.test(u) && new URL(u).origin !== origin);
     expect(foreign).toEqual([]);
+    expect(bad, 'responses with status 400 or above').toEqual([]);
+  });
+
+  test('The icon is inline', async ({ page }) => {
+    await open(page);
+    const hrefs = await page.evaluate(() => Array.from(document.querySelectorAll('link[rel~="icon"]')).map((l) => l.getAttribute('href') || ''));
+    expect(hrefs.some((h) => h.startsWith('data:image/svg+xml')), `icon links: ${hrefs.map((h) => h.slice(0, 30)).join(', ')}`).toBe(true);
   });
 
   test('Weight budget', async ({ page }) => {
@@ -542,8 +573,19 @@ test.describe('Light and self-contained', () => {
     const all = await Promise.all(bodies);
     const total = all.reduce((s, x) => s + x.size, 0);
     expect(total, `response bodies: ${all.map((x) => x.url.split('/').pop() + '=' + x.size).join(', ')}`).toBeLessThanOrEqual(150 * 1024);
-    const footer = await page.locator('footer').innerText();
-    expect(norm(footer)).toContain('under 150 kb');
-    expect(norm(footer)).not.toContain('lighthouse');
+  });
+
+  test('The footer is plain', async ({ page }) => {
+    await open(page);
+    const d = await page.evaluate(() => {
+      const f = document.querySelector('footer') as HTMLElement | null;
+      return f ? { text: f.innerText, hrefs: Array.from(f.querySelectorAll('a')).map((a) => a.getAttribute('href')) } : null;
+    });
+    expect(d, 'a footer').not.toBeNull();
+    expect(d!.hrefs).toContain('/ivan-alexandrov-cv.pdf');
+    expect(d!.hrefs).toContain('/llms.txt');
+    expect(norm(d!.text)).toContain('12 november 2026');
+    expect(d!.text, 'no «KB» in the footer').not.toContain('KB');
+    expect(norm(d!.text)).not.toContain('lighthouse');
   });
 });

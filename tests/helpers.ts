@@ -90,14 +90,37 @@ function pageHelpers() {
     return { heading: h, stop, lines: lines(h, stop), els: elementsAfter(h, stop) };
   };
 
-  // Everything before the harness heading: the intro block.
-  const harnessHeading = (): Element | null => headingMatching(/harness/);
+  // The harness case: the h2 «A multi-agent harness on Claude Code» and the section that holds it.
+  const harnessHeading = (): Element | null =>
+    Array.from(document.querySelectorAll('main h2')).find((h) => /^a multi-agent harness on claude code$/.test(norm(h.textContent || ''))) || null;
+  const harness = () => {
+    const h = harnessHeading();
+    if (!h) return null;
+    const section = h.closest('section');
+    const r = region(/^a multi-agent harness on claude code$/)!;
+    return { h2: h, section, lines: r.lines, els: r.els, text: norm(section ? (section as HTMLElement).innerText : r.lines.join(' ')) };
+  };
+
+  // Everything before the first h2 of main: the intro block (the header is included).
   const intro = () => {
-    const stop = harnessHeading();
+    const stop = document.querySelector('main h2');
     const els = Array.from(document.querySelectorAll('main *')).filter(
       (el) => !stop || (!el.contains(stop) && el !== stop && !!(stop.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING)),
     );
     return { stop, lines: lines(null, stop), els };
+  };
+
+  // The entry of a project: the highest ancestor of its link that does not hold the other project's
+  // link, taken inside the Projects section.
+  const entryOf = (href: string, otherHref: string): { el: Element; text: string; linkText: string } | null => {
+    const r = region(/^projects$/);
+    if (!r) return null;
+    const a = r.els.find((e) => e.tagName === 'A' && e.getAttribute('href') === href);
+    const other = r.els.find((e) => e.tagName === 'A' && e.getAttribute('href') === otherHref);
+    if (!a) return null;
+    let el: Element = a;
+    while (el.parentElement && el.parentElement !== document.body && (!other || !el.parentElement.contains(other)) && el.parentElement.tagName !== 'MAIN') el = el.parentElement;
+    return { el, text: norm((el as HTMLElement).innerText || el.textContent || ''), linkText: (a.textContent || '').replace(/\s+/g, ' ').trim() };
   };
 
   const firstP = (): Element | null => document.querySelector('main p');
@@ -131,7 +154,7 @@ function pageHelpers() {
   // Sentences of a text, split after . ! ? followed by a space.
   const sentences = (s: string): string[] => s.split(/(?<=[.!?])\s+/);
 
-  return { norm, headings, lines, endOf, headingMatching, region, intro, firstP, leafMatches, introParts, sentences, levelOf, isHeading };
+  return { norm, headings, lines, endOf, headingMatching, region, intro, harness, entryOf, firstP, leafMatches, introParts, sentences, levelOf, isHeading };
 }
 
 declare global {
