@@ -204,13 +204,6 @@ Implementer. Each task is done when the named tests pass under
   Stop the server by the listener on its port. Then check every figure on the page against D7: each
   has a row, and none is new.
 
-- [ ] 2.8 Rebuild the PDF after `cv-en.md` changes. The owner updates
-  `~/projects/freelance_leads/cv/cv-en.md` for AI product in his own repository. After that lands,
-  regenerate `site/ivan-alexandrov-cv.pdf` with the two D4 commands (`-f gfm`, A4). Verify: open page
-  1 as an image and check that its headline equals line 3 of `cv-en.md` and the lists are lists
-  (cv-page «The PDF matches the current CV»). `head -c 5` prints `%PDF-`, and «The PDF CV downloads»
-  passes. Today: the PDF carries «Senior Frontend Developer», line 3 of the current `cv-en.md`.
-
 ## 3. Integration
 
 - [x] 3.1 Full check from a clean tree. Verify: `export RUN_SLOT=1 && git diff --check && npx playwright test`
@@ -265,7 +258,7 @@ suite and expect red on the old page.
   «around the clock»).
   → tests/page.spec.ts: The page does not overclaim or count activity
 - [x] 4.12 New, manual: cv-page «The PDF matches the current CV», as `test.skip` pointing to task
-  2.8.
+  2.8 (now a line of design «Hands»).
   → tests/page.spec.ts: The PDF matches the current CV (test.skip, manual)
 - [x] 4.13 Changed: cv-page «No third-party requests and no errors». Also no response status ≥ 400
   during load.
@@ -283,11 +276,11 @@ suite and expect red on the old page.
   → npx playwright test, RUN_SLOT=1: 49 tests, 2 skipped (manual), 46 pass, 1 red (Person.description lacks def-3p, task 4.18). On the old page (beb6e5b, BASE_URL): 15 red, 32 pass
 
 Designer, then implementer.
-- [ ] 4.17 Designer: rebuild `site/index.html` and `site/style.css` to D7 v3 and «Screens» 1–11.
+- [x] 4.17 Designer: rebuild `site/index.html` and `site/style.css` to D7 v3 and «Screens» 1–11.
   That means the order, the short case, real subheadings, plain project links, the plain footer and
   the inline SVG favicon. Verify: the 4.x tests pass, and screenshots at 390 × 844 and 1280 × 800 in
   light and dark are opened. Commit `cv-site: page — revision round`.
-- [ ] 4.17a Designer: re-set the case in the shortened D7 v4 copy (o1–o3, hard1–2, m1–3, l1, asof,
+- [x] 4.17a Designer: re-set the case in the shortened D7 v4 copy (o1–o3, hard1–2, m1–3, l1, asof,
   `h3` «What went wrong») at the 16 px phone body, dropping the 15 px exception. Verify: the case
   measures about 1150 px at 390 and stays at or below 1266 px at 375, with the screenshot opened.
 - [x] 4.18 Implementer: the JSON-LD `Person.description` and the `> ` line of `site/llms.txt` become

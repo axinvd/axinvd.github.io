@@ -269,7 +269,7 @@ switch were removed in 9a3bf5a.
 - [The live run depends on the network and on Pages caching (about 10 minutes)] → it is a
   post-deploy check, not part of the full check.
 - [The PDF's headline differs from the page until the owner updates `cv-en.md`] → he does it in his
-  own repository. Task 2.8 rebuilds the PDF with the D4 commands, and the spec fixes no headline.
+  own repository. The rebuild of the PDF with the D4 commands is a line of «Hands», and the spec fixes no headline.
 - [The phone number sits on a public, crawlable page] → the owner chose to keep it (revision round,
   2026-11-18).
 - [A privacy hook on this machine (cc-plugin-privacy) refused an architect write that put the contact
@@ -294,6 +294,10 @@ re-run the workflow.
   deployment → Source: «GitHub Actions». Then Actions → «Pages» → Run workflow. The same switch by
   API, if the owner prefers: `gh api -X PUT repos/axinvd/axinvd.github.io/pages -f build_type=workflow`.
   This does not block the build: everything before the merge is checked against the local server.
+- Owner, after he updates `~/projects/freelance_leads/cv/cv-en.md` for AI product: rebuild
+  `site/ivan-alexandrov-cv.pdf` with the two D4 commands and open page 1 (its headline equals line 3 of
+  `cv-en.md`, the lists are lists). The skipped test «The PDF matches the current CV» is then
+  unskipped by hand.
 
 ## Decided without the user
 
@@ -304,7 +308,7 @@ re-run the workflow.
 | Check tooling | `@playwright/test` 1.64.1 and `@axe-core/playwright` 4.14.0, Python `http.server` (D3) | House pattern in 011 and fathom; browser already cached; stdlib server |
 | Live check | Same suite with `BASE_URL` (D3) | Done when asks for the live site; no second test set |
 | PDF source | Committed file from `cv-en.md` via pandoc and `playwright pdf` (D4) | Source not reachable from CI; probe produced a good 3-page PDF |
-| PDF headline | Whatever `cv-en.md` says when the PDF is generated; rebuilt after the owner's update (task 2.8) | Owner: he updates `cv-en.md` for AI product himself; the spec fixes no headline |
+| PDF headline | Whatever `cv-en.md` says when the PDF is generated; rebuilt after the owner's update (Hands) | Owner: he updates `cv-en.md` for AI product himself; the spec fixes no headline |
 | Years of experience | «since 2018», no count | `cv-en.md` says 7+, `ai-experience.md` says 8+; the date is true in both |
 | Copy and order | Table D7; first person on the page, third-person definition for JSON-LD and `llms.txt` | Owner: one voice; machine readers need the name in the answer |
 | Content by the owner's answers | D7 rewritten: outcomes, hard problems and measured findings with a baseline; activity counts out | Owner's answers in the roadmap Scope, 2026-11-18; content research |
