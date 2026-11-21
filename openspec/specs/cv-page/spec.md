@@ -77,6 +77,7 @@ site and links to the live site with an ordinary text link.
   and «90+» for performance
 - **AND** it names «Open Design» as the design tool, the specs with «scenarios» that its late work
   went through, and the typed «content modules» that hold its copy
+- **AND** it says that the quote form and its handler share «one validation module»
 
 #### Scenario: Leads, and when the sites were built
 - **WHEN** a visitor reads the Projects section
@@ -84,6 +85,7 @@ site and links to the live site with an ordinary text link.
 - **AND** one sentence says that both production sites were built with Claude Code before the harness
   existed. It names them as «caro.md» and «infodreamhome.com», or as «both sites», and either
   wording passes
+- **AND** the section gives no date for when the harness appeared
 
 ### Requirement: The harness case is short and self-contained
 The page SHALL have a section headed «A multi-agent harness on Claude Code», after Projects. It says
@@ -101,6 +103,8 @@ names no count of steps.
 - **WHEN** a visitor, or a screen reader, reads the harness section
 - **THEN** its text names, in this order: «orchestrator», «architect», «designer», «tester»,
   «implementer», «verifier», «pull request», «approve», «merge»
+- **AND** it says the tester writes tests from the spec without reading the code, and that the
+  implementer «never edits them»
 - **AND** it says he starts a step with «one line», and that a chat message or a PR comment does not
   count as approval
 - **AND** it says the harness is his own tool, used on his own repositories and those of his
@@ -113,27 +117,28 @@ names no count of steps.
 
 #### Scenario: Measured findings are shown with their baseline and date
 - **WHEN** a visitor reads the harness section
-- **THEN** it contains «135,948», «6,344», «none of 74 steps», «14 of 46» and «8 of its top 10»
-- **AND** each of the verifier, MCP and lead-ranking findings says what its figure was compared
+- **THEN** it contains «135,948», «6,344», «none of 74 steps», «14 of 46», «90 roubles» and «82.51»
+- **AND** each of the verifier, MCP and pay-reading findings says what its figure was compared
   with, in the sentence that holds the figure or the one just before it. The verifier's «14 of 46»
   after the split compares with «none of 74 steps» when one verifier was the only check. The MCP
-  figures are the same call with and without every MCP server loaded. The model's top 10 compares
-  with the leads he had skipped
-- **AND** it states that the figures are as of 12 November 2026
+  figures are the same call with and without every MCP server loaded. The model's guessed rate of
+  «90 roubles» per dollar compares with the central bank's «82.51»
+- **AND** the pay-reading finding says that the model now copies pay as written and code converts it
+- **AND** it states that the figures are as of 18 November 2026
 
 #### Scenario: Live-model testing and the limits
 - **WHEN** a visitor reads the harness section
 - **THEN** it says the chat agent is tested on the «live model» against «prompt injection»
-- **AND** a limits part says the write hook covers «file tools» only, and that role order and
-  pre-merge checks are held by a model following a written skill, with the merge pinned by
-  «--match-head-commit»
+- **AND** a limits part says that a hook keeps unattended sessions writing only «inside the project»,
+  that it covers «file tools» only, and that role order and pre-merge checks are held by a model
+  following a written skill, with the merge pinned by «--match-head-commit»
 
 #### Scenario: The page does not overclaim or count activity
 - **WHEN** the page text is searched
 - **THEN** it contains none of «sandboxed», «eval suite», «011.md», «Distru», «main contributor»,
   «pull requests merged», «47 pull requests», «31 merged», «121», «roadmap steps have run», «around
   the clock», «$474.9», «469 role calls», «413 tests», «2,923», «325 of 596», «81 of 108», «circuit
-  breaker», «407», «IP ban»
+  breaker», «407», «IP ban», «8 of its top 10», «130–681k»
 
 ### Requirement: The page lists experience from the CV
 The page SHALL have an Experience section with every position of `cv-en.md`, with its employer, role
@@ -144,17 +149,23 @@ and dates. Skills, education and languages follow it.
 - **THEN** it shows the freelance position (Jun 2025 – present), Otherweb (Web Developer, Dec 2024 –
   May 2025; Lead Mobile Developer, Aug 2023 – Dec 2024), Raters (Jan 2022 – May 2023) and
   DexTechnology (Frontend Team Lead, Dec 2021 – Jul 2022; React Native Developer, Jul 2018 – Dec 2021)
+- **AND** the freelance position names the multi-agent harness on Claude Code as his own tool, «not
+  production at an employer»
 - **AND** the page names both degrees from Dniester State University and the languages English and
   Russian
 
 ### Requirement: The page lists skills from the CV
-The page SHALL have a Skills section with the skill groups of `cv-en.md`: Frontend, Quality, Mobile,
-Backend & data, Integrations, Delivery, AI.
+The page SHALL have a Skills section with the skill groups of `cv-en.md` in that file's order:
+Frontend, Quality, AI, Mobile, Backend & data, Integrations, Delivery.
 
 #### Scenario: Skill groups are shown
 - **WHEN** a visitor reads the section headed «Skills»
-- **THEN** it names each group «Frontend», «Quality», «Mobile», «Backend & data», «Integrations»,
-  «Delivery» and «AI», each followed by its tools from `cv-en.md`
+- **THEN** it names the groups «Frontend», «Quality», «AI», «Mobile», «Backend & data»,
+  «Integrations» and «Delivery», in this order, each followed by its tools from `cv-en.md`
+- **AND** the «AI» group names the multi-agent orchestration on «Claude Code», «MCP servers», the
+  tests of agents on the «live model», the «with-and-without-skill evals», «OpenAI», «SSE» and
+  «GitHub Copilot»
+- **AND** the «Backend & data» group names «Python»
 
 ### Requirement: The page gives contacts and the PDF CV
 The page SHALL list the contacts of `cv-en.md` as working links in its header, and SHALL link the CV
@@ -175,17 +186,25 @@ headline at the time it was generated. The page does not require a particular he
   starts with `%PDF`
 
 #### Scenario: The PDF matches the current CV
-- **WHEN** the reviewer opens page 1 of the PDF next to `~/projects/freelance_leads/cv/cv-en.md`
-- **THEN** the PDF's headline is the CV's line 3 as it stands, and its lists render as lists
+- **WHEN** the text of page 1 of the served `/ivan-alexandrov-cv.pdf` is read next to line 3 of
+  `~/projects/freelance_leads/cv/cv-en.md`
+- **THEN** the page-1 text, with all whitespace removed and compatibility characters folded (a
+  ligature reads as its letters), contains that line with its `**` marks and its whitespace removed
+- **AND** the page-1 text contains no `**`, so bold text and list items were rendered, not printed
+  as Markdown
+- **AND** on a machine without that file the check is skipped, and the skip names the missing path
 
 ### Requirement: Facts come only from the sources
-Every fact and figure on the page SHALL come from `freelance_leads/cv/cv-en.md`,
-`cv/ai-experience.md`, the profile README, the owner's answers in the roadmap step, or a file of the
-caro_md or dreamHome repository read for this change. Each is listed with its source in the copy
-table of the design. The page SHALL carry no closed code, secrets, or client-private details.
+Every fact and figure on the page SHALL come from `freelance_leads/cv/cv-en.md`, the current
+`cv/ai-experience.md` (version 2, a figure only its version 1 carried is not a source), the profile
+README, the owner's answers in the roadmap step, or a file of the caro_md or dreamHome repository
+read for the cv-site change. Each is listed with its source in a copy table: the site-v2-sync design's
+table for the lines it wrote, the cv-site design's D7 table for the rest. The page SHALL carry no
+closed code, secrets, or client-private details.
 
 #### Scenario: A reviewer checks the copy
-- **WHEN** the verifier compares the page text with the copy table of `design.md`
+- **WHEN** the verifier compares the page text with the copy table of the site-v2-sync `design.md`,
+  and for lines that table does not hold, with the D7 table of the cv-site `design.md`
 - **THEN** each figure and claim on the page has a row there with its source, and none is missing
   from the source
 
@@ -274,5 +293,5 @@ responses together, the PDF aside, SHALL weigh at most 150 KB. The footer links 
 
 #### Scenario: The footer is plain
 - **WHEN** the footer is read
-- **THEN** it links `/ivan-alexandrov-cv.pdf` and `/llms.txt` and contains «12 November 2026»
+- **THEN** it links `/ivan-alexandrov-cv.pdf` and `/llms.txt` and contains «18 November 2026»
 - **AND** it contains neither «KB» nor «Lighthouse»
