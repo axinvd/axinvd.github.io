@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { open, found, missing, norm } from './helpers';
+import { existsSync, readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { open, found, missing, norm, pdfPage1Text } from './helpers';
 
-// Contract tests of the cv-page spec (openspec/changes/cv-site/specs/cv-page/spec.md). One test per
+// Contract tests of the cv-page spec (openspec/specs/cv-page/spec.md, as changed by
+// openspec/changes/site-v2-sync/specs/cv-page/spec.md). One test per
 // scenario, titled with the scenario's name. A phrase quoted in a scenario is matched in the visible
 // text case-insensitively with whitespace collapsed; an href is matched exactly.
 
@@ -113,6 +116,7 @@ test('Section order', async ({ page }) => {
   expect(d.all.filter((h) => h.startsWith('case:')), 'headings that start with «Case:»').toEqual([]);
 });
 
+// The groups in the order of cv-en.md (the spec fixes the order), each with tools from that file.
 const SKILLS: Record<string, string[]> = {
   Frontend: [
     'React', 'Next.js', 'App Router', 'prerendering', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS',
@@ -120,11 +124,14 @@ const SKILLS: Record<string, string[]> = {
     'Storybook', 'Figma REST API',
   ],
   Quality: ['Playwright', 'Lighthouse', 'WCAG AA', 'Core Web Vitals', 'SEO', 'Sentry'],
+  AI: [
+    'Claude Code', 'MCP servers', 'live model', 'with-and-without-skill evals', 'OpenAI', 'real-time chat', 'SSE',
+    'GitHub Copilot',
+  ],
   Mobile: ['React Native', 'Expo', 'native navigation', 'Fastlane', 'WatermelonDB', 'react-native-track-player', 'native modules'],
-  'Backend & data': ['Node.js', 'NestJS', 'Hono', 'Prisma', 'PostgreSQL', 'Redis', 'Django admin', 'REST', 'GraphQL'],
+  'Backend & data': ['Node.js', 'NestJS', 'Hono', 'Prisma', 'PostgreSQL', 'Redis', 'Django admin', 'REST', 'GraphQL', 'Python'],
   Integrations: ['Stripe', 'Clerk', 'Resend', 'Firebase', 'third-party APIs', 'proxies'],
   Delivery: ['GitHub Actions', 'Docker', 'Dokploy', 'Orval', 'ESLint', 'oxlint', 'Husky', 'Bun'],
-  AI: ['OpenAI', 'Claude', 'real-time chat', 'SSE', 'Claude Code', 'GitHub Copilot'],
 };
 
 test('Skill groups are shown', async ({ page }) => {
@@ -141,6 +148,7 @@ test('Skill groups are shown', async ({ page }) => {
     return lines!.findIndex((l) => re.test(norm(l)));
   });
   groups.forEach((g, i) => expect(starts[i], `group «${g}» starts a line in the Skills section`).toBeGreaterThanOrEqual(0));
+  expect(starts, 'the groups follow one another in the order of cv-en.md').toEqual([...starts].sort((a, b) => a - b));
   const order = starts.map((s, i) => [s, i]).sort((a, b) => a[0] - b[0]);
   order.forEach(([s, i], k) => {
     const end = k + 1 < order.length ? order[k + 1][0] : lines!.length;
@@ -172,6 +180,15 @@ test('Positions, education and languages are shown', async ({ page }) => {
   expect(missing(exp, ['Freelance']), 'the freelance position').toEqual([]);
   expect(near('Freelance', 'Jun 2025 – present'), 'Freelance with Jun 2025 – present').toBe(true);
   expect(missing(exp, ['Otherweb', 'Raters', 'DexTechnology'])).toEqual([]);
+  // The freelance position (up to the next employer) names the harness as his own tool.
+  const ne = norm(exp);
+  const f0 = ne.indexOf('freelance');
+  const next = ['otherweb', 'raters', 'dextechnology'].map((e) => ne.indexOf(e)).filter((i) => i > f0);
+  const freelance = ne.slice(f0, next.length ? Math.min(...next) : undefined);
+  expect(
+    missing(freelance, ['multi-agent harness', 'Claude Code', 'not production at an employer']),
+    'the freelance position names the multi-agent harness on Claude Code as «not production at an employer»',
+  ).toEqual([]);
   const positions: Array<[string, string]> = [
     ['Web Developer', 'Dec 2024 – May 2025'],
     ['Lead Mobile Developer', 'Aug 2023 – Dec 2024'],
@@ -222,7 +239,10 @@ test.describe('The harness case', () => {
       expect(i, `«${w}» comes after the one before it`).toBeGreaterThanOrEqual(0);
       at = i + w.length;
     }
-    expect(missing(text!, ['one line', 'three-person studio', 'own tool']), 'phrases of the pipeline part').toEqual([]);
+    expect(
+      missing(text!, ['without reading the code', 'never edits them', 'one line', 'three-person studio', 'own tool']),
+      'phrases of the pipeline part',
+    ).toEqual([]);
     expect(missing(text!, ['chat message', 'comment', 'count']), 'a chat message or a PR comment does not count').toEqual([]);
   });
 
@@ -251,15 +271,31 @@ test.describe('The harness case', () => {
     await open(page);
     const text = await harnessText(page);
     expect(text, 'a harness section').not.toBeNull();
-    expect(missing(text!, ['135,948', '6,344', 'none of 74 steps', '14 of 46', '8 of its top 10', 'as of 12 November 2026'])).toEqual([]);
+    expect(missing(text!, ['135,948', '6,344', 'none of 74 steps', '14 of 46', '90 roubles', '82.51', 'as of 18 November 2026'])).toEqual([]);
     expect(found(text!, ['121 roadmap steps']), 'no step count').toEqual([]);
+    expect(missing(text!, ['copies pay as written', 'code converts it']), 'the pay-reading finding says what changed').toEqual([]);
+    // Each finding says what its figure was compared with, in the sentence that holds the figure or the one just before.
+    const raw = await page.evaluate(() => {
+      const h = window.__t.harness();
+      return h && h.section ? (h.section as HTMLElement).innerText : '';
+    });
+    const sents = raw.split(/\n+|(?<=[.!?])\s+/).map(norm).filter(Boolean);
+    const at = (needle: string) => sents.findIndex((x) => x.includes(norm(needle)));
+    const near = (a: string, b: string) => at(a) >= 0 && at(b) >= 0 && Math.abs(at(a) - at(b)) <= 1;
+    expect(near('14 of 46', 'none of 74 steps'), 'the verifier: «14 of 46» next to its baseline «none of 74 steps»').toBe(true);
+    expect(near('135,948', '6,344'), 'MCP: the two figures of one call in the same or neighbouring sentences').toBe(true);
+    expect(sents.slice(Math.max(0, Math.min(at('135,948'), at('6,344')) - 1), Math.max(at('135,948'), at('6,344')) + 1).join(' '), 'the MCP finding names MCP').toContain('mcp');
+    expect(near('90 roubles', '82.51'), 'pay: «90 roubles» next to the central bank rate «82.51»').toBe(true);
+    expect(sents.slice(Math.max(0, Math.min(at('90 roubles'), at('82.51')) - 1), Math.max(at('90 roubles'), at('82.51')) + 1).join(' '), 'the rate «82.51» is the central bank\'s').toContain('central bank');
   });
 
   test('Live-model testing and the limits', async ({ page }) => {
     await open(page);
     const text = await harnessText(page);
     expect(text, 'a harness section').not.toBeNull();
-    expect(missing(text!, ['chat agent', 'live model', 'prompt injection', 'file tools', '--match-head-commit'])).toEqual([]);
+    expect(
+      missing(text!, ['chat agent', 'live model', 'prompt injection', 'hook', 'inside the project', 'file tools', 'written skill', '--match-head-commit']),
+    ).toEqual([]);
   });
 
   test('The page does not overclaim or count activity', async ({ page }) => {
@@ -268,7 +304,7 @@ test.describe('The harness case', () => {
     const banned = [
       'sandboxed', 'eval suite', '011.md', 'Distru', 'main contributor', 'pull requests merged', '47 pull requests',
       '31 merged', '121', 'roadmap steps have run', 'around the clock', '$474.9', '469 role calls', '413 tests', '2,923',
-      '325 of 596', '81 of 108', 'circuit breaker', '407', 'IP ban',
+      '325 of 596', '81 of 108', 'circuit breaker', '407', 'IP ban', '8 of its top 10', '130–681k',
     ];
     expect(found(body, banned), 'phrases the page must not contain').toEqual([]);
   });
@@ -317,7 +353,7 @@ test.describe('Projects', () => {
     await open(page);
     const e = await entry(page, DH, CARO);
     expect(e, 'an infodreamhome.com entry (the ancestor of its link that holds no other project)').not.toBeNull();
-    expect(missing(e.text, ['Las Vegas', 'Lighthouse', '100', '90+', 'Open Design', 'scenarios', 'content modules'])).toEqual([]);
+    expect(missing(e.text, ['Las Vegas', 'Lighthouse', '100', '90+', 'Open Design', 'scenarios', 'content modules', 'one validation module'])).toEqual([]);
   });
 
   test('Leads, and when the sites were built', async ({ page }) => {
@@ -341,6 +377,13 @@ test.describe('Projects', () => {
       ),
       'a sentence in Projects says both production sites were built with Claude Code before the harness existed',
     ).toBe(true);
+    // A date (a month name with a day or a year) in a sentence that speaks of the harness. The sites' own
+    // launch dates («live since October 2026») are not the harness's.
+    const month = '(?:january|february|march|april|may|june|july|august|september|october|november|december)';
+    const dated = sents.filter(
+      (x) => /\bappeared on\b/.test(x) || (x.includes('harness') && new RegExp(`\\b${month}\\s+\\d|\\b\\d+\\s+${month}\\b`).test(x)),
+    );
+    expect(dated, 'sentences in Projects that give a date for when the harness appeared').toEqual([]);
   });
 });
 
@@ -367,8 +410,19 @@ test('The PDF CV downloads', async ({ request }) => {
   expect((await res.body()).subarray(0, 4).toString('latin1')).toBe('%PDF');
 });
 
-// Manual: the reviewer opens page 1 of the PDF next to cv-en.md (task 2.8).
-test.skip('The PDF matches the current CV: page 1 headline is cv-en.md line 3 and lists render as lists (task 2.8)', () => {});
+// The served PDF's page 1 holds line 3 of cv-en.md (design D3). Read through the suite's baseURL, so
+// BASE_URL=… checks the deployed file. The source lives only on the owner's machine: absent, skip.
+test('The PDF matches the current CV', async ({ request }) => {
+  const cv = `${homedir()}/projects/freelance_leads/cv/cv-en.md`;
+  test.skip(!existsSync(cv), `missing ${cv}`);
+  const headline = readFileSync(cv, 'utf8').split(/\r?\n/)[2];
+  const want = headline.replace(/\*\*/g, '').normalize('NFKC').replace(/\s+/g, '');
+  const res = await request.get('/ivan-alexandrov-cv.pdf');
+  expect(res.status()).toBe(200);
+  const got = pdfPage1Text(await res.body());
+  expect(got, `page 1 of the PDF contains line 3 of cv-en.md (${headline})`).toContain(want);
+  expect(got, 'page 1 has no «**»: bold text and list items were rendered, not printed as Markdown').not.toContain('**');
+});
 
 // Manual: the verifier compares the page text with the copy table of design.md (D7).
 test.skip('A reviewer checks the copy: each figure and claim on the page has a row in the D7 table of design.md', () => {});
@@ -584,7 +638,7 @@ test.describe('Light and self-contained', () => {
     expect(d, 'a footer').not.toBeNull();
     expect(d!.hrefs).toContain('/ivan-alexandrov-cv.pdf');
     expect(d!.hrefs).toContain('/llms.txt');
-    expect(norm(d!.text)).toContain('12 november 2026');
+    expect(norm(d!.text)).toContain('18 november 2026');
     expect(d!.text, 'no «KB» in the footer').not.toContain('KB');
     expect(norm(d!.text)).not.toContain('lighthouse');
   });
