@@ -34,10 +34,10 @@ blockers by what they unblock.
 Depends: —
 Read: CLAUDE.md (команды сборки PDF); `~/projects/freelance_leads/cv/ai-experience.md` (v2 — подходы), `~/projects/freelance_leads/cv/cv-en.md`
 Goal: сайт и PDF резюме сходятся с ресёрчем подходов v2 и новым `cv-en.md` — ничего сильного не упущено, ничего не противоречит.
-Scope: сверить страницу с записями `ai-experience.md` v2 («задача → подход → почему → что ломалось»): что на сайте нет, но сильнее того, что есть, — добавить в кейс harness или проекты; что расходится с v2 — поправить; подача прежняя (D7: подходы, без счётчиков активности). Пересобрать `site/ivan-alexandrov-cv.pdf` из нового `cv-en.md` командами из CLAUDE.md, снять skip с теста «The PDF matches the current CV». Список «добавлено / не взято и почему» — в PR.
+Scope: сверить страницу с записями `ai-experience.md` v2 («задача → подход → почему → что ломалось»): что на сайте нет, но сильнее того, что есть, — добавить в кейс harness или проекты; что расходится с v2 — поправить; подача прежняя (D7: подходы, без счётчиков активности). Пересобрать `site/ivan-alexandrov-cv.pdf` из нового `cv-en.md` командами из CLAUDE.md, снять skip с теста «The PDF matches the current CV». Список «добавлено / не взято и почему» — в PR. Известное расхождение (из PR #32 freelance_leads): строка сайта «a model put 8 of its top 10 among leads I had skipped, so code now does the scoring» противоречит v2 Q2.1 (на верх ставила формула); на сайте остаются счётчики и факты, которых нет в `cv-en.md`, — сверить и решить.
 Out: правка `cv-en.md` и `ai-experience.md` (роадмап freelance_leads).
 Done when: в PR список сверки с v2; PDF на `https://axinvd.github.io/ivan-alexandrov-cv.pdf` с заголовком «AI Product Engineer · Senior Frontend»; тест PDF проходит; полная проверка зелёная, живой сайт проверен в 390.
-Decide: ждёт шагов `ai-experience-v2@freelance_leads` и `cv-ai-refresh@freelance_leads` — запускать после их мержа (зависимость между роадмапами скрипт пока не читает).
+Decide: —
 ### walk-fixes-1
 Depends: cv-site
 Goal: мелкие замечания персоны ко второму проходу сайта-резюме, которые не блокировали cv-site.
