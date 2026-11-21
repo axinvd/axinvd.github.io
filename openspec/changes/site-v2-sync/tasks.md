@@ -73,28 +73,28 @@ Red before 2 and 3 (on today's tree): the ones marked «red».
 
 ## 2. Page copy (implementer)
 
-- [ ] 2.1 Apply D1 rows o1, hard1, m3, l1, asof and footer in `site/index.html`, keeping the
+- [x] 2.1 Apply D1 rows o1, hard1, m3, l1, asof and footer in `site/index.html`, keeping the
   existing markup: the `nowrap` spans in m3 and the `<code>` in l1. Verify:
   `grep -c -E "8 of its top 10|130–681k|3 November 2026|12 November 2026" site/index.html`. Today
   it prints `5`; expected `0`. The harness tests pass. The case height test passes: measured on a
   scratch copy, 1210 px at 390 and 1234 px at 375, against a limit of 1266.
-- [ ] 2.2 Apply D1 rows p-note, dh-leads, exp-free-h (the first `li` of the freelance position) and
+- [x] 2.2 Apply D1 rows p-note, dh-leads, exp-free-h (the first `li` of the freelance position) and
   skills (groups in the order of `cv-en.md`, tools verbatim). Verify:
   `grep -c -E "90 roubles|82.51|18 November 2026|never edits them|one validation module|not production at an employer|Python \(agent tooling\)" site/index.html`.
   Today it prints `0`; expected at least `7`. The Projects, Experience and Skills tests pass.
 
 ## 3. PDF (implementer)
 
-- [ ] 3.1 Rebuild `site/ivan-alexandrov-cv.pdf` with the two D4 commands, then open page 1 and look
+- [x] 3.1 Rebuild `site/ivan-alexandrov-cv.pdf` with the two D4 commands, then open page 1 and look
   at it: the headline «AI Product Engineer · Senior Frontend Developer — React, Next.js, TypeScript»
   and lists as lists. Verify: `npx playwright test -g "PDF"` passes. The file is about 114 KB
   (today 100708 bytes). A scratch build on 2026-11-21 made 4 pages with the right headline.
 
 ## 4. Integration checks
 
-- [ ] 4.1 Full check green: `export RUN_SLOT=1 && git diff --check && npx playwright test`. Today
+- [x] 4.1 Full check green: `export RUN_SLOT=1 && git diff --check && npx playwright test`. Today
   `47 passed, 2 skipped`. Expected: all passed, 1 skipped (the manual copy review).
-- [ ] 4.2 Drive the page on the local preview (`python3 -m http.server 4021 --bind 127.0.0.1
+- [x] 4.2 Drive the page on the local preview (`python3 -m http.server 4021 --bind 127.0.0.1
   --directory site`, port free first, stopped by its listener after). Screenshot the harness
   section, Projects, Experience and Skills at 390 and 1280, and open the screenshots: no overflow,
   the case reads whole.
