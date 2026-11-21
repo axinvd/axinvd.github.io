@@ -181,7 +181,7 @@ test('JavaScript disabled', async ({ browser, baseURL }) => {
     await expect(page.locator('main p').first()).toBeVisible();
     await expect(page.locator('main p').first()).toContainText('Chișinău');
     const text = await page.locator('body').innerText();
-    expect(missing(text, ['135,948', '6,344', 'none of 74 steps', '14 of 46', '8 of its top 10']), "the harness's measured findings").toEqual([]);
+    expect(missing(text, ['135,948', '6,344', 'none of 74 steps', '14 of 46', '90 roubles', '82.51']), "the harness's measured findings").toEqual([]);
     const shown = [
       'a[href="https://caro.md/"]',
       'a[href="https://infodreamhome.com/"]',

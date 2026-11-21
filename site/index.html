@@ -113,21 +113,21 @@
         <li>Its late work went through OpenSpec changes. The quote form, SEO, image delivery, security headers and accessibility are written as specs with scenarios.</li>
         <li>All copy lives in typed per-block content modules whose IDs match the blocks on the page, so the client's text edits land in one place.</li>
       </ul>
-      <p>Quote requests land in the owner's inbox through Resend, with silent bot filtering. Leads come in through the site.</p>
+      <p>Quote requests pass one validation module shared by the form and its handler, and land in the owner's inbox through Resend, with silent bot filtering. Leads come in through the site.</p>
       <p class="project-meta">Next.js 16 App Router, Bun in Docker</p>
     </article>
-    <p class="projects-note">Both sites were built with Claude Code before the harness existed; it appeared on 3 November 2026.</p>
+    <p class="projects-note">Both sites were built with Claude Code before the harness existed.</p>
   </section>
 
   <section id="harness" class="case">
     <h2>A multi-agent harness on Claude Code</h2>
-    <p>Each roadmap step gets an orchestrator that leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code.</p>
+    <p>Each roadmap step gets an orchestrator that leads an architect, a designer, a tester, an implementer and a fresh verifier from plan to pull request. The tester writes tests from the spec without reading the code, and the implementer never edits them.</p>
     <p>I start a step with one line, answer only the decisions the agents cannot ground, and approve the merge on GitHub; a chat message or a PR comment does not count.</p>
     <p>It is my own tool, used daily on my repositories and my three-person studio's. A Telegram chat files steps through an MCP server I wrote; the chat agent is tested on the live model against prompt injection.</p>
 
     <h3>What went wrong</h3>
     <ul class="notes">
-      <li>One agent per step peaked at 130–681k tokens of context and tested its own code, so I split it into roles.</li>
+      <li>One agent per step re-paid everything it read on every call and tested its own code, so I split it into roles.</li>
       <li>An agent tried to approve its own pull request; the bot now has its own GitHub App identity.</li>
     </ul>
 
@@ -135,12 +135,12 @@
     <ul class="notes">
       <li><strong>Verifier:</strong> as the only check it changed <span class="nowrap">none of 74 steps</span>; after the split into roles, <span class="nowrap">14 of 46</span>.</li>
       <li><strong>MCP:</strong> the same headless call cost 135,948 tokens with every server loaded, 6,344 with <code>--strict-mcp-config</code>.</li>
-      <li><strong>Lead ranking:</strong> a model put <span class="nowrap">8 of its top 10</span> among leads I had skipped, so code now does the scoring.</li>
+      <li><strong>Pay in job posts:</strong> asked for dollars, a model guessed <span class="nowrap">90 roubles</span> per dollar against the central bank's <span class="nowrap">82.51</span>, so it now copies pay as written and code converts it.</li>
     </ul>
 
     <h3>Limits</h3>
-    <p>The write hook covers file tools only; role order and pre-merge checks are a model following a written skill, with the merge pinned by <code>--match-head-commit</code>.</p>
-    <p class="asof">Figures as of 12 November 2026, from my own runs.</p>
+    <p>A hook keeps unattended sessions writing only inside the project, but it covers file tools only; role order and pre-merge checks are a model following a written skill, with the merge pinned by <code>--match-head-commit</code>.</p>
+    <p class="asof">Figures as of 18 November 2026, from my own runs.</p>
   </section>
 
   <section id="experience" class="experience">
@@ -152,6 +152,7 @@
         <h4>Senior Frontend Developer</h4>
         <p class="when">Jun 2025 – present</p>
         <ul>
+          <li>Multi-agent harness on Claude Code: my own tool, used daily on my and my studio's repositories, not production at an employer.</li>
           <li>caro.md: car import platform (Korea, China, USA → Moldova), in production.</li>
           <li>Dream Home Construction (infodreamhome.com): production website for a licensed Las Vegas general contractor, live since October 2026; built most of the site.</li>
           <li>Agency prototypes: e-commerce prototypes and a modular shop template (Vendure, Payload, Next.js) for agency leads; AI-agent-driven workflow from discovery to deployed prototype.</li>
@@ -215,11 +216,11 @@
     <dl class="skill-groups">
       <div><dt>Frontend</dt><dd>React, Next.js (App Router, prerendering), TypeScript, JavaScript, HTML, CSS, Tailwind CSS, React Hook Form, Zod, TanStack Query, Redux Toolkit, Redux Saga, RxJS, next-intl / i18n, Storybook, Figma REST API</dd></div>
       <div><dt>Quality</dt><dd>Playwright end-to-end tests, Lighthouse (performance, accessibility), WCAG AA contrast, Core Web Vitals, SEO (structured data, sitemaps, link previews), Sentry</dd></div>
+      <div><dt>AI</dt><dd>multi-agent orchestration on Claude Code (subagents, skills, hooks), MCP servers, tests of agents on the live model (prompt injection included), with-and-without-skill evals, model output narrowed to facts and validated in code, LLM features (OpenAI, Claude), real-time chat over SSE, GitHub Copilot</dd></div>
       <div><dt>Mobile</dt><dd>React Native, Expo, native navigation, Fastlane, offline storage (WatermelonDB), audio (react-native-track-player), native modules</dd></div>
-      <div><dt>Backend &amp; data</dt><dd>Node.js, NestJS, Hono, Prisma, PostgreSQL, Redis, Django admin, REST, GraphQL</dd></div>
+      <div><dt>Backend &amp; data</dt><dd>Node.js, NestJS, Hono, Prisma, PostgreSQL, Redis, Django admin, REST, GraphQL, Python (agent tooling)</dd></div>
       <div><dt>Integrations</dt><dd>Stripe, Clerk, Resend, Firebase, third-party APIs and proxies</dd></div>
       <div><dt>Delivery</dt><dd>GitHub Actions, Docker, Dokploy, Orval API clients, ESLint / oxlint, Husky, Bun</dd></div>
-      <div><dt>AI</dt><dd>LLM features (OpenAI, Claude), real-time chat over SSE, AI-assisted development (Claude Code, GitHub Copilot)</dd></div>
     </dl>
   </section>
 
@@ -237,7 +238,7 @@
   <ul>
     <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
     <li><a href="/llms.txt">llms.txt</a></li>
-    <li>Figures as of 12 November 2026</li>
+    <li>Figures as of 18 November 2026</li>
   </ul>
 </footer>
 </body>
