@@ -64,3 +64,7 @@ Decide: —
 - Добавить `.playwright-cli/` в `.gitignore` (`playwright-cli` из worktree создаёт папку, `git add -A` её коммитит) и строкой в CLAUDE.md: `pdftoppm` на машине нет, страницу 1 PDF в картинку даёт `sips -s format png file.pdf --out x.png`; ридер PDF в `tests/helpers.ts` читает только PDF Chromium, upgrade path — `pdfjs-dist` (из site-v2-sync, репо axinvd.github.io)
 
 ## Candidates (user decides)
+
+- схема цепочки шагов харнесса (orchestrator → architect / designer / tester / implementer → verifier → Approve) на один экран — Dana, hiring manager: нужно переслать кейс CTO, проза про восемь ролей плохо пересылается (from site-v2-sync)
+- ссылка на публичный обезличенный образец харнесса (tasks.md одного шага, трейс или код hook) — CTO: «own tool, not production» честно, но не проверяемо, на интервью всё равно попросят показать (from site-v2-sync)
+- блок «interview ready» (уровень английского, пересечение с US-часовыми поясами, дата доступности) — Dana: следующий её шаг — назначить скрин, а на странице только «EET (UTC+2/+3)» (from site-v2-sync)
