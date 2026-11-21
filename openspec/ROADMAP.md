@@ -57,5 +57,6 @@ Decide: —
 - Обновить `~/projects/freelance_leads/cv/cv-en.md` под AI product (заголовок, summary, строка про harness: сейчас «Senior Frontend Developer», «Looking for remote frontend roles»), затем пересобрать `site/ivan-alexandrov-cv.pdf` двумя командами из CLAUDE.md репо axinvd.github.io, открыть страницу 1 и снять skip с теста «The PDF matches the current CV» (из cv-site; обновление CV — репо freelance_leads, PDF — репо axinvd.github.io)
 - В `~/.claude/memory/projects-map.md` у `caro_md` вместо «Django-шаблоны» написать «Next.js + Django admin»: публичный сайт на Next.js, Django только админка и API (проверено в репо caro_md при cv-site; репо `.claude`)
 - `/llms.txt` на локальном `python3 -m http.server` отдаётся без charset (Chișinău читается кракозябрами); на Pages utf-8, так что касается только превью и тестового сервера шага (из cv-site, репо axinvd.github.io)
+- Добавить `.playwright-cli/` в `.gitignore` (`playwright-cli` из worktree создаёт папку, `git add -A` её коммитит) и строкой в CLAUDE.md: `pdftoppm` на машине нет, страницу 1 PDF в картинку даёт `sips -s format png file.pdf --out x.png`; ридер PDF в `tests/helpers.ts` читает только PDF Chromium, upgrade path — `pdfjs-dist` (из site-v2-sync, репо axinvd.github.io)
 
 ## Candidates (user decides)
