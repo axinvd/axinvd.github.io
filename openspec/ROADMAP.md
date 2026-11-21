@@ -45,6 +45,10 @@ Scope: одной строкой на каждое (polish):
 - inline-ссылка «PlatformColor fix» на телефоне 20 px в высоту, трудно нажать.
 - «Leads come in through the site.» повторяется дословно в обеих карточках проектов; строка «Both sites were built with Claude Code…» стоит между карточками и кейсом без заголовка.
 - страница нигде не определяет, что такое «шаг» харнесса, цифры «74 steps» / «14 of 46» висят без привязки ко времени (одна строка-определение).
+- в шапке страницы нет «8+ years of TypeScript and React» и «long-term contracts», с которых начинается Summary в PDF; в Experience нет «hiring, onboarding and mentoring junior developers» из PDF (site-v2-sync, персона).
+- «Before going freelance, I led …» стоит над списком, где между ролями тимлида есть фриланс-позиция (Raters 2022–23): «Earlier, I led …» (site-v2-sync, персона).
+- «Verifier: … changed none of 74 steps … 14 of 46» — не понятно, что значит «changed» (вердикт или код): «caught a defect in none of 74 steps» (site-v2-sync, персона).
+- в «What I measured» нет цифр 93% vs 59% (skill evals) и Sonnet 10/10 vs Haiku 8/10, которые есть в PDF; решить, нужны ли на странице (site-v2-sync, персона; polish).
 Out: ссылка на репозиторий и скриншоты проектов (владелец решил, что ссылок достаточно); PDF (обновление `cv-en.md` — отдельная строка Follow-ups).
 Done when: каждая строка исправлена или снята владельцем; полная проверка зелёная; телефон 390 без обрезки.
 Decide: —
