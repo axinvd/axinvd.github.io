@@ -98,7 +98,7 @@ Red before 2 and 3 (on today's tree): the ones marked «red».
   --directory site`, port free first, stopped by its listener after). Screenshot the harness
   section, Projects, Experience and Skills at 390 and 1280, and open the screenshots: no overflow,
   the case reads whole.
-- [ ] 4.3 Write the PR body with the D2 reconciliation list in Russian («добавлено / не взято и
+- [x] 4.3 Write the PR body with the D2 reconciliation list in Russian («добавлено / не взято и
   почему») and the «Decided without you» rows of design.md. Verify: the body has both lists.
 
 ## Workflow follow-up
