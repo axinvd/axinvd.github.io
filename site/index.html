@@ -36,7 +36,7 @@
       "name": "Ivan Alexandrov",
       "jobTitle": "AI Product Engineer",
       "url": "https://axinvd.github.io/",
-      "description": "Ivan Alexandrov is an AI product and frontend engineer working remotely from Chișinău, Moldova. He builds web products in React and Next.js for clients, and his own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.",
+      "description": "Ivan Alexandrov is an AI product and frontend engineer working remotely from Chișinău, Moldova, with 8+ years of TypeScript and React. He builds web products in React and Next.js for clients, and his own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Chișinău",
@@ -53,7 +53,7 @@
         "@type": "CollegeOrUniversity",
         "name": "Dniester State University"
       },
-      "knowsAbout": ["React", "Next.js", "TypeScript", "Claude Code", "multi-agent systems", "Playwright"]
+      "knowsAbout": ["Claude Code", "multi-agent harness", "React", "Next.js", "TypeScript", "Playwright"]
     }
   ]
 }
@@ -72,8 +72,8 @@
       <li><a href="mailto:axinvd@gmail.com">axinvd@gmail.com</a></li>
       <li><a href="https://www.linkedin.com/in/axinvd/">LinkedIn</a></li>
       <li><a href="https://github.com/axinvd">GitHub</a></li>
-      <li><a href="https://t.me/axinvd">Telegram</a></li>
       <li><a href="tel:+37378297494">+373 78 297 494</a></li>
+      <li><a href="https://t.me/axinvd">Telegram</a></li>
       <li><a href="/ivan-alexandrov-cv.pdf">CV (PDF)</a></li>
     </ul>
   </address>
@@ -81,16 +81,28 @@
 
 <main id="main">
   <section class="intro">
-    <p class="lede">I'm an AI product and frontend engineer working remotely from Chișinău, Moldova. I build web products in React and Next.js for clients, and my own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.</p>
+    <p class="lede">I'm an AI product and frontend engineer working remotely from Chișinău, Moldova, with 8+ years of TypeScript and React. I build web products in React and Next.js for clients, and my own multi-agent harness on Claude Code that takes a roadmap step from plan to merged pull request.</p>
     <p class="open">Open to remote AI product engineer and senior frontend roles · EET (UTC+2/+3)</p>
     <ul class="outcomes">
-      <li>Two production Next.js sites for clients in 2026: caro.md and infodreamhome.com.</li>
+      <li>Two production Next.js sites for clients in 2026: infodreamhome.com and caro.md.</li>
       <li>My own multi-agent harness on Claude Code: a step goes from plan to merged pull request, and nothing merges without my approval.</li>
     </ul>
   </section>
 
   <section id="projects" class="projects">
     <h2>Projects</h2>
+    <article class="project">
+      <h3><a href="https://infodreamhome.com/">infodreamhome.com</a></h3>
+      <p>infodreamhome.com is the production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it.</p>
+      <p>The hard part was a photo-heavy site that stays fast on a phone. Every route is prerendered, and photos are served as AVIF or WebP at the device's width, the main image first. On the key pages, Lighthouse mobile scores 100 for accessibility and 90+ for performance, out of 100.</p>
+      <ul class="practices">
+        <li>The site was designed with Open Design. Later pages, such as the 404 and the navigation, were designed the same way inside the site's own design language.</li>
+        <li>Its late work went through OpenSpec changes. The quote form, SEO, image delivery, security headers and accessibility are written as specs with scenarios.</li>
+        <li>All copy lives in typed per-block content modules whose IDs match the blocks on the page, so the client's text edits land in one place.</li>
+      </ul>
+      <p>Quote requests pass one validation module shared by the form and its handler, and land in the owner's inbox through Resend, with silent bot filtering.</p>
+      <p class="project-meta">Next.js 16 App Router, Bun in Docker</p>
+    </article>
     <article class="project">
       <h3><a href="https://caro.md/">caro.md</a></h3>
       <p>caro.md imports cars to Moldova from Korea, China and the USA, and it is in production. I build its Next.js web app; a Django admin and API sit behind it.</p>
@@ -101,20 +113,8 @@
         <li>Playwright end-to-end tests cover the calculator, the request forms, both languages and ad attribution, against a mock backend.</li>
         <li>Every fix gets a short patch note (problem, root cause, solution, prevention), and the notes are folded into the rules the implementing agent reads, so a mistake is not repeated.</li>
       </ul>
-      <p>Leads come in through the site.</p>
+      <p>Buyers request a car through the site's forms.</p>
       <p class="project-meta">Next.js 16, React 19, TypeScript, Tailwind CSS v4, next-intl (Russian, Romanian), Django admin</p>
-    </article>
-    <article class="project">
-      <h3><a href="https://infodreamhome.com/">infodreamhome.com</a></h3>
-      <p>infodreamhome.com is the production website of a licensed Las Vegas general contractor, live since October 2026. I built most of it.</p>
-      <p>The hard part was a photo-heavy site that stays fast on a phone. Every route is prerendered, and photos are served as AVIF or WebP at the device's width, the main image first. On the key pages, Lighthouse mobile scores 100 for accessibility and 90+ for performance, out of 100.</p>
-      <ul class="practices">
-        <li>The site was designed with Open Design. Later pages, such as the 404 and the navigation, were designed the same way inside the site's own design language.</li>
-        <li>Its late work went through OpenSpec changes. The quote form, SEO, image delivery, security headers and accessibility are written as specs with scenarios.</li>
-        <li>All copy lives in typed per-block content modules whose IDs match the blocks on the page, so the client's text edits land in one place.</li>
-      </ul>
-      <p>Quote requests pass one validation module shared by the form and its handler, and land in the owner's inbox through Resend, with silent bot filtering. Leads come in through the site.</p>
-      <p class="project-meta">Next.js 16 App Router, Bun in Docker</p>
     </article>
     <p class="projects-note">Both sites were built with Claude Code before the harness existed.</p>
   </section>
@@ -145,7 +145,7 @@
 
   <section id="experience" class="experience">
     <h2>Experience</h2>
-    <p class="experience-lead">Before going freelance, I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and contributed a fix to React Native core.</p>
+    <p class="experience-lead">Earlier, I led frontend and mobile teams of up to 5 engineers, shipped consumer apps for KFC, Papa John's and a football club, and merged fixes upstream in React Native core and two React Native libraries.</p>
     <article class="org">
       <h3>Freelance</h3>
       <div class="position">
@@ -153,14 +153,14 @@
         <p class="when">Jun 2025 – present</p>
         <ul>
           <li>Multi-agent harness on Claude Code: my own tool, used daily on my and my studio's repositories, not production at an employer.</li>
-          <li>caro.md: car import platform (Korea, China, USA → Moldova), in production.</li>
           <li>Dream Home Construction (infodreamhome.com): production website for a licensed Las Vegas general contractor, live since October 2026; built most of the site.</li>
+          <li>caro.md: car import platform (Korea, China, USA → Moldova), in production.</li>
           <li>Agency prototypes: e-commerce prototypes and a modular shop template (Vendure, Payload, Next.js) for agency leads; AI-agent-driven workflow from discovery to deployed prototype.</li>
         </ul>
       </div>
     </article>
     <article class="org">
-      <h3>Otherweb (acquired by S.A.I.) · Chișinău</h3>
+      <h3>Otherweb (acquired by SAI Technologies) · Chișinău</h3>
       <div class="position">
         <h4>Web Developer</h4>
         <p class="when">Dec 2024 – May 2025</p>
@@ -172,7 +172,7 @@
         <h4>Lead Mobile Developer</h4>
         <p class="when">Aug 2023 – Dec 2024</p>
         <ul>
-          <li>News aggregator app (React Native): led mobile development, moved to native navigation and fixed Android 13 crashes; contributed a <a href="https://github.com/react/react-native/pull/39893">PlatformColor fix</a> to React Native core.</li>
+          <li>News aggregator app (React Native; 500K+ installs, 5.5M platform users): led mobile development, moved to native navigation and fixed Android 13 crashes; merged a <a href="https://github.com/react/react-native/pull/39893">PlatformColor fix</a> into React Native core, Android 14 support into react-native-navigation and a swipe fix into react-native-deck-swiper.</li>
           <li>Generated API clients with Orval + RTK Query and styles/icons from the Figma REST API; CI/CD on GitHub Actions with a Mac Mini runner; Sentry with Redux and navigation logging; offline audio; image resizer service in Next.js; pre-push linting with Husky, moved the project to Bun.</li>
           <li>Mentored junior developers and improved the team's code quality.</li>
         </ul>
@@ -195,7 +195,7 @@
         <p class="when">Dec 2021 – Jul 2022</p>
         <ul>
           <li>Winline / FC Krasnodar club app: runtime SVG ticket selector with 200+ seats, native navigation; managed 5 in-house developers.</li>
-          <li>Sbermarket delivery app: offline product storage (WatermelonDB), event-driven logic (RxJS), Storybook design-review app; managed 3 outsourced developers.</li>
+          <li>Sbermarket delivery app (5M+ installs): offline product storage (WatermelonDB), event-driven logic (RxJS), Storybook design-review app; managed 3 outsourced developers.</li>
           <li>Mentored junior developers and improved the team's code quality.</li>
         </ul>
       </div>
@@ -203,8 +203,8 @@
         <h4>React Native Developer</h4>
         <p class="when">Jul 2018 – Dec 2021</p>
         <ul>
-          <li>KFC: automated builds with Fastlane, live updates with Expo.</li>
-          <li>Papa John's: Yandex Maps native module, handling of 10 MB+ API responses.</li>
+          <li>KFC Russia app (5M+ installs): automated builds with Fastlane, live updates with Expo.</li>
+          <li>Papa John's Russia app (1M+ installs): Yandex Maps native module, handling of 10 MB+ API responses.</li>
           <li>Big3 basketball club: chat with Redux Saga.</li>
         </ul>
       </div>
@@ -214,9 +214,9 @@
   <section id="skills" class="skills">
     <h2>Skills</h2>
     <dl class="skill-groups">
+      <div><dt>AI</dt><dd>multi-agent orchestration on Claude Code (subagents, skills, hooks), MCP servers, tests of agents on the live model (prompt injection included), with-and-without-skill evals, model output narrowed to facts and validated in code, LLM features (OpenAI, Claude), real-time chat over SSE, GitHub Copilot</dd></div>
       <div><dt>Frontend</dt><dd>React, Next.js (App Router, prerendering), TypeScript, JavaScript, HTML, CSS, Tailwind CSS, React Hook Form, Zod, TanStack Query, Redux Toolkit, Redux Saga, RxJS, next-intl / i18n, Storybook, Figma REST API</dd></div>
       <div><dt>Quality</dt><dd>Playwright end-to-end tests, Lighthouse (performance, accessibility), WCAG AA contrast, Core Web Vitals, SEO (structured data, sitemaps, link previews), Sentry</dd></div>
-      <div><dt>AI</dt><dd>multi-agent orchestration on Claude Code (subagents, skills, hooks), MCP servers, tests of agents on the live model (prompt injection included), with-and-without-skill evals, model output narrowed to facts and validated in code, LLM features (OpenAI, Claude), real-time chat over SSE, GitHub Copilot</dd></div>
       <div><dt>Mobile</dt><dd>React Native, Expo, native navigation, Fastlane, offline storage (WatermelonDB), audio (react-native-track-player), native modules</dd></div>
       <div><dt>Backend &amp; data</dt><dd>Node.js, NestJS, Hono, Prisma, PostgreSQL, Redis, Django admin, REST, GraphQL, Python (agent tooling)</dd></div>
       <div><dt>Integrations</dt><dd>Stripe, Clerk, Resend, Firebase, third-party APIs and proxies</dd></div>
